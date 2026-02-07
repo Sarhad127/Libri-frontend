@@ -23,3 +23,7 @@
     background-color: #ffffff;
     color: #000000;
 }
+
+.main-area {
+    border-right: 1px solid #ffffff;
+}

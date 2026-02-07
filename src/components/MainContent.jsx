@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './MainContent.css';
+import '../styles/MainContent.css';
 
 function MainContent({ user }) {
     const [books, setBooks] = useState([]);

@@ -1,4 +1,4 @@
-import './TopBar.css';
+import '../styles/TopBar.css';
 
 function TopBar({ user, goToLogin, onLogout }) {
     return (

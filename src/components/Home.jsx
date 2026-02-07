@@ -1,7 +1,7 @@
 import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import TopBar from './TopBar';
-import './Home.css';
+import '../styles/Home.css';
 
 function Home({ user, goToLogin }) {
     const handleLogout = () => {

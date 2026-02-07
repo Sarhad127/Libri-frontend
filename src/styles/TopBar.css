@@ -1,0 +1,48 @@
+.top-bar {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.top-bar input[type="text"] {
+    padding: 6px 8px;
+    border: 1px solid #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s ease;
+    flex: 1;
+}
+
+.top-bar input[type="text"]::placeholder {
+    color: #cccccc;
+}
+
+.top-bar input[type="text"]:focus {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.top-bar button {
+    padding: 6px 8px;
+    border: 1px solid #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.top-bar button:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.user-button button {
+    margin-left: 10px;
+}
