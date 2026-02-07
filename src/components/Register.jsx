@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {registerUser} from "../services/api.js";
+import './Register.css';
 
 function Register({ goToLogin }) {
     const [email, setEmail] = useState('');
@@ -29,8 +30,8 @@ function Register({ goToLogin }) {
     };
 
     return (
-        <div className="login-page">
-            <div className="login-card">
+        <div className="register-page">
+            <div className="register-card">
                 <h2>Register</h2>
 
                 <form onSubmit={handleRegister}>
@@ -83,7 +84,7 @@ function Register({ goToLogin }) {
                     <button type="submit">Register</button>
                 </form>
 
-                <div className="login-footer">
+                <div className="register-footer">
                     Already have an account?{' '}
                     <span onClick={goToLogin}>Login</span>
                 </div>
