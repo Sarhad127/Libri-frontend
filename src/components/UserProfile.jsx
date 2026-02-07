@@ -36,16 +36,13 @@ function UserProfile() {
 
                 return (
                     <div className="tab-content">
-                        <h3>User Info</h3>
+                        <h3>User Information</h3>
                         <p><strong>First Name:</strong> {userInfo.firstName}</p>
                         <p><strong>Last Name:</strong> {userInfo.lastName}</p>
                         <p><strong>Email:</strong> {userInfo.email}</p>
-                        <p><strong>Role:</strong> {userInfo.role}</p>
                         <p><strong>Phone:</strong> {userInfo.phoneNumber}</p>
                         <p><strong>Address:</strong> {userInfo.address}</p>
-                        <p><strong>Active:</strong> {userInfo.isActive ? 'Yes' : 'No'}</p>
-                        <p><strong>Created At:</strong> {new Date(userInfo.createdAt).toLocaleString()}</p>
-                        <p><strong>Updated At:</strong> {new Date(userInfo.updatedAt).toLocaleString()}</p>
+                        <p><strong>Registered:</strong> {new Date(userInfo.createdAt).toISOString().split('T')[0]}</p>
                     </div>
                 );
 
