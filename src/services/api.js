@@ -32,3 +32,18 @@ export async function registerUser(userData) {
 
     return response.json();
 }
+
+export async function fetchUserProfile(token) {
+    const response = await fetch(`${API_BASE_URL}/me`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch user profile');
+    }
+
+    return response.json();
+}

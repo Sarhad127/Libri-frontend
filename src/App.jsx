@@ -6,6 +6,7 @@ import './App.css';
 function App() {
     const [user, setUser] = useState(null);
     const [page, setPage] = useState('home');
+    const [showUserPage, setShowUserPage] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -13,14 +14,21 @@ function App() {
         if (token && savedUser) setUser(savedUser);
     }, []);
 
+    const handleLoginSuccess = (userData) => {
+        setUser(userData);
+        setShowUserPage(false);
+    };
+
+    const handleUserPage = () => {
+        setShowUserPage(true);
+    };
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
-    };
-
-    const handleLoginSuccess = (userData) => {
-        setUser(userData);
+        setShowUserPage(false);
+        setPage('home');
     };
 
     return (
@@ -28,15 +36,15 @@ function App() {
             {page === 'home' && (
                 <Home
                     user={user}
-                    onLogout={handleLogout}
                     onLoginSuccess={handleLoginSuccess}
                     goToRegister={() => setPage('register')}
+                    showUserPage={showUserPage}
+                    onUserPage={handleUserPage}
+                    onLogout={handleLogout}
                 />
             )}
 
-            {page === 'register' && (
-                <Register goToLogin={() => setPage('home')} />
-            )}
+            {page === 'register' && <Register goToLogin={() => setPage('home')} />}
         </div>
     );
 }

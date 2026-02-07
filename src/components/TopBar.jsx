@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { loginUser } from '../services/api.js';
 import '../styles/TopBar.css';
 
-function TopBar({ user, goToRegister, onLoginSuccess, onLogout }) {
+function TopBar({ user, goToRegister, onLoginSuccess, onUserPage, onLogout }) {
     const [showLoginDropdown, setShowLoginDropdown] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,6 +21,7 @@ function TopBar({ user, goToRegister, onLoginSuccess, onLogout }) {
                 JSON.stringify({
                     id: data.id,
                     email: data.email,
+                    username: data.username || data.firstName,
                     role: data.role,
                 })
             );
@@ -28,6 +29,7 @@ function TopBar({ user, goToRegister, onLoginSuccess, onLogout }) {
             onLoginSuccess({
                 id: data.id,
                 email: data.email,
+                username: data.username || data.firstName,
                 role: data.role,
             });
 
@@ -42,12 +44,18 @@ function TopBar({ user, goToRegister, onLoginSuccess, onLogout }) {
     return (
         <div className="top-bar">
             <input type="text" placeholder="Search books..." />
-
             <button>Search</button>
 
-            <div className="user-button">
+            <div className="user-button" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 {user ? (
-                    <button onClick={onLogout}>Logout</button>
+                    <>
+                        <button onClick={() => onUserPage(user)}>
+                            {user.username || user.email}
+                        </button>
+                        <button onClick={onLogout} style={{ border: '1px solid #fff', background: 'transparent', color: '#fff', cursor: 'pointer', padding: '6px 8px' }}>
+                            Logout
+                        </button>
+                    </>
                 ) : (
                     <div className="login-dropdown-wrapper">
                         <button onClick={toggleDropdown}>Login</button>
