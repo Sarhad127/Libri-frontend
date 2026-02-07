@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home.jsx';
 import './App.css';
 
 function App() {
-    const [page, setPage] = useState('home');
     const [user, setUser] = useState(null);
+    const [page, setPage] = useState('home');
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -18,29 +17,25 @@ function App() {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
-        setPage('login');
+    };
+
+    const handleLoginSuccess = (userData) => {
+        setUser(userData);
     };
 
     return (
         <div className="app-container">
             {page === 'home' && (
-                <Home user={user} goToLogin={() => setPage('login')} onLogout={handleLogout} />
+                <Home
+                    user={user}
+                    onLogout={handleLogout}
+                    onLoginSuccess={handleLoginSuccess}
+                    goToRegister={() => setPage('register')}
+                />
             )}
 
-            {(page === 'login' || page === 'register') && (
-                <div className="login-page">
-                    {page === 'login' && (
-                        <Login
-                            goToRegister={() => setPage('register')}
-                            goToHome={(user) => {
-                                setUser(user);
-                                localStorage.setItem('user', JSON.stringify(user));
-                                setPage('home');
-                            }}
-                        />
-                    )}
-                    {page === 'register' && <Register goToLogin={() => setPage('login')} />}
-                </div>
+            {page === 'register' && (
+                <Register goToLogin={() => setPage('home')} />
             )}
         </div>
     );

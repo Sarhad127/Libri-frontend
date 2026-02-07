@@ -46,3 +46,67 @@
 .user-button button {
     margin-left: 10px;
 }
+
+.login-dropdown-wrapper {
+    position: relative;
+}
+
+.login-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 220px;
+    margin-top: 2px;
+    padding: 15px;
+    background-color: #1e1e1e;
+    border: 1px solid #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+}
+
+.login-dropdown input {
+    padding: 6px 6px;
+    margin: 4px 0;
+    border: 1px solid #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.login-dropdown input::placeholder {
+    color: #cccccc;
+}
+
+.login-dropdown input:focus {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.login-dropdown button[type="submit"] {
+    padding: 6px 8px;
+    margin: 10px 0;
+    border: 1px solid #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login-dropdown button[type="submit"]:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.login-dropdown p {
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.login-dropdown p span {
+    cursor: pointer;
+    text-decoration: underline;
+}
