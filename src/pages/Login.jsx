@@ -7,25 +7,21 @@ function Login({ goToRegister, goToHome }) {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await fetch('http://localhost:8080/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
+        const response = await fetch('http://localhost:8080/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        });
 
-            if (response.ok) {
-                const user = await response.json();
-                console.log('Logged in as:', user);
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Logged in as:', data);
 
-                goToHome(user);
-            } else {
-                const errorText = await response.text();
-                alert('Login failed: ' + errorText);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred during login.');
+            localStorage.setItem('token', data.token);
+
+            goToHome({ email: data.email, role: data.role, id: data.id });
+        } else {
+            alert('Login failed');
         }
     };
 
