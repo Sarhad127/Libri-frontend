@@ -8,7 +8,7 @@ function BookDetails({ book, onBack, onReviewAdded }) {
     return (
         <div className="book-details">
             <button className="back-button" onClick={onBack}>
-                ← Back to books
+                ← Back
             </button>
 
             <div className="book-details-card">

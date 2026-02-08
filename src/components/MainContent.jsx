@@ -1,4 +1,3 @@
-// MainContent.jsx
 import { useEffect, useState } from 'react';
 import UserProfile from './UserProfile';
 import Register from './Register';
@@ -37,7 +36,7 @@ function MainContent({ user, showUserPage, showRegisterPage }) {
             ) : showRegisterPage ? (
                 <Register />
             ) : selectedBook ? (
-                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />
+                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)}/>
             ) : (
                 <BookList
                     books={books}

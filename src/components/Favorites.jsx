@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { fetchFavorites } from '../services/api.js';
+import BookDetails from './BookDetails.jsx';
 import '../styles/BookList.css';
 
 function Favorites() {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [selectedBook, setSelectedBook] = useState(null);
 
     useEffect(() => {
         const loadFavorites = async () => {
@@ -32,10 +34,19 @@ function Favorites() {
     if (error) return <p>{error}</p>;
     if (!favorites || favorites.length === 0) return <p>No favorites yet.</p>;
 
+    if (selectedBook) {
+        return <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />;
+    }
+
     return (
         <div className="book-list">
             {favorites.map((book) => (
-                <div key={book.id} className="book-card">
+                <div
+                    key={book.id}
+                    className="book-card"
+                    onClick={() => setSelectedBook(book)}
+                    style={{ cursor: 'pointer' }}
+                >
                     {book.imageUrl && <img src={book.imageUrl} alt={book.title} className="book-image" />}
                     <div className="book-info">
                         <h2 className="book-title">{book.title}</h2>
