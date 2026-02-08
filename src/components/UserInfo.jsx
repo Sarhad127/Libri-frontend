@@ -1,11 +1,11 @@
 import React from 'react';
-import '../styles/UserProfile.css';
+import '../styles/UserInfo.css';
 
 function UserInfo({ user }) {
     if (!user) return null;
 
     return (
-        <div className="tab-content">
+        <div className="user-info">
             <h3>User Information</h3>
             <p><strong>First Name:</strong> {user.firstName}</p>
             <p><strong>Last Name:</strong> {user.lastName}</p>

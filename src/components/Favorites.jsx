@@ -33,7 +33,7 @@ function Favorites() {
     if (!favorites || favorites.length === 0) return <p>No favorites yet.</p>;
 
     return (
-        <div className="book-list tab-content">
+        <div className="book-list">
             {favorites.map((book) => (
                 <div key={book.id} className="book-card">
                     {book.imageUrl && <img src={book.imageUrl} alt={book.title} className="book-image" />}

@@ -1,7 +1,4 @@
 .user-profile {
-    padding: 20px;
-    border: 1px solid #ffffff;
-    background-color: transparent;
     color: #ffffff;
 }
 
@@ -28,8 +25,4 @@
 .profile-top-bar button.active {
     background-color: #ffffff;
     color: #000000;
-}
-
-.tab-content {
-    padding: 10px 0;
 }

@@ -4,7 +4,7 @@ import '../styles/UserProfile.css';
 function HistoryTab({ history }) {
     if (!history || history.length === 0) {
         return (
-            <div className="tab-content">
+            <div>
                 <h3>History</h3>
                 <p>No history yet.</p>
             </div>
@@ -12,7 +12,7 @@ function HistoryTab({ history }) {
     }
 
     return (
-        <div className="tab-content">
+        <div>
             <h3>History</h3>
             <ul>
                 {history.map((item, index) => (
