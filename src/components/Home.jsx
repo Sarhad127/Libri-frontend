@@ -3,7 +3,15 @@ import MainContent from './MainContent';
 import TopBar from './TopBar';
 import '../styles/Home.css';
 
-function Home({ user, onLoginSuccess, goToRegister, showUserPage, onUserPage, onLogout }) {
+function Home({
+                  user,
+                  onLoginSuccess,
+                  showUserPage,
+                  showRegisterPage,
+                  onUserPage,
+                  onRegisterPage,
+                  onLogout
+              }) {
     return (
         <div className="home-layout">
             <Sidebar />
@@ -12,11 +20,16 @@ function Home({ user, onLoginSuccess, goToRegister, showUserPage, onUserPage, on
                 <TopBar
                     user={user}
                     onLoginSuccess={onLoginSuccess}
-                    goToRegister={goToRegister}
                     onUserPage={onUserPage}
+                    goToRegister={onRegisterPage}
                     onLogout={onLogout}
+                    showRegisterPage={showRegisterPage}
                 />
-                <MainContent user={user} showUserPage={showUserPage} />
+                <MainContent
+                    user={user}
+                    showUserPage={showUserPage}
+                    showRegisterPage={showRegisterPage}
+                />
             </div>
         </div>
     );

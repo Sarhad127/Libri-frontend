@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import Register from './components/Register';
 import Home from './components/Home.jsx';
 import './App.css';
 
 function App() {
     const [user, setUser] = useState(null);
-    const [page, setPage] = useState('home');
     const [showUserPage, setShowUserPage] = useState(false);
+    const [showRegisterPage, setShowRegisterPage] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -14,13 +13,20 @@ function App() {
         if (token && savedUser) setUser(savedUser);
     }, []);
 
-    const handleLoginSuccess = (userData) => {
+    const handleLoginSuccess = async (userData) => {
         setUser(userData);
         setShowUserPage(false);
+        setShowRegisterPage(false);
     };
 
     const handleUserPage = () => {
         setShowUserPage(true);
+        setShowRegisterPage(false);
+    };
+
+    const handleRegisterPage = () => {
+        setShowRegisterPage(true);
+        setShowUserPage(false);
     };
 
     const handleLogout = () => {
@@ -28,23 +34,20 @@ function App() {
         localStorage.removeItem('user');
         setUser(null);
         setShowUserPage(false);
-        setPage('home');
+        setShowRegisterPage(false);
     };
 
     return (
         <div className="app-container">
-            {page === 'home' && (
-                <Home
-                    user={user}
-                    onLoginSuccess={handleLoginSuccess}
-                    goToRegister={() => setPage('register')}
-                    showUserPage={showUserPage}
-                    onUserPage={handleUserPage}
-                    onLogout={handleLogout}
-                />
-            )}
-
-            {page === 'register' && <Register goToLogin={() => setPage('home')} />}
+            <Home
+                user={user}
+                onLoginSuccess={handleLoginSuccess}
+                showUserPage={showUserPage}
+                showRegisterPage={showRegisterPage}
+                onUserPage={handleUserPage}
+                onRegisterPage={handleRegisterPage}
+                onLogout={handleLogout}
+            />
         </div>
     );
 }

@@ -9,23 +9,22 @@ function UserProfile() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (activeTab === 'info') {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+        const token = localStorage.getItem('token');
+        if (!token) return;
 
-            setLoading(true);
-            fetchUserProfile(token)
-                .then(data => {
-                    setUserInfo(data);
-                    setLoading(false);
-                })
-                .catch(err => {
-                    console.error(err);
-                    setError('Failed to load user info.');
-                    setLoading(false);
-                });
-        }
-    }, [activeTab]);
+        setLoading(true);
+        fetchUserProfile(token)
+            .then(data => {
+                setUserInfo(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setError('Failed to load user info.');
+                setLoading(false);
+            });
+    }, []);
+
 
     const renderTabContent = () => {
         switch (activeTab) {

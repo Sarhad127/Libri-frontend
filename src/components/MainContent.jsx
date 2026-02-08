@@ -1,21 +1,26 @@
 import { useEffect, useState } from 'react';
 import UserProfile from './UserProfile';
+import Register from './Register';
 import '../styles/MainContent.css';
 
-function MainContent({ user, showUserPage }) {
+function MainContent({ user, showUserPage, showRegisterPage }) {
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
+        if (!showUserPage && !showRegisterPage) {
         fetch("https://openlibrary.org/search.json?q=foundation&limit=10")
             .then(res => res.json())
             .then(data => setBooks(data.docs))
             .catch(err => console.error(err));
-    }, []);
+        }
+    }, [showUserPage, showRegisterPage]);
 
     return (
         <div className="main-content">
             {showUserPage && user ? (
-                <UserProfile user={user} />
+                <UserProfile user={user}/>
+            ) : showRegisterPage ? (
+                <Register/>
             ) : (
                 <div className="book-list">
                     {books.map(book => (
