@@ -79,3 +79,18 @@ export async function createReview(token, reviewData) {
 
     return response.json();
 }
+
+export async function fetchBookReviews(bookId) {
+    const response = await fetch(`${API_BASE_URL}/${bookId}/reviews`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch reviews');
+    }
+
+    return response.json();
+}

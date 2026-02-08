@@ -68,12 +68,6 @@ function MainContent({ user, showUserPage, showRegisterPage }) {
                                 <p className="book-format-language">
                                     {book.format}, {book.language}
                                 </p>
-                                <p className="book-isbn">
-                                    <strong>ISBN:</strong> {book.isbn}
-                                </p>
-                                <p className="book-amount">
-                                    <strong>Available copies:</strong> {book.amount}
-                                </p>
                                 <p className="book-description">
                                     {book.description?.substring(0, 300)}
                                     {book.description?.length > 300 && '…'}
