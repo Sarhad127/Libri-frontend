@@ -6,16 +6,13 @@ import '../styles/Home.css';
 function Home({
                   user,
                   onLoginSuccess,
-                  showUserPage,
-                  showRegisterPage,
-                  onUserPage,
-                  onRegisterPage,
-                  onLogout,
+                  page,
+                  setPage,
                   goToCart,
                   cartItems,
                   onAddToCart,
                   onRemoveFromCart,
-                  showCart
+                  onLogout,
               }) {
     return (
         <div className="home-layout">
@@ -24,20 +21,19 @@ function Home({
                 <TopBar
                     user={user}
                     onLoginSuccess={onLoginSuccess}
-                    onUserPage={onUserPage}
-                    goToRegister={onRegisterPage}
+                    onUserPage={() => setPage('user')}
+                    goToRegister={() => setPage('register')}
                     onLogout={onLogout}
                     goToCart={goToCart}
-                    showRegisterPage={showRegisterPage}
+                    page={page}
                 />
                 <MainContent
                     user={user}
-                    showUserPage={showUserPage}
-                    showRegisterPage={showRegisterPage}
-                    showCart={showCart}
+                    page={page}
                     cartItems={cartItems}
                     onAddToCart={onAddToCart}
                     onRemoveItem={onRemoveFromCart}
+                    setPage={setPage}
                 />
             </div>
         </div>

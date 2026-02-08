@@ -5,11 +5,9 @@ import {addToCart, fetchCart, removeCartItem} from "./services/api.js";
 
 function App() {
     const [user, setUser] = useState(null);
-    const [showUserPage, setShowUserPage] = useState(false);
-    const [showRegisterPage, setShowRegisterPage] = useState(false);
-    const [showCart, setShowCart] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const token = localStorage.getItem('token');
+    const [page, setPage] = useState('home');
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -17,35 +15,26 @@ function App() {
         if (token && savedUser) setUser(savedUser);
     }, []);
 
-    const handleLoginSuccess = async (userData) => {
+    const handleLoginSuccess = (userData) => {
         setUser(userData);
-        setShowUserPage(false);
-        setShowRegisterPage(false);
+        setPage('home');
     };
 
-    const handleUserPage = () => {
-        setShowUserPage(true);
-        setShowRegisterPage(false);
-    };
-
-    const handleRegisterPage = () => {
-        setShowRegisterPage(true);
-        setShowUserPage(false);
-    };
+    const handleUserPage = () => setPage('user');
+    const handleRegisterPage = () => setPage('register');
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
-        setShowUserPage(false);
-        setShowRegisterPage(false);
+        setPage('home');
     };
 
     const goToCart = async () => {
         try {
-            setShowCart(true);
             const cartItems = await fetchCart(token);
             setCartItems(cartItems);
+            setPage('cart');
         } catch (error) {
             console.error('Failed to load cart:', error);
         }
@@ -82,8 +71,6 @@ function App() {
             <Home
                 user={user}
                 onLoginSuccess={handleLoginSuccess}
-                showUserPage={showUserPage}
-                showRegisterPage={showRegisterPage}
                 onUserPage={handleUserPage}
                 onRegisterPage={handleRegisterPage}
                 onLogout={handleLogout}
@@ -91,7 +78,8 @@ function App() {
                 cartItems={cartItems}
                 onAddToCart={handleAddToCart}
                 onRemoveFromCart={handleRemoveFromCart}
-                showCart={showCart}
+                page={page}
+                setPage={setPage}
             />
         </div>
     );

@@ -7,7 +7,7 @@ import Cart from './Cart';
 import '../styles/MainContent.css';
 import { fetchBooks } from "../services/api.js";
 
-function MainContent({ user, showUserPage, showRegisterPage, showCart, cartItems, onAddToCart, onRemoveItem }) {
+function MainContent({ user, page, cartItems, onAddToCart, onRemoveItem }) {
     const [books, setBooks] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -32,15 +32,10 @@ function MainContent({ user, showUserPage, showRegisterPage, showCart, cartItems
 
     return (
         <div className="main-content">
-            {showUserPage && user ? (
-                <UserProfile user={user} />
-            ) : showRegisterPage ? (
-                <Register />
-            ) : showCart ? (
-                <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} />
-            ) : selectedBook ? (
-                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />
-            ) : (
+            {page === 'user' && user && <UserProfile user={user} />}
+            {page === 'register' && <Register />}
+            {page === 'cart' && <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} />}
+            {page === 'home' && !selectedBook && (
                 <BookList
                     books={books}
                     loading={loading}
@@ -48,6 +43,9 @@ function MainContent({ user, showUserPage, showRegisterPage, showCart, cartItems
                     onSelectBook={setSelectedBook}
                     onAddToCart={onAddToCart}
                 />
+            )}
+            {selectedBook && (
+                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />
             )}
         </div>
     );
