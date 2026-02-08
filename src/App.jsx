@@ -10,14 +10,27 @@ function App() {
     const [page, setPage] = useState('home');
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
         const savedUser = JSON.parse(localStorage.getItem('user'));
-        if (token && savedUser) setUser(savedUser);
-    }, []);
+        if (token && savedUser) {
+            setUser(savedUser);
+            fetchCart(token)
+                .then(cart => setCartItems(cart))
+                .catch(err => console.error('Failed to load cart:', err));
+        }
+    }, [token]);
 
-    const handleLoginSuccess = (userData) => {
+    const handleLoginSuccess = async (userData) => {
         setUser(userData);
         setPage('home');
+
+        if (userData.token || token) {
+            try {
+                const savedCart = await fetchCart(token || userData.token);
+                setCartItems(savedCart);
+            } catch (err) {
+                console.error('Failed to load cart on login:', err);
+            }
+        }
     };
 
     const handleUserPage = () => setPage('user');
@@ -27,6 +40,7 @@ function App() {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
+        setCartItems([]);
         setPage('home');
     };
 

@@ -26,6 +26,7 @@ function Home({
                     onLogout={onLogout}
                     goToCart={goToCart}
                     page={page}
+                    cartItems={cartItems}
                 />
                 <MainContent
                     user={user}
