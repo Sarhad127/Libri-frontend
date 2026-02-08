@@ -3,10 +3,11 @@ import UserProfile from './UserProfile';
 import Register from './Register';
 import BookDetails from './BookDetails';
 import BookList from './BookList';
+import Cart from './Cart';
 import '../styles/MainContent.css';
 import { fetchBooks } from "../services/api.js";
 
-function MainContent({ user, showUserPage, showRegisterPage }) {
+function MainContent({ user, showUserPage, showRegisterPage, showCart, cartItems, onAddToCart, onRemoveItem }) {
     const [books, setBooks] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -35,14 +36,17 @@ function MainContent({ user, showUserPage, showRegisterPage }) {
                 <UserProfile user={user} />
             ) : showRegisterPage ? (
                 <Register />
+            ) : showCart ? (
+                <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} />
             ) : selectedBook ? (
-                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)}/>
+                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />
             ) : (
                 <BookList
                     books={books}
                     loading={loading}
                     error={error}
                     onSelectBook={setSelectedBook}
+                    onAddToCart={onAddToCart}
                 />
             )}
         </div>

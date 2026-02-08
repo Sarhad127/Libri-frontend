@@ -142,3 +142,69 @@ export async function fetchFavorites(token) {
 
     return response.json();
 }
+
+export async function fetchCart(token) {
+    const response = await fetch(`${API_BASE_URL}/cart`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch cart');
+    }
+
+    return response.json();
+}
+
+export async function addToCart(token, bookId, quantity = 1) {
+    const response = await fetch(`${API_BASE_URL}/cart`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ bookId, quantity }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to add item to cart');
+    }
+
+    return response.json();
+}
+
+export async function updateCartItem(token, cartItemId, quantity) {
+    const response = await fetch(`${API_BASE_URL}/cart/${cartItemId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ quantity }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update cart item');
+    }
+
+    return response.json();
+}
+
+export async function removeCartItem(token, cartItemId) {
+    const response = await fetch(`${API_BASE_URL}/cart/${cartItemId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to remove cart item');
+    }
+
+    return response.json();
+}
