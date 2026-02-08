@@ -44,7 +44,7 @@ function MainContent({ user, page, cartItems, onAddToCart, onRemoveItem }) {
                     onAddToCart={onAddToCart}
                 />
             )}
-            {selectedBook && (
+            {page === 'home' && selectedBook && (
                 <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />
             )}
         </div>
