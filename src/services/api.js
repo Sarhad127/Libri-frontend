@@ -47,3 +47,18 @@ export async function fetchUserProfile(token) {
 
     return response.json();
 }
+
+export async function fetchBooks() {
+    const response = await fetch(`${API_BASE_URL}/books`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch books');
+    }
+
+    return response.json();
+}

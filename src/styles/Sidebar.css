@@ -1,37 +1,50 @@
 .sidebar {
-    width: 200px;
+    width: 250px;
+    background-color: #1a1a1a;
     padding: 20px;
-    background-color: transparent;
-    border: 1px solid #ffffff;
+    color: #fff;
+    flex-shrink: 0;
+    overflow-y: auto;
+    height: calc(100vh - 0px);
 }
 
 .sidebar h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-    font-weight: normal;
-    color: #ffffff;
+    margin-bottom: 15px;
+    font-size: 18px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
 }
 
-.sidebar ul {
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group h4 {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #ccc;
+}
+
+.filter-group ul {
     list-style: none;
     padding-left: 0;
+}
+
+.filter-group ul li {
+    margin-bottom: 6px;
+    font-size: 14px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
 }
 
-.sidebar li {
-    padding: 6px 8px;
-    border: 1px solid #ffffff;
-    font-size: 0.9rem;
-    background-color: transparent;
-    color: #ffffff;
-    cursor: pointer;
-    transition: all 0.2s ease;
+.filter-group input[type="checkbox"] {
+    margin-right: 8px;
 }
 
-.sidebar li:hover {
-    background-color: #ffffff;
-    color: #000000;
+.filter-group input[type="text"] {
+    width: 100%;
+    padding: 5px 8px;
+    border: 1px solid #444;
+    background-color: #121212;
+    color: #fff;
 }
