@@ -1,0 +1,103 @@
+import '../styles/BookDetails.css';
+
+function BookDetails({ book, onBack }) {
+    return (
+        <div className="book-details">
+            <button className="back-button" onClick={onBack}>
+                ← Back to books
+            </button>
+
+            <div className="book-details-card">
+                {book.imageUrl && (
+                    <img
+                        src={book.imageUrl}
+                        alt={book.title}
+                        className="book-details-image"
+                    />
+                )}
+
+                <div className="book-details-info">
+                    <h1 className="title">{book.title}</h1>
+
+                    {book.author && (
+                        <p className="author">
+                            av {book.author.name}
+                        </p>
+                    )}
+
+                    <div className="meta-grid">
+                        {book.category && (
+                            <p><strong>Category:</strong> {book.category}</p>
+                        )}
+
+                        {book.format && (
+                            <p><strong>Format:</strong> {book.format}</p>
+                        )}
+
+                        {book.language && (
+                            <p><strong>Language:</strong> {book.language}</p>
+                        )}
+
+                        {book.publisher && (
+                            <p><strong>Publisher:</strong> {book.publisher}</p>
+                        )}
+
+                        {book.seriesName && (
+                            <p>
+                                <strong>Series:</strong> {book.seriesName}
+                                {book.seriesNumber != null && ` (#${book.seriesNumber})`}
+                            </p>
+                        )}
+
+                        {book.isbn && (
+                            <p><strong>ISBN:</strong> {book.isbn}</p>
+                        )}
+
+                        <p>
+                            <strong>Available copies:</strong> {book.amount}
+                        </p>
+                    </div>
+
+                    {book.description && (
+                        <div className="description">
+                            <h3>Description</h3>
+                            <p>{book.description}</p>
+                        </div>
+                    )}
+
+                    {book.reviews?.length > 0 && (
+                        <div className="extra-section">
+                            <h3>Reviews</h3>
+                            <p>{book.reviews.length} review(s)</p>
+                        </div>
+                    )}
+
+                    {book.borrowHistory?.length > 0 && (
+                        <div className="extra-section">
+                            <h3>Borrow history</h3>
+                            <p>Borrowed {book.borrowHistory.length} time(s)</p>
+                        </div>
+                    )}
+
+                    <div className="timestamps">
+                        {book.createdAt && (
+                            <p>
+                                <strong>Added:</strong>{' '}
+                                {new Date(book.createdAt).toLocaleDateString()}
+                            </p>
+                        )}
+
+                        {book.updatedAt && (
+                            <p>
+                                <strong>Last updated:</strong>{' '}
+                                {new Date(book.updatedAt).toLocaleDateString()}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default BookDetails;
