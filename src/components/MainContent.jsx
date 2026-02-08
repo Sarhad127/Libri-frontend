@@ -1,7 +1,9 @@
+// MainContent.jsx
 import { useEffect, useState } from 'react';
 import UserProfile from './UserProfile';
 import Register from './Register';
 import BookDetails from './BookDetails';
+import BookList from './BookList';
 import '../styles/MainContent.css';
 import { fetchBooks } from "../services/api.js";
 
@@ -25,7 +27,6 @@ function MainContent({ user, showUserPage, showRegisterPage }) {
                 setLoading(false);
             }
         };
-
         loadBooks();
     }, []);
 
@@ -36,46 +37,14 @@ function MainContent({ user, showUserPage, showRegisterPage }) {
             ) : showRegisterPage ? (
                 <Register />
             ) : selectedBook ? (
-                <BookDetails
-                    book={selectedBook}
-                    onBack={() => setSelectedBook(null)}
-                />
+                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />
             ) : (
-                <div className="book-list">
-                    {loading && <p>Loading books...</p>}
-                    {error && <p>{error}</p>}
-                    {!loading && !error && books.length === 0 && (
-                        <p>No books available.</p>
-                    )}
-
-                    {books.map(book => (
-                        <div
-                            key={book.id}
-                            className="book-card"
-                            onClick={() => setSelectedBook(book)}
-                        >
-                            {book.imageUrl && (
-                                <img
-                                    src={book.imageUrl}
-                                    alt={book.title}
-                                    className="book-image"
-                                />
-                            )}
-
-                            <div className="book-info">
-                                <h2 className="book-title">{book.title}</h2>
-                                <p className="book-author">av {book.author}</p>
-                                <p className="book-format-language">
-                                    {book.format}, {book.language}
-                                </p>
-                                <p className="book-description">
-                                    {book.description?.substring(0, 300)}
-                                    {book.description?.length > 300 && '…'}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <BookList
+                    books={books}
+                    loading={loading}
+                    error={error}
+                    onSelectBook={setSelectedBook}
+                />
             )}
         </div>
     );
