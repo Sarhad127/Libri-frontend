@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { fetchUserProfile } from '../services/api.js';
 import '../styles/UserProfile.css';
 import Favorites from "./Favorites.jsx";
+import UserInfo from "./UserInfo.jsx";
+import HistoryTab from "./HistoryTab.jsx";
 
 function UserProfile() {
     const [activeTab, setActiveTab] = useState('info');
@@ -34,25 +36,10 @@ function UserProfile() {
                 if (error) return <p>{error}</p>;
                 if (!userInfo) return null;
 
-                return (
-                    <div className="tab-content">
-                        <h3>User Information</h3>
-                        <p><strong>First Name:</strong> {userInfo.firstName}</p>
-                        <p><strong>Last Name:</strong> {userInfo.lastName}</p>
-                        <p><strong>Email:</strong> {userInfo.email}</p>
-                        <p><strong>Phone:</strong> {userInfo.phoneNumber}</p>
-                        <p><strong>Address:</strong> {userInfo.address}</p>
-                        <p><strong>Registered:</strong> {new Date(userInfo.createdAt).toISOString().split('T')[0]}</p>
-                    </div>
-                );
+                return <UserInfo user={userInfo} />;
 
             case 'history':
-                return (
-                    <div className="tab-content">
-                        <h3>History</h3>
-                        <p>No history yet.</p>
-                    </div>
-                );
+                return <HistoryTab history={userInfo?.history} />;
 
             case 'favorites':
                 return <Favorites favorites={userInfo?.favorites} />;
