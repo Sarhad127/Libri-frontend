@@ -8,14 +8,29 @@ import '../styles/MainContent.css';
 import { fetchBooks } from "../services/api.js";
 import SortDropdown from "./SortDropdown.jsx";
 
-function MainContent({ user, page, cartItems, onAddToCart, onRemoveItem }) {
+function MainContent({
+                         user,
+                         page,
+                         cartItems,
+                         onAddToCart,
+                         onRemoveItem,
+                         selectedLanguages = [],
+                         selectedCategories = [],
+                         selectedFormats
+                     }) {
     const [books, setBooks] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [sortOption, setSortOption] = useState('popular');
 
-    const sortedBooks = [...books].sort((a, b) => {
+    const filteredBooks = books.filter(book =>
+        (selectedLanguages.length === 0 || selectedLanguages.includes(book.language)) &&
+        (selectedCategories.length === 0 || selectedCategories.includes(book.category)) &&
+        (selectedFormats.length === 0 || selectedFormats.includes(book.format))
+    );
+
+    const sortedBooks = [...filteredBooks].sort((a, b) => {
         switch (sortOption) {
             case 'title':
                 return a.title.localeCompare(b.title);
@@ -57,6 +72,7 @@ function MainContent({ user, page, cartItems, onAddToCart, onRemoveItem }) {
             {page === 'user' && user && <UserProfile user={user} />}
             {page === 'register' && <Register />}
             {page === 'cart' && <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} />}
+
             {page === 'home' && !selectedBook && (
                 <>
                     <SortDropdown
@@ -73,6 +89,7 @@ function MainContent({ user, page, cartItems, onAddToCart, onRemoveItem }) {
                     />
                 </>
             )}
+
             {page === 'home' && selectedBook && (
                 <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />
             )}

@@ -1,6 +1,23 @@
 import '../styles/Sidebar.css';
 
-function Sidebar({ goHome }) {
+function Sidebar({
+                     goHome,
+                     selectedLanguages,
+                     onLanguageChange,
+                     selectedCategories,
+                     onCategoryChange,
+                     selectedFormats,
+                     onFormatChange
+                 }) {
+
+    const handleLanguageToggle = (lang) => {
+        if (selectedLanguages.includes(lang)) {
+            onLanguageChange(selectedLanguages.filter(l => l !== lang));
+        } else {
+            onLanguageChange([...selectedLanguages, lang]);
+        }
+    };
+
     return (
         <aside className="sidebar">
 
@@ -16,34 +33,80 @@ function Sidebar({ goHome }) {
             <div className="filter-group">
                 <h4>Language</h4>
                 <ul>
-                    <li><input type="checkbox" /> Swedish</li>
-                    <li><input type="checkbox" /> English</li>
+                    {["Swedish","English"].map(lang => (
+                        <li key={lang}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedLanguages.includes(lang)}
+                                    onChange={() => handleLanguageToggle(lang)}
+                                />
+                                {lang}
+                            </label>
+                        </li>
+                    ))}
                 </ul>
             </div>
 
             <div className="filter-group">
                 <h4>Category</h4>
                 <ul>
-                    <li><input type="checkbox" /> Fantasy</li>
-                    <li><input type="checkbox" /> Romance</li>
-                    <li><input type="checkbox" /> Fiction</li>
-                    <li><input type="checkbox" /> Crime</li>
-                    <li><input type="checkbox" /> Science</li>
-                    <li><input type="checkbox" /> Biography</li>
-                    <li><input type="checkbox" /> History</li>
-                    <li><input type="checkbox" /> Children & Teens</li>
-                    <li><input type="checkbox" /> Horror</li>
-                    <li><input type="checkbox" /> Adventure</li>
+                    {[
+                        "Fantasy",
+                        "Romance",
+                        "Fiction",
+                        "Crime",
+                        "Science",
+                        "Biography",
+                        "History",
+                        "Children & Teens",
+                        "Horror",
+                        "Adventure"
+                    ].map(cat => (
+                        <li key={cat}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedCategories.includes(cat)}
+                                    onChange={() => {
+                                        if (selectedCategories.includes(cat)) {
+                                            onCategoryChange(selectedCategories.filter(c => c !== cat));
+                                        } else {
+                                            onCategoryChange([...selectedCategories, cat]);
+                                        }
+                                    }}
+                                />
+                                {cat}
+                            </label>
+                        </li>
+                    ))}
                 </ul>
             </div>
 
             <div className="filter-group">
                 <h4>Format</h4>
                 <ul>
-                    <li><input type="checkbox" /> Inbunden</li>
-                    <li><input type="checkbox" /> Pocket</li>
+                    {["Hardcover", "Paperback"].map(format => (
+                        <li key={format}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedFormats.includes(format)}
+                                    onChange={() => {
+                                        if (selectedFormats.includes(format)) {
+                                            onFormatChange(selectedFormats.filter(f => f !== format));
+                                        } else {
+                                            onFormatChange([...selectedFormats, format]);
+                                        }
+                                    }}
+                                />
+                                {format}
+                            </label>
+                        </li>
+                    ))}
                 </ul>
             </div>
+
         </aside>
     );
 }

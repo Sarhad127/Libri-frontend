@@ -2,6 +2,7 @@ import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import TopBar from './TopBar';
 import '../styles/Home.css';
+import {useState} from "react";
 
 function Home({
                   user,
@@ -14,9 +15,22 @@ function Home({
                   onRemoveFromCart,
                   onLogout,
               }) {
+
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedFormats, setSelectedFormats] = useState([]);
+
     return (
         <div className="home-layout">
-            <Sidebar goHome={() => setPage('home')} />
+            <Sidebar
+                goHome={() => setPage('home')}
+                selectedLanguages={selectedLanguages}
+                onLanguageChange={setSelectedLanguages}
+                selectedCategories={selectedCategories}
+                onCategoryChange={setSelectedCategories}
+                selectedFormats={selectedFormats}
+                onFormatChange={setSelectedFormats}
+            />
             <div className="main-area">
                 <TopBar
                     user={user}
@@ -35,6 +49,9 @@ function Home({
                     onAddToCart={onAddToCart}
                     onRemoveItem={onRemoveFromCart}
                     setPage={setPage}
+                    selectedLanguages={selectedLanguages}
+                    selectedCategories={selectedCategories}
+                    selectedFormats={selectedFormats}
                 />
             </div>
         </div>
