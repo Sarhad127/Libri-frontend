@@ -1,0 +1,19 @@
+.favorite-heart {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: gray;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.favorite-heart.favorited {
+    color: red;
+    background-color: transparent;
+}

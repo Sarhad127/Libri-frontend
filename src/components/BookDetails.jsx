@@ -1,5 +1,6 @@
 import '../styles/BookDetails.css';
 import BookReviews from './BookReviews.jsx';
+import BookImage from "./BookImage.jsx";
 
 function BookDetails({ book, onBack, onReviewAdded }) {
     const token = localStorage.getItem('token');
@@ -11,13 +12,7 @@ function BookDetails({ book, onBack, onReviewAdded }) {
             </button>
 
             <div className="book-details-card">
-                {book.imageUrl && (
-                    <img
-                        src={book.imageUrl}
-                        alt={book.title}
-                        className="book-details-image"
-                    />
-                )}
+                <BookImage book={book} token={token} />
 
                 <div className="book-details-info">
                     <h1 className="title">{book.title}</h1>

@@ -94,3 +94,51 @@ export async function fetchBookReviews(bookId) {
 
     return response.json();
 }
+
+export async function addFavorite(token, bookId) {
+    const response = await fetch(`${API_BASE_URL}/favorites/${bookId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to add favorite');
+    }
+
+    return response.json();
+}
+
+export async function removeFavorite(token, bookId) {
+    const response = await fetch(`${API_BASE_URL}/favorites/${bookId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to remove favorite');
+    }
+
+    return response.json();
+}
+
+export async function fetchFavorites(token) {
+    const response = await fetch(`${API_BASE_URL}/favorites`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch favorites');
+    }
+
+    return response.json();
+}
