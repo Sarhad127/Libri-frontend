@@ -63,3 +63,9 @@
     padding: 2px 6px;
     border-radius: 50%;
 }
+
+.top-bar-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
