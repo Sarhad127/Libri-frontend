@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchUserProfile } from '../services/api.js';
 import '../styles/UserProfile.css';
+import Favorites from "./Favorites.jsx";
 
 function UserProfile() {
     const [activeTab, setActiveTab] = useState('info');
@@ -54,12 +55,7 @@ function UserProfile() {
                 );
 
             case 'favorites':
-                return (
-                    <div className="tab-content">
-                        <h3>Favorites</h3>
-                        <p>No favorites yet.</p>
-                    </div>
-                );
+                return <Favorites favorites={userInfo?.favorites} />;
 
             default:
                 return null;
