@@ -62,3 +62,20 @@ export async function fetchBooks() {
 
     return response.json();
 }
+
+export async function createReview(token, reviewData) {
+    const response = await fetch(`${API_BASE_URL}/reviews`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(reviewData),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to create review');
+    }
+
+    return response.json();
+}

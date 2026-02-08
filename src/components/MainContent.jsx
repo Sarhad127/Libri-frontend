@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import UserProfile from './UserProfile';
 import Register from './Register';
+import BookDetails from './BookDetails';
 import '../styles/MainContent.css';
-import {fetchBooks} from "../services/api.js";
+import { fetchBooks } from "../services/api.js";
 
 function MainContent({ user, showUserPage, showRegisterPage }) {
     const [books, setBooks] = useState([]);
+    const [selectedBook, setSelectedBook] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -33,13 +35,25 @@ function MainContent({ user, showUserPage, showRegisterPage }) {
                 <UserProfile user={user} />
             ) : showRegisterPage ? (
                 <Register />
+            ) : selectedBook ? (
+                <BookDetails
+                    book={selectedBook}
+                    onBack={() => setSelectedBook(null)}
+                />
             ) : (
                 <div className="book-list">
                     {loading && <p>Loading books...</p>}
                     {error && <p>{error}</p>}
-                    {!loading && !error && books.length === 0 && <p>No books available.</p>}
+                    {!loading && !error && books.length === 0 && (
+                        <p>No books available.</p>
+                    )}
+
                     {books.map(book => (
-                        <div key={book.id} className="book-card">
+                        <div
+                            key={book.id}
+                            className="book-card"
+                            onClick={() => setSelectedBook(book)}
+                        >
                             {book.imageUrl && (
                                 <img
                                     src={book.imageUrl}
@@ -47,15 +61,23 @@ function MainContent({ user, showUserPage, showRegisterPage }) {
                                     className="book-image"
                                 />
                             )}
+
                             <div className="book-info">
                                 <h2 className="book-title">{book.title}</h2>
                                 <p className="book-author">av {book.author}</p>
                                 <p className="book-format-language">
                                     {book.format}, {book.language}
                                 </p>
-                                <p className="book-isbn"><strong>ISBN:</strong> {book.isbn}</p>
-                                <p className="book-amount"><strong>Available copies:</strong> {book.amount}</p>
-                                <p className="book-description">{book.description?.substring(0, 300)}{book.description?.length > 300 && '…'}</p>
+                                <p className="book-isbn">
+                                    <strong>ISBN:</strong> {book.isbn}
+                                </p>
+                                <p className="book-amount">
+                                    <strong>Available copies:</strong> {book.amount}
+                                </p>
+                                <p className="book-description">
+                                    {book.description?.substring(0, 300)}
+                                    {book.description?.length > 300 && '…'}
+                                </p>
                             </div>
                         </div>
                     ))}
