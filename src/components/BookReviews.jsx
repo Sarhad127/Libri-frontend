@@ -39,7 +39,6 @@ function BookReviews({ bookId, token, onReviewAdded }) {
             const reviewData = { bookId, rating, comment };
             const newReview = await createReview(token, reviewData);
 
-            alert("Review submitted successfully!");
             setShowReviewForm(false);
             setRating(0);
             setComment('');
@@ -87,17 +86,17 @@ function BookReviews({ bookId, token, onReviewAdded }) {
                 <p className="no-reviews">No reviews yet. Be the first to review this book.</p>
             )}
 
-            <button
-                className="write-review-button"
-                onClick={() => setShowReviewForm(!showReviewForm)}
-            >
-                {showReviewForm ? "Cancel" : "Write a Review"}
-            </button>
+            {token && (
+                <button
+                    className="write-review-button"
+                    onClick={() => setShowReviewForm(!showReviewForm)}
+                >
+                    {showReviewForm ? "Cancel" : "Write a Review"}
+                </button>
+            )}
 
             {showReviewForm && (
                 <div className="review-form">
-                    const [hoveredStar, setHoveredStar] = useState(0);
-
                     <div className="star-rating">
                         {[1,2,3,4,5].map(star => (
                             <span

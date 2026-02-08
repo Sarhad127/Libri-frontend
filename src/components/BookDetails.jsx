@@ -24,7 +24,7 @@ function BookDetails({ book, onBack, onReviewAdded }) {
 
                     {book.author && (
                         <p className="author">
-                            av {book.author.name}
+                            av {book.author}
                         </p>
                     )}
 
