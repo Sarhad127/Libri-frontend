@@ -1,9 +1,17 @@
 import '../styles/Sidebar.css';
 
-function Sidebar() {
+function Sidebar({ goHome }) {
     return (
         <aside className="sidebar">
-            <h3>Filter</h3>
+
+            <div className="filter-group">
+                <h4>Libri</h4>
+                <ul>
+                    <li className="clickable-item" onClick={goHome}>
+                        Books
+                    </li>
+                </ul>
+            </div>
 
             <div className="filter-group">
                 <h4>Language</h4>

@@ -64,3 +64,28 @@
     line-height: 1.4;
     color: #ddd;
 }
+
+.add-to-cart-button {
+    background-color: #1e1e1e;
+    color: #eaeaea;
+    border: 1px solid #333;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.add-to-cart-button:hover {
+    background-color: #2a2a2a;
+    border-color: #555;
+}
+
+.add-to-cart-button:active {
+    background-color: #161616;
+}
+
+.add-to-cart-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

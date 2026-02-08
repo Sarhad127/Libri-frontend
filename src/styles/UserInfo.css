@@ -1,9 +1,9 @@
 .user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     padding: 16px;
-    background-color: #1e1e1e;
     color: #f0f0f0;
-    max-width: 500px;
-    margin: 0 auto;
 }
 
 .user-info h3 {

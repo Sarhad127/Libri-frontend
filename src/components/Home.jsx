@@ -16,7 +16,7 @@ function Home({
               }) {
     return (
         <div className="home-layout">
-            <Sidebar />
+            <Sidebar goHome={() => setPage('home')} />
             <div className="main-area">
                 <TopBar
                     user={user}

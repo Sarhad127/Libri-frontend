@@ -47,3 +47,14 @@
     background-color: #121212;
     color: #fff;
 }
+
+.clickable-item {
+    cursor: pointer;
+    color: #eaeaea;
+    font-size: 0.9rem;
+}
+
+.clickable-item:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
