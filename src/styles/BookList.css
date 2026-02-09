@@ -89,3 +89,16 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.favorite-heart.book-list-heart {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.favorite-heart.book-list-heart.favorited {
+    color: red;
+}

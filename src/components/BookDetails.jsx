@@ -12,7 +12,11 @@ function BookDetails({ book, onBack, onReviewAdded }) {
             </button>
 
             <div className="book-details-card">
-                <BookImage book={book} token={token} />
+                <BookImage
+                    book={book}
+                    token={token}
+                    className="book-details-wrapper"
+                    heartClassName="book-details-heart" />
 
                 <div className="book-details-info">
                     <h1 className="title">{book.title}</h1>
