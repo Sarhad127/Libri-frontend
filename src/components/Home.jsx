@@ -19,6 +19,7 @@ function Home({
 
     const [allBooks, setAllBooks] = useState([]);
     const [displayBooks, setDisplayBooks] = useState([]);
+    const [sortOption, setSortOption] = useState('popular');
 
     useEffect(() => {
         const loadBooks = async () => {
@@ -39,6 +40,8 @@ function Home({
                 goHome={() => setPage('home')}
                 books={allBooks}
                 onBooksChange={setDisplayBooks}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
             />
             <div className="main-area">
                 <TopBar
@@ -59,6 +62,8 @@ function Home({
                     onRemoveItem={onRemoveFromCart}
                     setPage={setPage}
                     books={displayBooks}
+                    sortOption={sortOption}
+                    setSortOption={setSortOption}
                 />
             </div>
         </div>

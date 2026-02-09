@@ -1,40 +1,27 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useMemo} from 'react';
 import '../styles/Sidebar.css';
-import SortDropdown from "./SortDropdown.jsx";
 
 function Sidebar({ goHome, books = [], onBooksChange }) {
 
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedFormats, setSelectedFormats] = useState([]);
-    const [sortOption, setSortOption] = useState('popular');
 
     const toggleItem = (list, setList, item) => {
         setList(list.includes(item) ? list.filter(i => i !== item) : [...list, item]);
     };
 
-    const filteredBooks = books.filter(book =>
-        (selectedLanguages.length === 0 || selectedLanguages.includes(book.language)) &&
-        (selectedCategories.length === 0 || selectedCategories.includes(book.category)) &&
-        (selectedFormats.length === 0 || selectedFormats.includes(book.format))
-    );
-
-    const sortedBooks = [...filteredBooks].sort((a, b) => {
-        switch (sortOption) {
-            case 'title': return a.title.localeCompare(b.title);
-            case 'author': return a.author.localeCompare(b.author);
-            case 'reviews': return (b.reviewCount || 0) - (a.reviewCount || 0);
-            case 'latest': return new Date(b.publishedDate) - new Date(a.publishedDate);
-            case 'oldest': return new Date(a.publishedDate) - new Date(b.publishedDate);
-            case 'price-low': return a.price - b.price;
-            case 'popular':
-            default: return (b.popularity || 0) - (a.popularity || 0);
-        }
-    });
+    const filteredBooks = useMemo(() => {
+        return books.filter(book =>
+            (selectedLanguages.length === 0 || selectedLanguages.includes(book.language)) &&
+            (selectedCategories.length === 0 || selectedCategories.includes(book.category)) &&
+            (selectedFormats.length === 0 || selectedFormats.includes(book.format))
+        );
+    }, [books, selectedLanguages, selectedCategories, selectedFormats]);
 
     useEffect(() => {
-        onBooksChange(sortedBooks);
-    }, [sortedBooks, onBooksChange]);
+        onBooksChange(filteredBooks);
+    }, [filteredBooks, onBooksChange]);
 
     return (
         <aside className="sidebar">
@@ -91,7 +78,6 @@ function Sidebar({ goHome, books = [], onBooksChange }) {
                 ))}
             </div>
 
-            <SortDropdown sortOption={sortOption} onSortChange={setSortOption} />
         </aside>
     );
 }
