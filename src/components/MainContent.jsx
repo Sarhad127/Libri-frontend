@@ -51,7 +51,7 @@ function MainContent({
             )}
 
             {page === 'home' && selectedBook && (
-                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />
+                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} onAddToCart={onAddToCart} />
             )}
         </div>
     );

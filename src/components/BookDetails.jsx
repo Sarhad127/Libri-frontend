@@ -2,7 +2,7 @@ import '../styles/BookDetails.css';
 import BookReviews from './BookReviews.jsx';
 import BookImage from "./BookImage.jsx";
 
-function BookDetails({ book, onBack, onReviewAdded }) {
+function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
     const token = localStorage.getItem('token');
 
     return (
@@ -49,6 +49,16 @@ function BookDetails({ book, onBack, onReviewAdded }) {
                             <p>{book.description}</p>
                         </div>
                     )}
+                    <div className="add-to-cart-wrapper">
+                        {token && onAddToCart && (
+                            <button
+                                className="add-to-cart-button-bookdetails"
+                                onClick={() => onAddToCart(book)}
+                            >
+                                Add to Cart
+                            </button>
+                        )}
+                    </div>
 
                     <BookReviews
                         bookId={book.id}
