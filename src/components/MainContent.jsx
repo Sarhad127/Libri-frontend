@@ -37,14 +37,21 @@ function MainContent({
 
     return (
         <div className="main-content">
+
             {page === 'user' && user && <UserProfile
                 user={user}
                 onAddToCart={onAddToCart}
                 favoriteIds={favoriteIds}
                 onToggleFavorite={onToggleFavorite}
             />}
+
             {page === 'register' && <Register />}
-            {page === 'cart' && <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} onUpdateQuantity={onUpdateQuantity} />}
+
+            {page === 'cart' && <Cart
+                cartItems={cartItems}
+                onRemoveItem={onRemoveItem}
+                onUpdateQuantity={onUpdateQuantity}
+            />}
 
             {page === 'home' && !selectedBook && (
                 <>
@@ -68,6 +75,7 @@ function MainContent({
                     onToggleFavorite={onToggleFavorite}
                 />
             )}
+
         </div>
     );
 }
