@@ -7,10 +7,14 @@ function Cart({ cartItems, onRemoveItem, onUpdateQuantity }) {
 
     if (!cartItems || cartItems.length === 0) return <p>Your cart is empty.</p>;
 
-    const totalCost = cartItems.reduce(
+    const SHIPPING_COST = 5.0;
+
+    const subtotal = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
     );
+
+    const total = subtotal + SHIPPING_COST;
 
     return (
         <div className="cart-list">
@@ -81,8 +85,15 @@ function Cart({ cartItems, onRemoveItem, onUpdateQuantity }) {
                 </div>
             ))}
 
-            <div className="cart-total">
-                <strong>Total Cost:</strong> ${totalCost.toFixed(2)}
+            <div className="cart-total-wrapper">
+                <p><strong>Subtotal:</strong> ${subtotal.toFixed(2)}</p>
+                <p><strong>Shipping:</strong> ${SHIPPING_COST.toFixed(2)}</p>
+                <p className="cart-total">
+                    <strong>Total:</strong> ${total.toFixed(2)}
+                </p>
+            </div>
+            <div className="cart-checkout-wrapper">
+                <button className="checkout-button">Proceed to checkout</button>
             </div>
         </div>
     );
