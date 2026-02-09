@@ -1,9 +1,41 @@
 import '../styles/BookDetails.css';
 import BookReviews from './BookReviews.jsx';
 import BookImage from "./BookImage.jsx";
+import FavoriteButton from './FavoriteButton.jsx';
+import { useState, useEffect } from 'react';
+import { fetchFavorites, addFavorite, removeFavorite } from "../services/api.js";
 
 function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
     const token = localStorage.getItem('token');
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const checkFavorite = async () => {
+            if (!token) return;
+            try {
+                const favorites = await fetchFavorites(token);
+                setIsFavorite(favorites.some(fav => fav.id === book.id));
+            } catch (err) {
+                console.error('Failed to fetch favorites', err);
+            }
+        };
+        checkFavorite();
+    }, [book.id, token]);
+
+    const toggleFavorite = async () => {
+        if (!token) return alert('Please log in to add favorites.');
+        try {
+            if (isFavorite) {
+                await removeFavorite(token, book.id);
+                setIsFavorite(false);
+            } else {
+                await addFavorite(token, book.id);
+                setIsFavorite(true);
+            }
+        } catch (err) {
+            console.error('Failed to update favorites', err);
+        }
+    };
 
     return (
         <div className="book-details">
@@ -12,21 +44,27 @@ function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
             </button>
 
             <div className="book-details-card">
-                <BookImage
-                    book={book}
-                    token={token}
-                    className="book-details-wrapper"
-                    heartClassName="book-details-heart"
-                    imgClassName="book-details-image"/>
+                <div className="book-image-wrapper">
+                    <BookImage
+                        book={book}
+                        token={token}
+                        className="book-details-wrapper"
+                        heartClassName="book-details-heart"
+                        imgClassName="book-details-image"
+                    />
+
+                    {token && (
+                        <FavoriteButton
+                            isFavorite={isFavorite}
+                            onToggle={toggleFavorite}
+                        />
+                    )}
+                </div>
 
                 <div className="book-details-info">
                     <h1 className="title">{book.title}</h1>
 
-                    {book.author && (
-                        <p className="author">
-                            av {book.author}
-                        </p>
-                    )}
+                    {book.author && <p className="author">av {book.author}</p>}
 
                     <div className="meta-grid">
                         {book.category && <p><strong>Category:</strong> {book.category}</p>}
