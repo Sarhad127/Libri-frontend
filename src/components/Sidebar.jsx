@@ -27,7 +27,6 @@ function Sidebar({ goHome, books = [], onBooksChange }) {
         <aside className="sidebar">
 
             <div className="filter-group">
-                <h4>Libri</h4>
                 <ul>
                     <li className="clickable-item" onClick={goHome}>Books</li>
                 </ul>

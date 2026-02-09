@@ -36,23 +36,21 @@ function Home({
 
     return (
         <div className="home-layout">
-            <Sidebar
-                goHome={() => setPage('home')}
-                books={allBooks}
-                onBooksChange={setDisplayBooks}
-                sortOption={sortOption}
-                setSortOption={setSortOption}
+            <TopBar
+                user={user}
+                onLoginSuccess={onLoginSuccess}
+                onUserPage={() => setPage('user')}
+                goToRegister={() => setPage('register')}
+                onLogout={onLogout}
+                goToCart={goToCart}
+                page={page}
+                cartItems={cartItems}
             />
-            <div className="main-area">
-                <TopBar
-                    user={user}
-                    onLoginSuccess={onLoginSuccess}
-                    onUserPage={() => setPage('user')}
-                    goToRegister={() => setPage('register')}
-                    onLogout={onLogout}
-                    goToCart={goToCart}
-                    page={page}
-                    cartItems={cartItems}
+            <div className="content-area">
+                <Sidebar
+                    goHome={() => setPage('home')}
+                    books={allBooks}
+                    onBooksChange={setDisplayBooks}
                 />
                 <MainContent
                     user={user}

@@ -9,8 +9,14 @@ function TopBar({ user, goToRegister, onLoginSuccess, onUserPage, onLogout, show
 
     return (
         <div className="top-bar">
-            <input type="text" placeholder="Search books..." />
-            <button>Search</button>
+            <div className="top-bar-left">
+                <h1 className="top-bar-title">Libri</h1>
+            </div>
+
+            <div className="top-bar-search">
+                <input type="text" placeholder="Search books..." />
+                <button>Search</button>
+             </div>
 
             <div className="top-bar-buttons">
                 {user ? (
