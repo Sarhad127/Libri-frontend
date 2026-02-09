@@ -2,51 +2,88 @@ import '../styles/Cart.css';
 import BookImage from './BookImage.jsx';
 import { FaTrash } from 'react-icons/fa';
 
-function Cart({ cartItems, onRemoveItem }) {
+function Cart({ cartItems, onRemoveItem, onUpdateQuantity }) {
     const token = localStorage.getItem('token');
 
     if (!cartItems || cartItems.length === 0) return <p>Your cart is empty.</p>;
 
+    const totalCost = cartItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
+
     return (
         <div className="cart-list">
+            <div className="cart-header">
+                <div className="cart-col item">Item</div>
+                <div className="cart-col price">Price</div>
+                <div className="cart-col quantity">Quantity</div>
+                <div className="cart-col total">Total</div>
+                <div className="cart-col actions">Actions</div>
+            </div>
+
             {cartItems.map((item) => (
                 <div key={item.id} className="cart-card">
-
-                    <BookImage
-                        book={{
-                            id: item.id,
-                            imageUrl: item.imageUrl,
-                            title: item.bookTitle,
-                            author: item.authorName,
-                            format: item.format,
-                            language: item.language,
-                            price: item.price,
-                            description: `Quantity: ${item.quantity}`,
-                        }}
-                        token={token}
-                        className="cart-image-wrapper"
-                        imgClassName="cart-image"
-                        heartClassName="hide-heart"
-                        onClick={() => {}}
-                    />
-
-                    <div className="cart-book-info">
-                        <h2 className="cart-book-title">{item.bookTitle}</h2>
-                        <p className="cart-book-author">av {item.authorName}</p>
-                        <p className="cart-book-meta">{item.format}, {item.language}</p>
-                        <p className="cart-book-description">Quantity: {item.quantity}</p>
-                        <p className="cart-book-price">Price: ${item.price.toFixed(2)}</p>
-                        <div className="button-wrapper-delete">
-                            <button
-                                className="cart-remove-button"
-                                onClick={() => onRemoveItem(item.id)}
-                            >
-                                <FaTrash /> Remove
-                            </button>
+                    <div className="cart-col item">
+                        <BookImage
+                            book={{
+                                id: item.id,
+                                imageUrl: item.imageUrl,
+                                title: item.bookTitle,
+                                author: item.authorName,
+                                format: item.format,
+                                language: item.language,
+                                price: item.price,
+                            }}
+                            token={token}
+                            className="cart-image-wrapper"
+                            imgClassName="cart-image"
+                            heartClassName="hide-heart"
+                            onClick={() => {}}
+                        />
+                        <div className="cart-book-info">
+                            <h2 className="cart-book-title">{item.bookTitle}</h2>
+                            <p className="cart-book-author">av {item.authorName}</p>
                         </div>
+                    </div>
+
+                    <div className="cart-col price">
+                        ${item.price.toFixed(2)}
+                    </div>
+
+                    <div className="cart-col quantity">
+                        <button
+                            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                            disabled={item.quantity <= 1}
+                        >
+                            -
+                        </button>
+                        <span className="cart-quantity">{item.quantity}</span>
+                        <button
+                            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                        >
+                            +
+                        </button>
+                    </div>
+
+                    <div className="cart-col total">
+                        ${(item.price * item.quantity).toFixed(2)}
+                    </div>
+
+                    <div className="cart-col actions">
+                        <button
+                            className="cart-remove-button"
+                            onClick={() => onRemoveItem(item.id)}
+                        >
+                            <FaTrash /> Remove
+                        </button>
                     </div>
                 </div>
             ))}
+
+            <div className="cart-total">
+                <strong>Total Cost:</strong> ${totalCost.toFixed(2)}
+            </div>
         </div>
     );
 }

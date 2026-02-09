@@ -13,7 +13,8 @@ function MainContent({
                          cartItems,
                          onAddToCart,
                          onRemoveItem,
-                         books = []
+                         books = [],
+                         onUpdateQuantity
                      }) {
 
     const [selectedBook, setSelectedBook] = useState(null);
@@ -36,7 +37,7 @@ function MainContent({
         <div className="main-content">
             {page === 'user' && user && <UserProfile user={user} />}
             {page === 'register' && <Register />}
-            {page === 'cart' && <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} />}
+            {page === 'cart' && <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} onUpdateQuantity={onUpdateQuantity} />}
 
             {page === 'home' && !selectedBook && (
                 <>

@@ -80,6 +80,16 @@ function App() {
         }
     };
 
+    const handleUpdateQuantity = (cartItemId, newQuantity) => {
+        if (newQuantity < 1) return;
+
+        setCartItems(prev =>
+            prev.map(item =>
+                item.id === cartItemId ? { ...item, quantity: newQuantity } : item
+            )
+        );
+    };
+
     return (
         <div className="app-container">
             <Home
@@ -92,6 +102,7 @@ function App() {
                 cartItems={cartItems}
                 onAddToCart={handleAddToCart}
                 onRemoveFromCart={handleRemoveFromCart}
+                onUpdateQuantity={handleUpdateQuantity}
                 page={page}
                 setPage={setPage}
             />

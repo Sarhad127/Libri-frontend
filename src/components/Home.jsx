@@ -15,6 +15,7 @@ function Home({
                   onAddToCart,
                   onRemoveFromCart,
                   onLogout,
+                  onUpdateQuantity
               }) {
 
     const [allBooks, setAllBooks] = useState([]);
@@ -84,6 +85,7 @@ function Home({
                     books={displayBooks}
                     sortOption={sortOption}
                     setSortOption={setSortOption}
+                    onUpdateQuantity={onUpdateQuantity}
                 />
             </div>
         </div>
