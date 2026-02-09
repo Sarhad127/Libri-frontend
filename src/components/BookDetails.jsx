@@ -43,6 +43,12 @@ function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
                         <p><strong>Available copies:</strong> {book.amount}</p>
                     </div>
 
+                    <div className="book-price">
+                        <h3>
+                            Price: <span className="price-number">${book.price.toFixed(2)}</span>
+                        </h3>
+                    </div>
+
                     {book.description && (
                         <div className="description">
                             <h3>Description</h3>
