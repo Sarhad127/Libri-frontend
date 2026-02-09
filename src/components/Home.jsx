@@ -34,6 +34,27 @@ function Home({
         loadBooks();
     }, []);
 
+    const handleSearch = (query) => {
+        if (!query) {
+            setDisplayBooks(allBooks);
+            return;
+        }
+
+        const lower = query.toLowerCase();
+
+        const filtered = allBooks.filter(book =>
+            book.title?.toLowerCase().includes(lower) ||
+            book.author?.toLowerCase().includes(lower) ||
+            book.category?.toLowerCase().includes(lower) ||
+            book.language?.toLowerCase().includes(lower) ||
+            book.format?.toLowerCase().includes(lower) ||
+            book.description?.toLowerCase().includes(lower)
+        );
+
+        setDisplayBooks(filtered);
+        setPage('home');
+    };
+
     return (
         <div className="home-layout">
             <TopBar
@@ -45,6 +66,7 @@ function Home({
                 goToCart={goToCart}
                 page={page}
                 cartItems={cartItems}
+                onSearch={handleSearch}
             />
             <div className="content-area">
                 <Sidebar
