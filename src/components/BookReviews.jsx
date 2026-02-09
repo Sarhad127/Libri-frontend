@@ -53,46 +53,16 @@ function BookReviews({ bookId, token, onReviewAdded }) {
 
     return (
         <div className="reviews-section">
-            <h3>Reviews</h3>
-
-            {reviews.length > 0 ? (
-                <>
-                    <p className="review-summary">
-                        {reviews.length} review(s) • Average rating:{" "}
-                        {(reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)} ⭐
-                    </p>
-
-                    <div className="reviews-list">
-                        {reviews.map((review) => (
-                            <div key={review.id} className="review-card">
-                                <div className="review-header">
-                                    <span className="review-user">{review.firstName || "Anonymous"}</span>
-                                    <span className="review-rating">
-                                        {"★".repeat(review.rating)}
-                                        {"☆".repeat(5 - review.rating)}
-                                    </span>
-                                </div>
-                                {review.createdAt && (
-                                    <p className="review-date">
-                                        {new Date(review.createdAt).toLocaleDateString()}
-                                    </p>
-                                )}
-                                {review.comment && <p className="review-comment">{review.comment}</p>}
-                            </div>
-                        ))}
-                    </div>
-                </>
-            ) : (
-                <p className="no-reviews">No reviews yet. Be the first to review this book.</p>
-            )}
 
             {token && (
-                <button
-                    className="write-review-button"
-                    onClick={() => setShowReviewForm(!showReviewForm)}
-                >
-                    {showReviewForm ? "Cancel" : "Write a Review"}
-                </button>
+                <div className="write-review-button-wrapper">
+                    <button
+                        className="write-review-button"
+                        onClick={() => setShowReviewForm(!showReviewForm)}
+                    >
+                        {showReviewForm ? "Cancel" : "Write a Review"}
+                    </button>
+                </div>
             )}
 
             {showReviewForm && (
@@ -124,6 +94,40 @@ function BookReviews({ bookId, token, onReviewAdded }) {
                         {submitting ? "Submitting..." : "Submit Review"}
                     </button>
                 </div>
+            )}
+
+            <h3>Reviews</h3>
+
+            <p className="review-summary">
+                {reviews.length} review(s) • Average rating:{" "}
+                {(reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)} ⭐
+            </p>
+
+            {reviews.length > 0 ? (
+                <>
+
+                    <div className="reviews-list">
+                        {reviews.map((review) => (
+                            <div key={review.id} className="review-card">
+                                <div className="review-header">
+                                    <span className="review-user">{review.firstName || "Anonymous"}</span>
+                                    <span className="review-rating">
+                                        {"★".repeat(review.rating)}
+                                        {"☆".repeat(5 - review.rating)}
+                                    </span>
+                                </div>
+                                {review.createdAt && (
+                                    <p className="review-date">
+                                        {new Date(review.createdAt).toLocaleDateString()}
+                                    </p>
+                                )}
+                                {review.comment && <p className="review-comment">{review.comment}</p>}
+                            </div>
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <p className="no-reviews">No reviews yet. Be the first to review this book.</p>
             )}
         </div>
     );

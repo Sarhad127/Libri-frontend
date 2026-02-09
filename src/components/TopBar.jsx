@@ -3,6 +3,7 @@ import LoginDropdownWrapper from './LoginDropdownWrapper.jsx';
 import '../styles/TopBar.css';
 import { FaShoppingCart } from "react-icons/fa";
 import {useState} from "react";
+import OpenBookIcon from '../assets/open-book.png';
 
 function TopBar({
                     user,
@@ -31,7 +32,10 @@ function TopBar({
     return (
         <div className="top-bar">
             <div className="top-bar-left">
-                <h1 className="top-bar-title">Libri</h1>
+                <div className="top-bar-logo">
+                    <img src={OpenBookIcon} alt="Open Book" className="top-bar-icon" />
+                    <h1 className="top-bar-title">Libri</h1>
+                </div>
             </div>
 
             <div className="top-bar-search">

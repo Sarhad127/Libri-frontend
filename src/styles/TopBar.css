@@ -9,6 +9,18 @@
     gap: 12px;
 }
 
+.top-bar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.top-bar-icon {
+    width: 30px;
+    height: 30px;
+    filter: invert(1);
+}
+
 .top-bar-title {
     font-size: 2rem;
     margin: 0;

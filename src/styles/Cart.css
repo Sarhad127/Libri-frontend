@@ -8,14 +8,42 @@
     font-size: 0.85rem;
 }
 
-.cart-header {
+.cart-header,
+.cart-card {
     display: grid;
-    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 12px;
+}
+
+.cart-header {
     font-weight: bold;
+    font-size: 0.8rem;
     border-bottom: 1.5px solid #555;
-    padding: 6px 4px;
+    padding: 6px 0;
     text-transform: uppercase;
-    color: #fff;
+}
+
+.cart-card {
+    padding: 6px 4px;
+    border-bottom: 1px solid #444;
+    background-color: #222;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-col.item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-col.price,
+.cart-col.quantity,
+.cart-col.total,
+.cart-col.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cart-col {
@@ -23,26 +51,10 @@
     align-items: center;
 }
 
-.cart-card {
-    display: grid;
-    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
-    align-items: center;
-    padding: 6px 4px;
-    border-bottom: 1px solid #444;
-    background-color: #222;
-    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
 .cart-card:hover {
     background-color: #2a2a2a;
     transform: translateY(-1px);
     box-shadow: 0 1px 6px rgba(0,0,0,0.3);
-}
-
-.cart-col.item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
 .cart-image-wrapper {
@@ -81,27 +93,26 @@
     color: #ccc;
 }
 
-.cart-col.price,
-.cart-col.total {
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.85rem;
-}
-
 .cart-col.quantity button {
     font-weight: bold;
-    font-size: 1rem;
-    width: 16px;
-    height: 26px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f0f0f0;
+    font-size: 1.2rem;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #555;
+    border-radius: 6px;
+    background-color: #333;
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
 .cart-col.quantity button:hover {
-    background-color: #e0e0e0;
+    background-color: #444;
+    border-color: #777;
+}
+
+.cart-col.quantity button:active {
+    background-color: #222;
 }
 
 .cart-quantity {

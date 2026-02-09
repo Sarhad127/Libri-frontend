@@ -47,15 +47,6 @@ function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
                         <h3>
                             Price: <span className="price-number">${book.price.toFixed(2)}</span>
                         </h3>
-                    </div>
-
-                    {book.description && (
-                        <div className="description">
-                            <h3>Description</h3>
-                            <p>{book.description}</p>
-                        </div>
-                    )}
-                    <div className="add-to-cart-wrapper">
                         {token && onAddToCart && (
                             <button
                                 className="add-to-cart-button-bookdetails"
@@ -65,6 +56,13 @@ function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
                             </button>
                         )}
                     </div>
+
+                    {book.description && (
+                        <div className="description">
+                            <h3>Description</h3>
+                            <p>{book.description}</p>
+                        </div>
+                    )}
 
                     <BookReviews
                         bookId={book.id}
