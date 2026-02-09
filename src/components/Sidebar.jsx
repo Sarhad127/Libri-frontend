@@ -1,22 +1,40 @@
+import { useState, useEffect } from 'react';
 import '../styles/Sidebar.css';
+import SortDropdown from "./SortDropdown.jsx";
 
-function Sidebar({
-                     goHome,
-                     selectedLanguages,
-                     onLanguageChange,
-                     selectedCategories,
-                     onCategoryChange,
-                     selectedFormats,
-                     onFormatChange
-                 }) {
+function Sidebar({ goHome, books = [], onBooksChange }) {
 
-    const handleLanguageToggle = (lang) => {
-        if (selectedLanguages.includes(lang)) {
-            onLanguageChange(selectedLanguages.filter(l => l !== lang));
-        } else {
-            onLanguageChange([...selectedLanguages, lang]);
-        }
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedFormats, setSelectedFormats] = useState([]);
+    const [sortOption, setSortOption] = useState('popular');
+
+    const toggleItem = (list, setList, item) => {
+        setList(list.includes(item) ? list.filter(i => i !== item) : [...list, item]);
     };
+
+    const filteredBooks = books.filter(book =>
+        (selectedLanguages.length === 0 || selectedLanguages.includes(book.language)) &&
+        (selectedCategories.length === 0 || selectedCategories.includes(book.category)) &&
+        (selectedFormats.length === 0 || selectedFormats.includes(book.format))
+    );
+
+    const sortedBooks = [...filteredBooks].sort((a, b) => {
+        switch (sortOption) {
+            case 'title': return a.title.localeCompare(b.title);
+            case 'author': return a.author.localeCompare(b.author);
+            case 'reviews': return (b.reviewCount || 0) - (a.reviewCount || 0);
+            case 'latest': return new Date(b.publishedDate) - new Date(a.publishedDate);
+            case 'oldest': return new Date(a.publishedDate) - new Date(b.publishedDate);
+            case 'price-low': return a.price - b.price;
+            case 'popular':
+            default: return (b.popularity || 0) - (a.popularity || 0);
+        }
+    });
+
+    useEffect(() => {
+        onBooksChange(sortedBooks);
+    }, [sortedBooks, onBooksChange]);
 
     return (
         <aside className="sidebar">
@@ -24,89 +42,56 @@ function Sidebar({
             <div className="filter-group">
                 <h4>Libri</h4>
                 <ul>
-                    <li className="clickable-item" onClick={goHome}>
-                        Books
-                    </li>
+                    <li className="clickable-item" onClick={goHome}>Books</li>
                 </ul>
             </div>
 
             <div className="filter-group">
                 <h4>Language</h4>
-                <ul>
-                    {["Swedish","English"].map(lang => (
-                        <li key={lang}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedLanguages.includes(lang)}
-                                    onChange={() => handleLanguageToggle(lang)}
-                                />
-                                {lang}
-                            </label>
-                        </li>
-                    ))}
-                </ul>
+                {["Swedish", "English"].map(lang => (
+                    <label key={lang}>
+                        <input
+                            type="checkbox"
+                            checked={selectedLanguages.includes(lang)}
+                            onChange={() => toggleItem(selectedLanguages, setSelectedLanguages, lang)}
+                        />
+                        {lang}
+                    </label>
+                ))}
             </div>
 
             <div className="filter-group">
                 <h4>Category</h4>
-                <ul>
-                    {[
-                        "Fantasy",
-                        "Romance",
-                        "Fiction",
-                        "Crime",
-                        "Science",
-                        "Biography",
-                        "History",
-                        "Children & Teens",
-                        "Horror",
-                        "Adventure"
-                    ].map(cat => (
-                        <li key={cat}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedCategories.includes(cat)}
-                                    onChange={() => {
-                                        if (selectedCategories.includes(cat)) {
-                                            onCategoryChange(selectedCategories.filter(c => c !== cat));
-                                        } else {
-                                            onCategoryChange([...selectedCategories, cat]);
-                                        }
-                                    }}
-                                />
-                                {cat}
-                            </label>
-                        </li>
-                    ))}
-                </ul>
+                {[
+                    "Fantasy", "Romance", "Fiction", "Crime", "Science",
+                    "Biography", "History", "Children & Teens", "Horror", "Adventure"
+                ].map(cat => (
+                    <label key={cat}>
+                        <input
+                            type="checkbox"
+                            checked={selectedCategories.includes(cat)}
+                            onChange={() => toggleItem(selectedCategories, setSelectedCategories, cat)}
+                        />
+                        {cat}
+                    </label>
+                ))}
             </div>
 
             <div className="filter-group">
                 <h4>Format</h4>
-                <ul>
-                    {["Hardcover", "Paperback"].map(format => (
-                        <li key={format}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedFormats.includes(format)}
-                                    onChange={() => {
-                                        if (selectedFormats.includes(format)) {
-                                            onFormatChange(selectedFormats.filter(f => f !== format));
-                                        } else {
-                                            onFormatChange([...selectedFormats, format]);
-                                        }
-                                    }}
-                                />
-                                {format}
-                            </label>
-                        </li>
-                    ))}
-                </ul>
+                {["Hardcover", "Paperback"].map(format => (
+                    <label key={format}>
+                        <input
+                            type="checkbox"
+                            checked={selectedFormats.includes(format)}
+                            onChange={() => toggleItem(selectedFormats, setSelectedFormats, format)}
+                        />
+                        {format}
+                    </label>
+                ))}
             </div>
 
+            <SortDropdown sortOption={sortOption} onSortChange={setSortOption} />
         </aside>
     );
 }

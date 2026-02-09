@@ -1,8 +1,9 @@
-import Sidebar from './Sidebar';
-import MainContent from './MainContent';
-import TopBar from './TopBar';
+import { useState, useEffect } from "react";
+import Sidebar from "./Sidebar";
+import MainContent from "./MainContent";
+import TopBar from "./TopBar";
 import '../styles/Home.css';
-import {useState} from "react";
+import { fetchBooks } from "../services/api.js";
 
 function Home({
                   user,
@@ -16,20 +17,28 @@ function Home({
                   onLogout,
               }) {
 
-    const [selectedLanguages, setSelectedLanguages] = useState([]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
-    const [selectedFormats, setSelectedFormats] = useState([]);
+    const [allBooks, setAllBooks] = useState([]);
+    const [displayBooks, setDisplayBooks] = useState([]);
+
+    useEffect(() => {
+        const loadBooks = async () => {
+            try {
+                const books = await fetchBooks();
+                setAllBooks(books);
+                setDisplayBooks(books);
+            } catch (err) {
+                console.error("Failed to fetch books:", err);
+            }
+        };
+        loadBooks();
+    }, []);
 
     return (
         <div className="home-layout">
             <Sidebar
                 goHome={() => setPage('home')}
-                selectedLanguages={selectedLanguages}
-                onLanguageChange={setSelectedLanguages}
-                selectedCategories={selectedCategories}
-                onCategoryChange={setSelectedCategories}
-                selectedFormats={selectedFormats}
-                onFormatChange={setSelectedFormats}
+                books={allBooks}
+                onBooksChange={setDisplayBooks}
             />
             <div className="main-area">
                 <TopBar
@@ -49,9 +58,7 @@ function Home({
                     onAddToCart={onAddToCart}
                     onRemoveItem={onRemoveFromCart}
                     setPage={setPage}
-                    selectedLanguages={selectedLanguages}
-                    selectedCategories={selectedCategories}
-                    selectedFormats={selectedFormats}
+                    books={displayBooks}
                 />
             </div>
         </div>
