@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import SortDropdown from "./SortDropdown.jsx";
 import UserProfile from './UserProfile';
 import Register from './Register';
-import BookDetails from './BookDetails';
 import BookList from './BookList';
+import BookDetails from './BookDetails';
 import Cart from './Cart';
 import '../styles/MainContent.css';
-import SortDropdown from "./SortDropdown.jsx";
 
 function MainContent({
                          user,
@@ -14,11 +13,14 @@ function MainContent({
                          onAddToCart,
                          onRemoveItem,
                          books = [],
-                         onUpdateQuantity
+                         sortOption,
+                         setSortOption,
+                         onUpdateQuantity,
+                         favoriteIds,
+                         onToggleFavorite,
+                         selectedBook,
+                         setSelectedBook
                      }) {
-
-    const [selectedBook, setSelectedBook] = useState(null);
-    const [sortOption, setSortOption] = useState('popular');
 
     const sortedBooks = [...books].sort((a, b) => {
         switch (sortOption) {
@@ -35,7 +37,12 @@ function MainContent({
 
     return (
         <div className="main-content">
-            {page === 'user' && user && <UserProfile user={user} onAddToCart={onAddToCart}/>}
+            {page === 'user' && user && <UserProfile
+                user={user}
+                onAddToCart={onAddToCart}
+                favoriteIds={favoriteIds}
+                onToggleFavorite={onToggleFavorite}
+            />}
             {page === 'register' && <Register />}
             {page === 'cart' && <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} onUpdateQuantity={onUpdateQuantity} />}
 
@@ -46,12 +53,20 @@ function MainContent({
                         books={sortedBooks}
                         onSelectBook={setSelectedBook}
                         onAddToCart={onAddToCart}
+                        favoriteIds={favoriteIds}
+                        onToggleFavorite={onToggleFavorite}
                     />
                 </>
             )}
 
             {page === 'home' && selectedBook && (
-                <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} onAddToCart={onAddToCart} />
+                <BookDetails
+                    book={selectedBook}
+                    onBack={() => setSelectedBook(null)}
+                    onAddToCart={onAddToCart}
+                    isFavorite={favoriteIds.includes(selectedBook.id)}
+                    onToggleFavorite={onToggleFavorite}
+                />
             )}
         </div>
     );

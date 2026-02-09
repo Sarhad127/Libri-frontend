@@ -2,52 +2,19 @@ import '../styles/BookDetails.css';
 import BookReviews from './BookReviews.jsx';
 import BookImage from "./BookImage.jsx";
 import FavoriteButton from './FavoriteButton.jsx';
-import { useState, useEffect } from 'react';
-import { fetchFavorites, addFavorite, removeFavorite } from "../services/api.js";
+import AddToCartButton from "./AddToCartButton.jsx";
 
-function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
+function BookDetails({ book, onBack, onAddToCart, isFavorite, onToggleFavorite, onReviewAdded }) {
     const token = localStorage.getItem('token');
-    const [isFavorite, setIsFavorite] = useState(false);
-
-    useEffect(() => {
-        const checkFavorite = async () => {
-            if (!token) return;
-            try {
-                const favorites = await fetchFavorites(token);
-                setIsFavorite(favorites.some(fav => fav.id === book.id));
-            } catch (err) {
-                console.error('Failed to fetch favorites', err);
-            }
-        };
-        checkFavorite();
-    }, [book.id, token]);
-
-    const toggleFavorite = async () => {
-        if (!token) return alert('Please log in to add favorites.');
-        try {
-            if (isFavorite) {
-                await removeFavorite(token, book.id);
-                setIsFavorite(false);
-            } else {
-                await addFavorite(token, book.id);
-                setIsFavorite(true);
-            }
-        } catch (err) {
-            console.error('Failed to update favorites', err);
-        }
-    };
 
     return (
         <div className="book-details">
-            <button className="back-button" onClick={onBack}>
-                ← Back
-            </button>
+            <button className="back-button" onClick={onBack}>← Back</button>
 
             <div className="book-details-card">
                 <div className="book-image-wrapper">
                     <BookImage
                         book={book}
-                        token={token}
                         className="book-details-wrapper"
                         heartClassName="book-details-heart"
                         imgClassName="book-details-image"
@@ -56,14 +23,13 @@ function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
                     {token && (
                         <FavoriteButton
                             isFavorite={isFavorite}
-                            onToggle={toggleFavorite}
+                            onToggle={() => onToggleFavorite(book.id)}
                         />
                     )}
                 </div>
 
                 <div className="book-details-info">
                     <h1 className="title">{book.title}</h1>
-
                     {book.author && <p className="author">av {book.author}</p>}
 
                     <div className="meta-grid">
@@ -82,17 +48,8 @@ function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
                     </div>
 
                     <div className="book-price">
-                        <h3>
-                            Price: <span className="price-number">${book.price.toFixed(2)}</span>
-                        </h3>
-                        {token && onAddToCart && (
-                            <button
-                                className="add-to-cart-button-bookdetails"
-                                onClick={() => onAddToCart(book)}
-                            >
-                                Add to Cart
-                            </button>
-                        )}
+                        <h3>Price: <span className="price-number">${book.price.toFixed(2)}</span></h3>
+                        <AddToCartButton book={book} onAddToCart={onAddToCart} />
                     </div>
 
                     {book.description && (
@@ -102,23 +59,11 @@ function BookDetails({ book, onBack, onReviewAdded, onAddToCart }) {
                         </div>
                     )}
 
-                    <BookReviews
-                        bookId={book.id}
-                        token={token}
-                        onReviewAdded={onReviewAdded}
-                    />
+                    <BookReviews bookId={book.id} token={token} onReviewAdded={onReviewAdded} />
 
                     <div className="timestamps">
-                        {book.createdAt && (
-                            <p>
-                                <strong>Added:</strong> {new Date(book.createdAt).toLocaleDateString()}
-                            </p>
-                        )}
-                        {book.updatedAt && (
-                            <p>
-                                <strong>Last updated:</strong> {new Date(book.updatedAt).toLocaleDateString()}
-                            </p>
-                        )}
+                        {book.createdAt && <p><strong>Added:</strong> {new Date(book.createdAt).toLocaleDateString()}</p>}
+                        {book.updatedAt && <p><strong>Last updated:</strong> {new Date(book.updatedAt).toLocaleDateString()}</p>}
                     </div>
                 </div>
             </div>

@@ -3,8 +3,9 @@ import { fetchFavorites } from '../services/api.js';
 import BookDetails from './BookDetails.jsx';
 import BookImage from './BookImage.jsx';
 import '../styles/Favorites.css';
+import BookCardInfo from "./BookCardInfo.jsx";
 
-function Favorites({onAddToCart}) {
+function Favorites({ onAddToCart, onToggleFavorite, favoriteIds }) {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -36,7 +37,12 @@ function Favorites({onAddToCart}) {
     if (!favorites || favorites.length === 0) return <p>No favorites yet.</p>;
 
     if (selectedBook) {
-        return <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} onAddToCart={onAddToCart}/>;
+        return <BookDetails
+            book={selectedBook}
+            onBack={() => setSelectedBook(null)}
+            onAddToCart={onAddToCart}
+            isFavorite={favoriteIds.includes(selectedBook.id)}
+            onToggleFavorite={onToggleFavorite}/>;
     }
 
     return (
@@ -56,20 +62,12 @@ function Favorites({onAddToCart}) {
                         onClick={() => setSelectedBook(book)}
                     />
 
-                    <div className="book-info">
-                        <h2 className="book-title">{book.title}</h2>
-                        <p className="book-author">av {book.author}</p>
-                        <p className="book-format-language">
-                            {book.format}, {book.language}
-                        </p>
-                        <p className="book-description">
-                            {book.description?.substring(0, 300)}
-                            {book.description?.length > 300 && '…'}
-                        </p>
-                        <p className="book-price">
-                            Price: ${book.price?.toFixed(2)}
-                        </p>
-                    </div>
+                    <BookCardInfo
+                        book={book}
+                        favoriteIds={favoriteIds}
+                        onToggleFavorite={onToggleFavorite}
+                        onAddToCart={onAddToCart}
+                    />
                 </div>
             ))}
         </div>
