@@ -56,13 +56,6 @@ function BookDetails({ book, onBack, onReviewAdded }) {
                         onReviewAdded={onReviewAdded}
                     />
 
-                    {book.borrowHistory?.length > 0 && (
-                        <div className="extra-section">
-                            <h3>Borrow history</h3>
-                            <p>Borrowed {book.borrowHistory.length} time(s)</p>
-                        </div>
-                    )}
-
                     <div className="timestamps">
                         {book.createdAt && (
                             <p>
