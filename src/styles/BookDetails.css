@@ -112,7 +112,7 @@
 .favorite-heart.book-details-heart {
     font-size: 2rem;
     background-color: transparent;
-    color: black;
+    color: gray;
     border: none;
     cursor: pointer;
     z-index: 10;

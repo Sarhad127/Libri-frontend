@@ -1,0 +1,110 @@
+.cart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
+}
+
+.cart-card {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #222;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.cart-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    background-color: #2a2a2a;
+}
+
+.cart-image-wrapper {
+    width: 90px;
+    height: 135px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.cart-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid #333;
+    background-color: #111;
+    border-radius: 3px;
+}
+
+.cart-book-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #eee;
+}
+
+.cart-book-info .cart-book-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.cart-book-info .cart-book-author {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+.cart-book-info .cart-book-meta {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+.cart-book-info .cart-book-description {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #ddd;
+}
+
+.cart-book-info .cart-book-price {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.button-wrapper-delete {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+.cart-remove-button {
+    margin-top: 4px;
+    width: fit-content;
+    background-color: #800000;
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.cart-remove-button:hover {
+    background-color: #aa0000;
+}
+
+.favorite-heart.hide-heart {
+    display: none;
+    background-color: transparent;
+    border: none;
+}
