@@ -21,14 +21,6 @@
     background-color: #262626;
 }
 
-.book-image {
-    width: 150px;
-    height: auto;
-    object-fit: cover;
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-}
-
 .book-info {
     flex: 1;
     display: flex;
@@ -88,6 +80,17 @@
 .add-to-cart-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.book-list-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.book-list-image {
+    width: 150px;
+    height: auto;
+    object-fit: cover;
 }
 
 .favorite-heart.book-list-heart {

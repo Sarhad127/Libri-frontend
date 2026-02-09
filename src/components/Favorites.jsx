@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { fetchFavorites } from '../services/api.js';
 import BookDetails from './BookDetails.jsx';
-import '../styles/BookList.css';
+import BookImage from './BookImage.jsx';
+import '../styles/Favorites.css';
 
 function Favorites() {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedBook, setSelectedBook] = useState(null);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const loadFavorites = async () => {
-            const token = localStorage.getItem('token');
             if (!token) return;
 
             setLoading(true);
@@ -28,7 +29,7 @@ function Favorites() {
         };
 
         loadFavorites();
-    }, []);
+    }, [token]);
 
     if (loading) return <p>Loading favorites...</p>;
     if (error) return <p>{error}</p>;
@@ -39,22 +40,34 @@ function Favorites() {
     }
 
     return (
-        <div className="book-list">
+        <div className="favorites-list">
             {favorites.map((book) => (
                 <div
                     key={book.id}
-                    className="book-card"
+                    className="favorites-card"
                     onClick={() => setSelectedBook(book)}
-                    style={{ cursor: 'pointer' }}
                 >
-                    {book.imageUrl && <img src={book.imageUrl} alt={book.title} className="book-image" />}
+                    <BookImage
+                        book={book}
+                        token={token}
+                        className="favorites-image-wrapper"
+                        imgClassName="favorites-image"
+                        heartClassName="favorites-heart"
+                        onClick={() => setSelectedBook(book)}
+                    />
+
                     <div className="book-info">
                         <h2 className="book-title">{book.title}</h2>
                         <p className="book-author">av {book.author}</p>
-                        <p className="book-format-language">{book.format}, {book.language}</p>
+                        <p className="book-format-language">
+                            {book.format}, {book.language}
+                        </p>
                         <p className="book-description">
                             {book.description?.substring(0, 300)}
                             {book.description?.length > 300 && '…'}
+                        </p>
+                        <p className="book-price">
+                            Price: ${book.price?.toFixed(2)}
                         </p>
                     </div>
                 </div>

@@ -16,7 +16,8 @@ function BookDetails({ book, onBack, onReviewAdded }) {
                     book={book}
                     token={token}
                     className="book-details-wrapper"
-                    heartClassName="book-details-heart" />
+                    heartClassName="book-details-heart"
+                    imgClassName="book-details-image"/>
 
                 <div className="book-details-info">
                     <h1 className="title">{book.title}</h1>

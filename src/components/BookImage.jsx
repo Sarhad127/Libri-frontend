@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { addFavorite, removeFavorite, fetchFavorites } from '../services/api.js';
 import '../styles/BookDetails.css';
 
-function BookImage({ book, token, onClick, className = '', heartClassName = '' }) {
+function BookImage({ book, token, onClick, className = '', heartClassName = '', imgClassName = '' }) {
     const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
@@ -43,7 +43,7 @@ function BookImage({ book, token, onClick, className = '', heartClassName = '' }
                     <img
                         src={book.imageUrl}
                         alt={book.title}
-                        className="book-image"
+                        className={`book-image ${imgClassName}`}
                     />
                 )}
 

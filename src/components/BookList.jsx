@@ -19,6 +19,7 @@ function BookList({ books, loading, error, onSelectBook, onAddToCart }) {
                         onClick={() => onSelectBook(book)}
                         className="book-list-image"
                         heartClassName="book-list-heart"
+                        imgClassName="book-list-image"
                     />
 
                     <div className="book-info" onClick={() => onSelectBook(book)}>

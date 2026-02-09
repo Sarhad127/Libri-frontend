@@ -22,14 +22,6 @@
     gap: 24px;
 }
 
-.book-details-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 1px solid #333;
-    background-color: #111;
-}
-
 .book-details-info {
     flex: 1;
     display: flex;
@@ -104,9 +96,23 @@
     color: #999;
 }
 
+.book-details-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.book-details-image {
+    width: 280px;
+    height: 420px;
+    object-fit: contain;
+    border: 1px solid #333;
+    background-color: #111;
+}
+
 .favorite-heart.book-details-heart {
     font-size: 2rem;
     background-color: transparent;
+    color: black;
     border: none;
     cursor: pointer;
     z-index: 10;

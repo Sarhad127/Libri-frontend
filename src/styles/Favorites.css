@@ -1,0 +1,48 @@
+.favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.favorites-card {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    border: 1px solid #444;
+    background-color: #222;
+    align-items: flex-start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.favorites-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    background-color: #262626;
+}
+
+.favorites-image-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: auto;
+}
+
+.favorites-image {
+    width: 150px;
+    height: auto;
+    object-fit: cover;
+}
+
+.favorite-heart.favorites-heart {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.favorite-heart.favorites-heart.favorited {
+    color: red;
+}
