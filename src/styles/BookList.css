@@ -58,9 +58,9 @@
 }
 
 .add-to-cart-button {
-    background-color: #1e1e1e;
-    color: #eaeaea;
-    border: 1px solid #333;
+    background-color: #007bff;
+    color: white;
+    border: none;
     padding: 6px 12px;
     font-size: 0.85rem;
     border-radius: 4px;
@@ -69,12 +69,11 @@
 }
 
 .add-to-cart-button:hover {
-    background-color: #2a2a2a;
-    border-color: #555;
+    background-color: #0056b3;
 }
 
 .add-to-cart-button:active {
-    background-color: #161616;
+    background-color: #004a93;
 }
 
 .add-to-cart-button:disabled {

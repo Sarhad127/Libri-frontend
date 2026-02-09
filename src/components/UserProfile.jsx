@@ -5,7 +5,7 @@ import Favorites from "./Favorites.jsx";
 import UserInfo from "./UserInfo.jsx";
 import HistoryTab from "./HistoryTab.jsx";
 
-function UserProfile() {
+function UserProfile({onAddToCart}) {
     const [activeTab, setActiveTab] = useState('info');
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ function UserProfile() {
                 return <HistoryTab history={userInfo?.history} />;
 
             case 'favorites':
-                return <Favorites favorites={userInfo?.favorites} />;
+                return <Favorites favorites={userInfo?.favorites} onAddToCart={onAddToCart}/>;
 
             default:
                 return null;

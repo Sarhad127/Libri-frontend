@@ -4,7 +4,7 @@ import BookDetails from './BookDetails.jsx';
 import BookImage from './BookImage.jsx';
 import '../styles/Favorites.css';
 
-function Favorites() {
+function Favorites({onAddToCart}) {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -36,7 +36,7 @@ function Favorites() {
     if (!favorites || favorites.length === 0) return <p>No favorites yet.</p>;
 
     if (selectedBook) {
-        return <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} />;
+        return <BookDetails book={selectedBook} onBack={() => setSelectedBook(null)} onAddToCart={onAddToCart}/>;
     }
 
     return (

@@ -35,7 +35,7 @@ function MainContent({
 
     return (
         <div className="main-content">
-            {page === 'user' && user && <UserProfile user={user} />}
+            {page === 'user' && user && <UserProfile user={user} onAddToCart={onAddToCart}/>}
             {page === 'register' && <Register />}
             {page === 'cart' && <Cart cartItems={cartItems} onRemoveItem={onRemoveItem} onUpdateQuantity={onUpdateQuantity} />}
 
