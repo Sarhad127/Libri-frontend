@@ -1,3 +1,5 @@
+import '../styles/FavoriteButton.css'
+
 function FavoriteButton({ isFavorite, onToggle }) {
     return (
         <button
