@@ -47,9 +47,16 @@
     overflow: hidden;
 }
 
+.main-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+}
+
 .content-area.centered {
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: calc(100vh - 60px);
 }
 

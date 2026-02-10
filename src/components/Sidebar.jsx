@@ -1,7 +1,7 @@
 import {useState, useEffect, useMemo} from 'react';
 import '../styles/Sidebar.css';
 
-function Sidebar({ goHome, books = [], onBooksChange }) {
+function Sidebar({books = [], onBooksChange }) {
 
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -25,12 +25,6 @@ function Sidebar({ goHome, books = [], onBooksChange }) {
 
     return (
         <aside className="sidebar">
-
-            <div className="filter-group">
-                <ul>
-                    <li className="clickable-item" onClick={goHome}>Books</li>
-                </ul>
-            </div>
 
             <div className="filter-group">
                 <h4>Language</h4>

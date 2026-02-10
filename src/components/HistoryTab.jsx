@@ -5,8 +5,8 @@ function HistoryTab({ history }) {
     if (!history || history.length === 0) {
         return (
             <div>
-                <h3>History</h3>
-                <p>No history yet.</p>
+                <h3>Order History</h3>
+                <p>No orders made yet.</p>
             </div>
         );
     }
