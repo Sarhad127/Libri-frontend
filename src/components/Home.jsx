@@ -4,6 +4,7 @@ import TopBar from "./TopBar";
 import '../styles/Home.css';
 import SubTopBar from "./SubTopBar.jsx";
 import {fetchMostPopularBooks, fetchMostPopularRecent, fetchTopRatedBooks} from "../services/api.js";
+import { useEffect, useState, useCallback } from "react";
 
 function Home({
                   user,
@@ -28,41 +29,67 @@ function Home({
                   onSearch
               }) {
 
+    const [baseBooks, setBaseBooks] = useState(allBooks);
+
+    const [sidebarFilters, setSidebarFilters] = useState({
+        languages: [],
+        categories: [],
+        formats: []
+    });
+
 
     const handleFilter = async (filter) => {
-        switch (filter) {
-            case "All Books":
-                setDisplayBooks(allBooks);
-                break;
-            case "Most Popular":
-                try {
-                    const popularBooks = await fetchMostPopularRecent(7, 10);
-                    setDisplayBooks(popularBooks);
-                } catch (error) {
-                    setDisplayBooks(allBooks);
-                }
-                break;
-            case "Top Rated":
-                try {
-                    const topRatedBooks = await fetchTopRatedBooks(10);
-                    setDisplayBooks(topRatedBooks);
-                } catch (error) {
-                    setDisplayBooks(allBooks);
-                }
-                break;
-            case "Bestsellers":
-                try {
-                    const popularBooks = await fetchMostPopularBooks(10);
-                    setDisplayBooks(popularBooks);
-                } catch (error) {
-                    setDisplayBooks(allBooks);
-                }
-                break;
-            default:
-                setDisplayBooks(allBooks);
+        let fetchedBooks;
+
+        try {
+            switch (filter) {
+                case "Most Popular":
+                    fetchedBooks = await fetchMostPopularRecent(7, 10);
+                    break;
+
+                case "Top Rated":
+                    fetchedBooks = await fetchTopRatedBooks(10);
+                    break;
+
+                case "Bestsellers":
+                    fetchedBooks = await fetchMostPopularBooks(10);
+                    break;
+
+                case "All Books":
+                default:
+                    fetchedBooks = allBooks;
+            }
+        } catch {
+            fetchedBooks = allBooks;
         }
-        setPage('home');
+
+        setBaseBooks(fetchedBooks);
+        setDisplayBooks(applySidebarFilters(fetchedBooks));
+        setPage("home");
     };
+
+
+    const applySidebarFilters = useCallback((books) => {
+        return books.filter(book =>
+            (sidebarFilters.languages.length === 0 ||
+                sidebarFilters.languages.includes(book.language)) &&
+
+            (sidebarFilters.categories.length === 0 ||
+                sidebarFilters.categories.includes(book.category)) &&
+
+            (sidebarFilters.formats.length === 0 ||
+                sidebarFilters.formats.includes(book.format))
+        );
+    }, [sidebarFilters]);
+
+    useEffect(() => {
+        setBaseBooks(allBooks);
+    }, [allBooks]);
+
+    useEffect(() => {
+        setDisplayBooks(applySidebarFilters(baseBooks));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [baseBooks, applySidebarFilters]);
 
     return (
         <div className="home-layout">
@@ -80,10 +107,7 @@ function Home({
 
             <div className={`content-area ${['register', 'user', 'cart'].includes(page) ? 'centered' : ''}`}>
                 { !['register', 'user', 'cart'].includes(page) && (
-                    <Sidebar
-                        books={allBooks}
-                        onBooksChange={setDisplayBooks}
-                    />
+                    <Sidebar onFilterChange={setSidebarFilters} />
                 )}
 
                 <div className="main-column">

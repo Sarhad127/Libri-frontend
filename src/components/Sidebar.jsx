@@ -1,27 +1,26 @@
-import {useState, useEffect, useMemo} from 'react';
+import {useEffect, useState} from 'react';
 import '../styles/Sidebar.css';
 
-function Sidebar({books = [], onBooksChange }) {
+function Sidebar({onFilterChange}) {
 
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedFormats, setSelectedFormats] = useState([]);
 
     const toggleItem = (list, setList, item) => {
-        setList(list.includes(item) ? list.filter(i => i !== item) : [...list, item]);
+        setList(list.includes(item)
+            ? list.filter(i => i !== item)
+            : [...list, item]
+        );
     };
 
-    const filteredBooks = useMemo(() => {
-        return books.filter(book =>
-            (selectedLanguages.length === 0 || selectedLanguages.includes(book.language)) &&
-            (selectedCategories.length === 0 || selectedCategories.includes(book.category)) &&
-            (selectedFormats.length === 0 || selectedFormats.includes(book.format))
-        );
-    }, [books, selectedLanguages, selectedCategories, selectedFormats]);
-
     useEffect(() => {
-        onBooksChange(filteredBooks);
-    }, [filteredBooks, onBooksChange]);
+        onFilterChange({
+            languages: selectedLanguages,
+            categories: selectedCategories,
+            formats: selectedFormats
+        });
+    }, [selectedLanguages, selectedCategories, selectedFormats]);
 
     return (
         <aside className="sidebar">
