@@ -1,6 +1,7 @@
 import '../styles/Cart.css';
 import BookImage from './BookImage.jsx';
 import { FaTrash } from 'react-icons/fa';
+import {createOrder} from "../services/api.js";
 
 function Cart({ cartItems = [], onRemoveItem, onUpdateQuantity }) {
     const token = localStorage.getItem('token');
@@ -12,6 +13,20 @@ function Cart({ cartItems = [], onRemoveItem, onUpdateQuantity }) {
     );
 
     const total = subtotal + SHIPPING_COST;
+
+    const handleCheckout = async () => {
+        if (!token) return alert('Please log in.');
+
+        try {
+            const order = await createOrder(token, cartItems);
+            alert('Order placed successfully! Order ID: ' + order.id);
+
+            cartItems.forEach(item => onRemoveItem(item.id));
+        } catch (err) {
+            console.error(err);
+            alert('Failed to place order: ' + err.message);
+        }
+    };
 
     return (
         <div className="cart-list">
@@ -97,7 +112,9 @@ function Cart({ cartItems = [], onRemoveItem, onUpdateQuantity }) {
             </div>
 
             <div className="cart-checkout-wrapper">
-                <button className="checkout-button">Proceed to checkout</button>
+                <button className="checkout-button" onClick={handleCheckout}>
+                    Proceed to checkout
+                </button>
             </div>
         </div>
     );

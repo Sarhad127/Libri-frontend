@@ -1,0 +1,58 @@
+.order-history {
+    color: #e0e0e0;
+    padding: 20px;
+}
+
+.order-card {
+    border: 1px solid #333;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+}
+
+.order-header p {
+    margin: 5px 0;
+}
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #1e1e1e;
+}
+
+.order-items-table th,
+.order-items-table td {
+    border: 1px solid #444;
+    padding: 8px;
+    text-align: left;
+    color: #e0e0e0;
+}
+
+.order-items-table th {
+    background-color: #2c2c2c;
+}
+
+.status-badge {
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: white;
+}
+
+.status-badge.placed {
+    background-color: orange;
+}
+
+.status-badge.paid {
+    background-color: green;
+}
+
+.status-badge.cancelled {
+    background-color: red;
+}
+
+.order-items-table tbody tr:hover {
+    background-color: #2a2a2a;
+}

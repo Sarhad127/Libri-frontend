@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080/api';
+export const API_BASE_URL = 'http://localhost:8080/api';
 
 export async function loginUser(email, password) {
     const response = await fetch(`${API_BASE_URL}/login`, {
@@ -227,9 +227,27 @@ export async function updateReview(token, reviewId, rating, comment) {
     return response.json();
 }
 
-export async function deleteReview(token, reviewId) {
-    const response = await fetch(`${API_BASE_URL}/reviews/${reviewId}`, {
-        method: 'DELETE',
+export async function createOrder(token, cartItems) {
+    const response = await fetch(`${API_BASE_URL}/orders/create`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(cartItems),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Failed to create order');
+    }
+
+    return response.json();
+}
+
+export async function fetchUserOrders(token) {
+    const response = await fetch(`${API_BASE_URL}/orders`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -237,9 +255,8 @@ export async function deleteReview(token, reviewId) {
     });
 
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error('Failed to delete review: ' + errorText);
+        throw new Error('Failed to fetch orders');
     }
 
-    return response.text();
+    return response.json();
 }

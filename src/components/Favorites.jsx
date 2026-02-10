@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchFavorites } from '../services/api.js';
 import BookDetails from './BookDetails.jsx';
 import BookImage from './BookImage.jsx';
@@ -13,26 +13,26 @@ function Favorites({ onAddToCart, onToggleFavorite, favoriteIds }) {
 
     const token = localStorage.getItem('token');
 
-    const loadFavorites = useCallback(async () => {
+    useEffect(() => {
         if (!token) return;
 
-        setLoading(true);
-        setError(null);
+        const fetchFavoritesData = async () => {
+            setLoading(true);
+            setError(null);
 
-        try {
-            const data = await fetchFavorites(token);
-            setFavorites(data);
-        } catch (err) {
-            console.error(err);
-            setError('Failed to load favorites.');
-        } finally {
-            setLoading(false);
-        }
-    }, [token]);
+            try {
+                const data = await fetchFavorites(token);
+                setFavorites(data);
+            } catch (err) {
+                console.error(err);
+                setError('Failed to load favorites.');
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    useEffect(() => {
-        loadFavorites();
-    }, [loadFavorites]);
+        fetchFavoritesData();
+    }, []);
 
     useEffect(() => {
         if (!favoriteIds?.length) {

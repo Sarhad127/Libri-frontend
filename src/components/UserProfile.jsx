@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { fetchUserProfile } from '../services/api.js';
+import React, { useState } from 'react';
 import '../styles/UserProfile.css';
 import Favorites from "./Favorites.jsx";
 import UserInfo from "./UserInfo.jsx";
@@ -7,38 +6,14 @@ import HistoryTab from "./HistoryTab.jsx";
 
 function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite }) {
     const [activeTab, setActiveTab] = useState('info');
-    const [userInfo, setUserInfo] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) return;
-
-        setLoading(true);
-        setError(null);
-
-        fetchUserProfile(token)
-            .then(data => setUserInfo(data))
-            .catch(err => {
-                console.error(err);
-                setError('Failed to load user info.');
-            })
-            .finally(() => setLoading(false));
-    }, []);
 
     const renderTabContent = () => {
         switch (activeTab) {
             case 'info':
-                if (loading) return <p>Loading...</p>;
-                if (error) return <p>{error}</p>;
-                if (!userInfo) return null;
-                return <UserInfo user={userInfo} />;
+                return <UserInfo />;
 
             case 'history':
-                if (loading) return <p>Loading...</p>;
-                if (error) return <p>{error}</p>;
-                return <HistoryTab history={userInfo?.history} />;
+                return <HistoryTab />;
 
             case 'favorites':
                 return (

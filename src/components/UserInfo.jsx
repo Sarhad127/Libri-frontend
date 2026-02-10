@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchUserProfile } from '../services/api.js';
 import '../styles/UserInfo.css';
 
-function UserInfo({ user }) {
+function UserInfo() {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const token = localStorage.getItem('token')
+
+    useEffect(() => {
+        if (!token) return;
+        fetchUserProfile(token)
+            .then(data => setUser(data))
+            .catch(err => {
+                console.error(err);
+                setError('Failed to load user info.');
+            })
+            .finally(() => setLoading(false));
+    }, [token]);
+
+    if (loading) return <p>Loading user info...</p>;
+    if (error) return <p>{error}</p>;
     if (!user) return null;
 
     return (
@@ -50,11 +69,10 @@ function UserInfo({ user }) {
                 <div className="detail-row">
                     <span className="label">Registered</span>
                     <span className="value">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                        {new Date(user.createdAt).toLocaleDateString()}
                     </span>
                 </div>
             </div>
-
         </div>
     );
 }
