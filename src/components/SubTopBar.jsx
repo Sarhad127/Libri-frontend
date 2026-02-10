@@ -1,7 +1,7 @@
 import '../styles/SubTopBar.css';
 
 function SubTopBar({ onFilter }) {
-    const filters = ["All Books", "Most Popular", "New Arrivals", "Top Rated", "Bestsellers"];
+    const filters = ["All Books", "Most Popular","Top Rated", "Bestsellers"];
 
     return (
         <div className="sub-top-bar">

@@ -3,6 +3,7 @@ import MainContent from "./MainContent";
 import TopBar from "./TopBar";
 import '../styles/Home.css';
 import SubTopBar from "./SubTopBar.jsx";
+import {fetchMostPopularBooks, fetchMostPopularRecent, fetchTopRatedBooks} from "../services/api.js";
 
 function Home({
                   user,
@@ -27,19 +28,35 @@ function Home({
                   onSearch
               }) {
 
-    const handleFilter = (filter) => {
+
+    const handleFilter = async (filter) => {
         switch (filter) {
-            case "Most Popular":
-                setDisplayBooks([...allBooks].sort((a, b) => (b.popularity || 0) - (a.popularity || 0)));
+            case "All Books":
+                setDisplayBooks(allBooks);
                 break;
-            case "New Arrivals":
-                setDisplayBooks([...allBooks].sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate)));
+            case "Most Popular":
+                try {
+                    const popularBooks = await fetchMostPopularRecent(7, 10);
+                    setDisplayBooks(popularBooks);
+                } catch (error) {
+                    setDisplayBooks(allBooks);
+                }
                 break;
             case "Top Rated":
-                setDisplayBooks([...allBooks].sort((a, b) => (b.rating || 0) - (a.rating || 0)));
+                try {
+                    const topRatedBooks = await fetchTopRatedBooks(10);
+                    setDisplayBooks(topRatedBooks);
+                } catch (error) {
+                    setDisplayBooks(allBooks);
+                }
                 break;
             case "Bestsellers":
-                setDisplayBooks([...allBooks].sort((a, b) => (b.sales || 0) - (a.sales || 0)));
+                try {
+                    const popularBooks = await fetchMostPopularBooks(10);
+                    setDisplayBooks(popularBooks);
+                } catch (error) {
+                    setDisplayBooks(allBooks);
+                }
                 break;
             default:
                 setDisplayBooks(allBooks);

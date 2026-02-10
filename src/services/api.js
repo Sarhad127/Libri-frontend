@@ -260,3 +260,53 @@ export async function fetchUserOrders(token) {
 
     return response.json();
 }
+
+export async function fetchMostPopularBooks(limit = 10) {
+    const response = await fetch(`${API_BASE_URL}/most-popular?limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch most popular books');
+    }
+
+    return response.json();
+}
+
+export async function fetchMostPopularRecent(days = 7, limit = 10) {
+    const response = await fetch(`${API_BASE_URL}/most-popular/recent?days=${days}&limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch most popular books (recent)');
+    }
+
+    return response.json();
+}
+
+export async function fetchTopRatedBooks(limit = 10) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/top-rated?limit=${limit}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch top rated books');
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Error fetching top rated books:', error);
+        throw error;
+    }
+}
