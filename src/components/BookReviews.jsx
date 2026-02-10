@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { createReview, fetchBookReviews } from "../services/api.js";
+import { createReview, fetchBookReviews, updateReview } from "../services/api.js";
 import '../styles/BookReviews.css';
 
-function BookReviews({ bookId, token, onReviewAdded }) {
+function BookReviews({ bookId, token}) {
     const [reviews, setReviews] = useState([]);
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [rating, setRating] = useState(0);
@@ -33,32 +33,46 @@ function BookReviews({ bookId, token, onReviewAdded }) {
 
     const handleSubmit = async () => {
         if (!token) {
-            alert("You must be logged in to submit a review");
+            alert("You must be logged in");
             return;
         }
+
         if (rating === 0 || !comment.trim()) {
             alert("Please provide a rating and comment.");
             return;
         }
 
         setSubmitting(true);
+
         try {
-            const reviewData = { bookId, rating, comment };
-            const newReview = await createReview(token, reviewData, editingReviewId);
+            let savedReview;
+
+            if (editingReviewId) {
+                savedReview = await updateReview(
+                    token,
+                    editingReviewId,
+                    rating,
+                    comment
+                );
+            } else {
+                savedReview = await createReview(token, {
+                    bookId,
+                    rating,
+                    comment
+                });
+            }
+
+            setReviews(prev =>
+                editingReviewId
+                    ? prev.map(r => r.id === editingReviewId ? savedReview : r)
+                    : [savedReview, ...prev]
+            );
 
             setShowReviewForm(false);
             setRating(0);
             setComment('');
             setEditingReviewId(null);
 
-            setReviews(prev => {
-                if (editingReviewId) {
-                    return prev.map(r => r.id === editingReviewId ? newReview : r);
-                }
-                return [newReview, ...prev];
-            });
-
-            onReviewAdded?.(newReview);
         } catch (err) {
             alert(err.message);
         } finally {
