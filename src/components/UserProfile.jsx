@@ -5,7 +5,7 @@ import Favorites from "./Favorites.jsx";
 import UserInfo from "./UserInfo.jsx";
 import HistoryTab from "./HistoryTab.jsx";
 
-function UserProfile({onAddToCart, favoriteIds, onToggleFavorite }) {
+function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite }) {
     const [activeTab, setActiveTab] = useState('info');
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -16,18 +16,16 @@ function UserProfile({onAddToCart, favoriteIds, onToggleFavorite }) {
         if (!token) return;
 
         setLoading(true);
+        setError(null);
+
         fetchUserProfile(token)
-            .then(data => {
-                setUserInfo(data);
-                setLoading(false);
-            })
+            .then(data => setUserInfo(data))
             .catch(err => {
                 console.error(err);
                 setError('Failed to load user info.');
-                setLoading(false);
-            });
+            })
+            .finally(() => setLoading(false));
     }, []);
-
 
     const renderTabContent = () => {
         switch (activeTab) {
@@ -35,17 +33,21 @@ function UserProfile({onAddToCart, favoriteIds, onToggleFavorite }) {
                 if (loading) return <p>Loading...</p>;
                 if (error) return <p>{error}</p>;
                 if (!userInfo) return null;
-
                 return <UserInfo user={userInfo} />;
 
             case 'history':
+                if (loading) return <p>Loading...</p>;
+                if (error) return <p>{error}</p>;
                 return <HistoryTab history={userInfo?.history} />;
 
             case 'favorites':
-                return <Favorites favorites={userInfo?.favorites}
-                                  onAddToCart={onAddToCart}
-                                  favoriteIds={favoriteIds}
-                                  onToggleFavorite={onToggleFavorite}/>;
+                return (
+                    <Favorites
+                        onAddToCart={onAddToCart}
+                        favoriteIds={favoriteIds}
+                        onToggleFavorite={onToggleFavorite}
+                    />
+                );
 
             default:
                 return null;
