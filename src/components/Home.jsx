@@ -39,12 +39,16 @@ function Home({
                 cartItems={cartItems}
                 onSearch={onSearch}
             />
-            <div className="content-area">
-                <Sidebar
-                    goHome={() => setPage('home')}
-                    books={allBooks}
-                    onBooksChange={setDisplayBooks}
-                />
+
+            <div className={`content-area ${page === 'register' ? 'centered' : ''}`}>
+                {page !== 'register' && (
+                    <Sidebar
+                        goHome={() => setPage('home')}
+                        books={allBooks}
+                        onBooksChange={setDisplayBooks}
+                    />
+                )}
+
                 <MainContent
                     user={user}
                     page={page}

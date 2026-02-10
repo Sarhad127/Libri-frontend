@@ -47,6 +47,12 @@
     overflow: hidden;
 }
 
+.content-area.centered {
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+}
+
 .sidebar h4, .sidebar label, .sidebar li {
     color: #fff;
 }
