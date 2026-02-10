@@ -208,3 +208,38 @@ export async function removeCartItem(token, cartItemId) {
 
     return response.json();
 }
+
+export async function updateReview(token, reviewId, rating, comment) {
+    const response = await fetch(`${API_BASE_URL}/reviews/${reviewId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ rating, comment }),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error('Failed to update review: ' + errorText);
+    }
+
+    return response.json();
+}
+
+export async function deleteReview(token, reviewId) {
+    const response = await fetch(`${API_BASE_URL}/reviews/${reviewId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error('Failed to delete review: ' + errorText);
+    }
+
+    return response.text();
+}

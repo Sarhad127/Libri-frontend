@@ -9,6 +9,13 @@ function BookReviews({ bookId, token, onReviewAdded }) {
     const [comment, setComment] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [hoveredStar, setHoveredStar] = useState(0);
+    const [editingReviewId, setEditingReviewId] = useState(null);
+
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const currentUserId = storedUser?.id;
+
+    const userReview = reviews.find(r => r.userId === currentUserId);
+    const canReview = !userReview;
 
     useEffect(() => {
         const loadReviews = async () => {
@@ -37,12 +44,20 @@ function BookReviews({ bookId, token, onReviewAdded }) {
         setSubmitting(true);
         try {
             const reviewData = { bookId, rating, comment };
-            const newReview = await createReview(token, reviewData);
+            const newReview = await createReview(token, reviewData, editingReviewId);
 
             setShowReviewForm(false);
             setRating(0);
             setComment('');
-            setReviews(prev => [newReview, ...prev]);
+            setEditingReviewId(null);
+
+            setReviews(prev => {
+                if (editingReviewId) {
+                    return prev.map(r => r.id === editingReviewId ? newReview : r);
+                }
+                return [newReview, ...prev];
+            });
+
             onReviewAdded?.(newReview);
         } catch (err) {
             alert(err.message);
@@ -51,17 +66,33 @@ function BookReviews({ bookId, token, onReviewAdded }) {
         }
     };
 
+    const handleEdit = (review) => {
+        setShowReviewForm(true);
+        setRating(review.rating);
+        setComment(review.comment);
+        setEditingReviewId(review.id);
+    };
+
     return (
         <div className="reviews-section">
 
             {token && (
                 <div className="write-review-button-wrapper">
-                    <button
-                        className="write-review-button"
-                        onClick={() => setShowReviewForm(!showReviewForm)}
-                    >
-                        {showReviewForm ? "Cancel" : "Write a Review"}
-                    </button>
+                    {token && canReview && (
+                        <div className="write-review-button-wrapper">
+                            <button
+                                className="write-review-button"
+                                onClick={() => {
+                                    setShowReviewForm(!showReviewForm);
+                                    setEditingReviewId(null);
+                                    setRating(0);
+                                    setComment('');
+                                }}
+                            >
+                                {showReviewForm ? "Cancel" : "Write a Review"}
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -76,7 +107,7 @@ function BookReviews({ bookId, token, onReviewAdded }) {
                                 onMouseEnter={() => setHoveredStar(star)}
                                 onMouseLeave={() => setHoveredStar(0)}
                             >
-                              ★
+                                ★
                             </span>
                         ))}
                     </div>
@@ -91,7 +122,7 @@ function BookReviews({ bookId, token, onReviewAdded }) {
                         onClick={handleSubmit}
                         disabled={submitting || rating === 0 || !comment.trim()}
                     >
-                        {submitting ? "Submitting..." : "Submit Review"}
+                        {submitting ? "Submitting..." : editingReviewId ? "Update Review" : "Submit Review"}
                     </button>
                 </div>
             )}
@@ -104,28 +135,38 @@ function BookReviews({ bookId, token, onReviewAdded }) {
             </p>
 
             {reviews.length > 0 ? (
-                <>
+                <div className="reviews-list">
+                    {reviews.map((review) => (
+                        <div key={review.id} className="review-card">
+                            <div className="review-header">
+                                <span className="review-user">{review.firstName || "Anonymous"}</span>
 
-                    <div className="reviews-list">
-                        {reviews.map((review) => (
-                            <div key={review.id} className="review-card">
-                                <div className="review-header">
-                                    <span className="review-user">{review.firstName || "Anonymous"}</span>
+                                <div className="update-edit-rating-wrapper">
+                                    {review.userId === currentUserId && (
+                                        <button
+                                            className="edit-review-button"
+                                            onClick={() => handleEdit(review)}
+                                        >
+                                            Edit
+                                        </button>
+                                    )}
                                     <span className="review-rating">
-                                        {"★".repeat(review.rating)}
+                                    {"★".repeat(review.rating)}
                                         {"☆".repeat(5 - review.rating)}
                                     </span>
                                 </div>
-                                {review.createdAt && (
-                                    <p className="review-date">
-                                        {new Date(review.createdAt).toLocaleDateString()}
-                                    </p>
-                                )}
-                                {review.comment && <p className="review-comment">{review.comment}</p>}
+
                             </div>
-                        ))}
-                    </div>
-                </>
+
+                            {review.createdAt && (
+                                <p className="review-date">
+                                    {new Date(review.createdAt).toLocaleDateString()}
+                                </p>
+                            )}
+                            {review.comment && <p className="review-comment">{review.comment}</p>}
+                        </div>
+                    ))}
+                </div>
             ) : (
                 <p className="no-reviews">No reviews yet. Be the first to review this book.</p>
             )}

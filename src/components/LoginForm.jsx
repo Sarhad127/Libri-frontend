@@ -16,13 +16,11 @@ function LoginForm({ onLoginSuccess, toggleDropdown, goToRegister }) {
                 email: data.email,
                 username: data.username || data.firstName,
                 role: data.role,
+                token: data.token
             };
-
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(userData));
-
-            onLoginSuccess(userData, data.token);
-
+            onLoginSuccess(userData);
             toggleDropdown(false);
             setEmail('');
             setPassword('');

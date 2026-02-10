@@ -33,6 +33,21 @@
     font-weight: 600;
 }
 
+.edit-review-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 0.85rem;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.edit-review-button:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
 .review-rating {
     color: #ffb400;
     font-size: 1rem;

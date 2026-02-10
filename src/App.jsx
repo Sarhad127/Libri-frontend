@@ -55,7 +55,7 @@ function App() {
         setPage('home');
 
         try {
-            const savedCart = await fetchCart(token || userData.token);
+            const savedCart = await fetchCart(userData.token);
             setCartItems(savedCart);
         } catch (err) {
             console.error('Failed to load cart on login:', err);
