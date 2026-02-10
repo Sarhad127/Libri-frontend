@@ -4,7 +4,7 @@ function BookImage({ book, onClick, className = '', imgClassName = '' }) {
 
     return (
         <div className={`book-image-wrapper ${className}`} onClick={onClick}>
-            <div className="book-image-inner" style={{ position: 'relative', display: 'inline-block' }}>
+            <div className="book-image-inner">
                 {book.imageUrl && (
                     <img
                         src={book.imageUrl}

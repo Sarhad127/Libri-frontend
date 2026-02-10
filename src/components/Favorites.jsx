@@ -55,11 +55,9 @@ function Favorites({ onAddToCart, onToggleFavorite, favoriteIds }) {
                 >
                     <BookImage
                         book={book}
-                        token={token}
                         className="favorites-image-wrapper"
                         imgClassName="favorites-image"
                         heartClassName="favorites-heart"
-                        onClick={() => setSelectedBook(book)}
                     />
 
                     <BookCardInfo
