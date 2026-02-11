@@ -55,14 +55,27 @@ function HistoryTab() {
             {orderHistory.map(order => (
                 <div key={order.id} className="order-card">
                     <div className="order-header">
-                        <p><strong>Order ID:</strong> {order.id}</p>
+                        <p><strong>Order ID:</strong> {order.orderNumber}</p>
                         <p>
                             <strong>Status:</strong>{' '}
                             <span className={`status-badge ${order.status.toLowerCase()}`}>
-                                {order.status === 'PLACED' ? 'Pending Payment' : order.status}
+                            {order.status === 'PLACED' ? 'Pending Payment' : order.status}
                             </span>
                         </p>
                         <p><strong>Total:</strong> ${order.totalAmount.toFixed(2)}</p>
+                        <p>
+                            <strong>Order Date:</strong>{' '}
+                            {new Date(order.createdAt).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                            })}{' '}
+                            at{' '}
+                            {new Date(order.createdAt).toLocaleTimeString('en-US', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                            })}
+                        </p>
                     </div>
 
                     <table className="order-items-table">
