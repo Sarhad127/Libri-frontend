@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import Home from './components/Home.jsx';
 import './App.css';
-import { addToCart, fetchCart, removeCartItem, fetchBooks, fetchFavorites, addFavorite, removeFavorite } from "./services/api.js";
+import {
+    addToCart, fetchCart, removeCartItem, fetchBooks, fetchFavorites, addFavorite, removeFavorite,
+    fetchMostPopularRecent, fetchTopRatedBooks, fetchMostPopularBooks
+} from "./services/api.js";
 
 function App() {
     const token = localStorage.getItem('token');
@@ -13,6 +16,7 @@ function App() {
     const [sortOption, setSortOption] = useState('popular');
     const [favoriteIds, setFavoriteIds] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
+    const [baseBooks, setBaseBooks] = useState(allBooks);
 
     useEffect(() => {
         const savedUser = JSON.parse(localStorage.getItem('user'));
@@ -49,6 +53,10 @@ function App() {
         };
         loadFavorites();
     }, [token]);
+
+    useEffect(() => {
+        setBaseBooks(allBooks);
+    }, [allBooks]);
 
     const handleLoginSuccess = async (userData) => {
         setUser(userData);
@@ -144,6 +152,76 @@ function App() {
         }
     };
 
+    const [sidebarFilters, setSidebarFilters] = useState({
+        languages: [],
+        categories: [],
+        formats: []
+    });
+
+    const applySidebarFilters = useCallback((books) => {
+        return books.filter(book =>
+            (sidebarFilters.languages.length === 0 || sidebarFilters.languages.includes(book.language)) &&
+            (sidebarFilters.categories.length === 0 || sidebarFilters.categories.includes(book.category)) &&
+            (sidebarFilters.formats.length === 0 || sidebarFilters.formats.includes(book.format))
+        );
+    }, [sidebarFilters]);
+
+    const sortedBooks = useMemo(() => {
+        const filtered = applySidebarFilters(baseBooks);
+
+        return [...filtered].sort((a, b) => {
+            switch (sortOption) {
+                case 'title':
+                    return a.title.localeCompare(b.title);
+                case 'author':
+                    return (a.author || '').localeCompare(b.author || '');
+                case 'reviews':
+                    return (b.reviewCount || 0) - (a.reviewCount || 0);
+                case 'latest':
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                case 'oldest':
+                    return new Date(a.createdAt) - new Date(b.createdAt);
+                case 'price-low':
+                    return a.price - b.price;
+                case 'price-high':
+                    return b.price - a.price;
+                case 'popular':
+                default:
+                    return (b.popularity || 0) - (a.popularity || 0);
+            }
+        });
+    }, [baseBooks, sortOption, applySidebarFilters]);
+
+    const handleFilter = async (filter) => {
+        let fetchedBooks;
+
+        try {
+            switch (filter) {
+                case "Most Popular":
+                    fetchedBooks = await fetchMostPopularRecent(7, 10);
+                    break;
+                case "Top Rated":
+                    fetchedBooks = await fetchTopRatedBooks(10);
+                    break;
+                case "Bestsellers":
+                    fetchedBooks = await fetchMostPopularBooks(10);
+                    break;
+                case "All Books":
+                default:
+                    fetchedBooks = allBooks;
+            }
+        } catch {
+            fetchedBooks = allBooks;
+        }
+
+        setBaseBooks(fetchedBooks);
+        setPage("home");
+    };
+
+    const handleSidebarFilters = (newFilters) => setSidebarFilters(newFilters);
+
+    const handleSortChange = (newSort) => setSortOption(newSort);
+
     return (
         <div className="app-container">
             <Home
@@ -163,12 +241,17 @@ function App() {
                 displayBooks={displayBooks}
                 setDisplayBooks={setDisplayBooks}
                 sortOption={sortOption}
-                setSortOption={setSortOption}
+                setSortOption={handleSortChange}
                 favoriteIds={favoriteIds}
                 onToggleFavorite={toggleFavorite}
                 selectedBook={selectedBook}
                 setSelectedBook={setSelectedBook}
                 onSearch={handleSearch}
+                baseBooks={baseBooks}
+                sortedBooks={sortedBooks}
+                sidebarFilters={sidebarFilters}
+                onSidebarFilterChange={handleSidebarFilters}
+                onFilter={handleFilter}
             />
         </div>
     );
