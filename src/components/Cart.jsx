@@ -1,32 +1,14 @@
 import '../styles/Cart.css';
 import BookImage from './BookImage.jsx';
 import { FaTrash } from 'react-icons/fa';
-import {createOrder} from "../services/api.js";
 
-function Cart({ cartItems = [], onRemoveItem, onUpdateQuantity }) {
+function Cart({ cartItems = [], onRemoveItem, onUpdateQuantity, onCheckout }) {
     const token = localStorage.getItem('token');
-    const SHIPPING_COST = 5.0;
 
-    const subtotal = cartItems.reduce(
+    const total = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
     );
-
-    const total = subtotal + SHIPPING_COST;
-
-    const handleCheckout = async () => {
-        if (!token) return alert('Please log in.');
-
-        try {
-            const order = await createOrder(token, cartItems);
-            alert('Order placed successfully! Order ID: ' + order.id);
-
-            cartItems.forEach(item => onRemoveItem(item.id));
-        } catch (err) {
-            console.error(err);
-            alert('Failed to place order: ' + err.message);
-        }
-    };
 
     return (
         <div className="cart-list">
@@ -104,15 +86,17 @@ function Cart({ cartItems = [], onRemoveItem, onUpdateQuantity }) {
             )}
 
             <div className="cart-total-wrapper">
-                <p><strong>Subtotal:</strong> ${subtotal.toFixed(2)}</p>
-                <p><strong>Shipping:</strong> ${SHIPPING_COST.toFixed(2)}</p>
                 <p className="cart-total">
                     <strong>Total:</strong> ${total.toFixed(2)}
                 </p>
             </div>
 
             <div className="cart-checkout-wrapper">
-                <button className="checkout-button" onClick={handleCheckout}>
+                <button
+                    className="checkout-button"
+                    onClick={onCheckout}
+                    disabled={cartItems.length === 0}
+                >
                     Proceed to checkout
                 </button>
             </div>

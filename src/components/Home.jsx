@@ -25,7 +25,8 @@ function Home({
                   onToggleFavorite,
                   selectedBook,
                   setSelectedBook,
-                  onSearch
+                  onSearch,
+                  onConfirmOrder
               }) {
 
     return (
@@ -42,8 +43,8 @@ function Home({
                 onSearch={onSearch}
             />
 
-            <div className={`content-area ${['register', 'user', 'cart'].includes(page) ? 'centered' : ''}`}>
-                {!['register', 'user', 'cart'].includes(page) && (
+            <div className={`content-area ${['register', 'user', 'cart', 'checkout'].includes(page) ? 'centered' : ''}`}>
+                {!['register', 'user', 'cart', 'checkout'].includes(page) && (
                     <Sidebar
                         filters={sidebarFilters}
                         onFilterChange={onSidebarFilterChange}
@@ -68,6 +69,7 @@ function Home({
                         selectedBook={selectedBook}
                         setSelectedBook={setSelectedBook}
                         onSortChange={setSortOption}
+                        onConfirmOrder={onConfirmOrder}
                     />
                 </div>
             </div>

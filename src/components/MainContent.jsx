@@ -5,6 +5,7 @@ import BookList from './BookList';
 import BookDetails from './BookDetails';
 import Cart from './Cart';
 import '../styles/MainContent.css';
+import Checkout from "./Checkout/Checkout.jsx";
 
 function MainContent({
                          user,
@@ -19,7 +20,9 @@ function MainContent({
                          favoriteIds,
                          onToggleFavorite,
                          selectedBook,
-                         setSelectedBook
+                         setSelectedBook,
+                         setPage,
+                         onConfirmOrder
                      }) {
 
 
@@ -39,7 +42,18 @@ function MainContent({
                 cartItems={cartItems}
                 onRemoveItem={onRemoveItem}
                 onUpdateQuantity={onUpdateQuantity}
+                onCheckout={() => setPage('checkout')}
             />}
+
+            {page === 'checkout' && (
+                <Checkout
+                    user={user}
+                    cartItems={cartItems}
+                    onBack={() => setPage('cart')}
+                    onConfirmOrder={onConfirmOrder}
+                    onRemoveItem={onRemoveItem}
+                />
+            )}
 
             {page === 'home' && !selectedBook && (
                 <>

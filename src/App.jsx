@@ -3,7 +3,7 @@ import Home from './components/Home.jsx';
 import './App.css';
 import {
     addToCart, fetchCart, removeCartItem, fetchBooks, fetchFavorites, addFavorite, removeFavorite,
-    fetchMostPopularRecent, fetchTopRatedBooks, fetchMostPopularBooks
+    fetchMostPopularRecent, fetchTopRatedBooks, fetchMostPopularBooks, createOrder
 } from "./services/api.js";
 
 function App() {
@@ -222,6 +222,21 @@ function App() {
 
     const handleSortChange = (newSort) => setSortOption(newSort);
 
+    const handleConfirmOrder = async (shippingMethod) => {
+        if (!token) return alert("Please log in.");
+
+        try {
+            await createOrder(token, cartItems, shippingMethod);
+
+            setCartItems([]);
+            setPage('home');
+            alert("Order placed successfully!");
+        } catch (err) {
+            console.error(err);
+            alert("Failed to place order.");
+        }
+    };
+
     return (
         <div className="app-container">
             <Home
@@ -252,6 +267,7 @@ function App() {
                 sidebarFilters={sidebarFilters}
                 onSidebarFilterChange={handleSidebarFilters}
                 onFilter={handleFilter}
+                onConfirmOrder={handleConfirmOrder}
             />
         </div>
     );
