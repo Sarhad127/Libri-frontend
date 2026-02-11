@@ -22,18 +22,6 @@ function MainContent({
                          setSelectedBook
                      }) {
 
-    const sortedBooks = [...books].sort((a, b) => {
-        switch (sortOption) {
-            case 'title': return a.title.localeCompare(b.title);
-            case 'author': return a.author.localeCompare(b.author);
-            case 'reviews': return (b.reviewCount || 0) - (a.reviewCount || 0);
-            case 'latest': return new Date(b.publishedDate) - new Date(a.publishedDate);
-            case 'oldest': return new Date(a.publishedDate) - new Date(b.publishedDate);
-            case 'price-low': return a.price - b.price;
-            case 'popular':
-            default: return (b.popularity || 0) - (a.popularity || 0);
-        }
-    });
 
     return (
         <div className="main-content">
@@ -57,7 +45,7 @@ function MainContent({
                 <>
                     <SortDropdown sortOption={sortOption} onSortChange={setSortOption} />
                     <BookList
-                        books={sortedBooks}
+                        books={books}
                         onSelectBook={setSelectedBook}
                         onAddToCart={onAddToCart}
                         favoriteIds={favoriteIds}

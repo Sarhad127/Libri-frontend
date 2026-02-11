@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import MainContent from "./MainContent";
 import TopBar from "./TopBar";
@@ -18,8 +18,6 @@ function Home({
                   onLogout,
                   goToCart,
                   allBooks,
-                  displayBooks,
-                  setDisplayBooks,
                   sortOption,
                   setSortOption,
                   favoriteIds,
@@ -28,7 +26,6 @@ function Home({
                   setSelectedBook,
                   onSearch
               }) {
-
     const [baseBooks, setBaseBooks] = useState(allBooks);
 
     const [sidebarFilters, setSidebarFilters] = useState({
@@ -36,6 +33,10 @@ function Home({
         categories: [],
         formats: []
     });
+
+    useEffect(() => {
+        setBaseBooks(allBooks);
+    }, [allBooks]);
 
     const applySidebarFilters = useCallback((books) => {
         return books.filter(book =>
@@ -45,10 +46,10 @@ function Home({
         );
     }, [sidebarFilters]);
 
-    const updateDisplayBooks = (books) => {
-        const filtered = applySidebarFilters(books);
+    const sortedBooks = useMemo(() => {
+        const filtered = applySidebarFilters(baseBooks);
 
-        const sorted = [...filtered].sort((a, b) => {
+        return [...filtered].sort((a, b) => {
             switch (sortOption) {
                 case 'title': return a.title.localeCompare(b.title);
                 case 'author': return a.author.localeCompare(b.author);
@@ -57,12 +58,11 @@ function Home({
                 case 'oldest': return new Date(a.publishedDate) - new Date(b.publishedDate);
                 case 'price-low': return a.price - b.price;
                 case 'price-high': return b.price - a.price;
-                default: return 0;
+                case 'popular':
+                default: return (b.popularity || 0) - (a.popularity || 0);
             }
         });
-
-        return sorted;
-    };
+    }, [baseBooks, sortOption, applySidebarFilters]);
 
     const handleFilter = async (filter) => {
         let fetchedBooks;
@@ -87,27 +87,12 @@ function Home({
         }
 
         setBaseBooks(fetchedBooks);
-        setDisplayBooks(updateDisplayBooks(fetchedBooks));
         setPage("home");
     };
 
-    const handleSidebarFilters = (newFilters) => {
-        setSidebarFilters(newFilters);
-        setDisplayBooks(updateDisplayBooks(baseBooks));
-    };
+    const handleSidebarFilters = (newFilters) => setSidebarFilters(newFilters);
 
-    const handleSortChange = (newSort) => {
-        setSortOption(newSort);
-        setDisplayBooks(updateDisplayBooks(baseBooks));
-    };
-
-    useEffect(() => {
-        setBaseBooks(allBooks);
-    }, [allBooks]);
-
-    useEffect(() => {
-        setDisplayBooks(updateDisplayBooks(baseBooks));
-    }, [baseBooks, applySidebarFilters, sortOption]);
+    const handleSortChange = (newSort) => setSortOption(newSort);
 
     return (
         <div className="home-layout">
@@ -124,12 +109,12 @@ function Home({
             />
 
             <div className={`content-area ${['register', 'user', 'cart'].includes(page) ? 'centered' : ''}`}>
-                { !['register', 'user', 'cart'].includes(page) && (
+                {!['register', 'user', 'cart'].includes(page) && (
                     <Sidebar onFilterChange={handleSidebarFilters} />
                 )}
 
                 <div className="main-column">
-                    { !['register'].includes(page) && <SubTopBar onFilter={handleFilter} /> }
+                    {!['register'].includes(page) && <SubTopBar onFilter={handleFilter} />}
                     <MainContent
                         user={user}
                         page={page}
@@ -137,7 +122,7 @@ function Home({
                         onAddToCart={onAddToCart}
                         onRemoveItem={onRemoveFromCart}
                         setPage={setPage}
-                        books={displayBooks}
+                        books={sortedBooks}
                         sortOption={sortOption}
                         setSortOption={handleSortChange}
                         onUpdateQuantity={onUpdateQuantity}
