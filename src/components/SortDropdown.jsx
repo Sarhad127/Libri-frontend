@@ -9,12 +9,12 @@ function SortDropdown({ sortOption, onSortChange }) {
                 value={sortOption}
                 onChange={(e) => onSortChange(e.target.value)}
             >
-                <option value="popular">Most Popular</option>
                 <option value="title">Title (A–Z)</option>
                 <option value="author">Author</option>
                 <option value="reviews">Most Reviews</option>
                 <option value="latest">Latest</option>
                 <option value="oldest">Oldest</option>
+                <option value="price-high">highest Price</option>
                 <option value="price-low">Lowest Price</option>
             </select>
         </div>

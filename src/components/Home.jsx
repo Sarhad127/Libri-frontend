@@ -1,10 +1,10 @@
+import { useEffect, useState, useCallback } from "react";
 import Sidebar from "./Sidebar";
 import MainContent from "./MainContent";
 import TopBar from "./TopBar";
-import '../styles/Home.css';
 import SubTopBar from "./SubTopBar.jsx";
-import {fetchMostPopularBooks, fetchMostPopularRecent, fetchTopRatedBooks} from "../services/api.js";
-import { useEffect, useState, useCallback } from "react";
+import '../styles/Home.css';
+import { fetchMostPopularBooks, fetchMostPopularRecent, fetchTopRatedBooks } from "../services/api.js";
 
 function Home({
                   user,
@@ -37,6 +37,32 @@ function Home({
         formats: []
     });
 
+    const applySidebarFilters = useCallback((books) => {
+        return books.filter(book =>
+            (sidebarFilters.languages.length === 0 || sidebarFilters.languages.includes(book.language)) &&
+            (sidebarFilters.categories.length === 0 || sidebarFilters.categories.includes(book.category)) &&
+            (sidebarFilters.formats.length === 0 || sidebarFilters.formats.includes(book.format))
+        );
+    }, [sidebarFilters]);
+
+    const updateDisplayBooks = (books) => {
+        const filtered = applySidebarFilters(books);
+
+        const sorted = [...filtered].sort((a, b) => {
+            switch (sortOption) {
+                case 'title': return a.title.localeCompare(b.title);
+                case 'author': return a.author.localeCompare(b.author);
+                case 'reviews': return (b.reviewCount || 0) - (a.reviewCount || 0);
+                case 'latest': return new Date(b.publishedDate) - new Date(a.publishedDate);
+                case 'oldest': return new Date(a.publishedDate) - new Date(b.publishedDate);
+                case 'price-low': return a.price - b.price;
+                case 'price-high': return b.price - a.price;
+                default: return 0;
+            }
+        });
+
+        return sorted;
+    };
 
     const handleFilter = async (filter) => {
         let fetchedBooks;
@@ -46,15 +72,12 @@ function Home({
                 case "Most Popular":
                     fetchedBooks = await fetchMostPopularRecent(7, 10);
                     break;
-
                 case "Top Rated":
                     fetchedBooks = await fetchTopRatedBooks(10);
                     break;
-
                 case "Bestsellers":
                     fetchedBooks = await fetchMostPopularBooks(10);
                     break;
-
                 case "All Books":
                 default:
                     fetchedBooks = allBooks;
@@ -64,32 +87,27 @@ function Home({
         }
 
         setBaseBooks(fetchedBooks);
-        setDisplayBooks(applySidebarFilters(fetchedBooks));
+        setDisplayBooks(updateDisplayBooks(fetchedBooks));
         setPage("home");
     };
 
+    const handleSidebarFilters = (newFilters) => {
+        setSidebarFilters(newFilters);
+        setDisplayBooks(updateDisplayBooks(baseBooks));
+    };
 
-    const applySidebarFilters = useCallback((books) => {
-        return books.filter(book =>
-            (sidebarFilters.languages.length === 0 ||
-                sidebarFilters.languages.includes(book.language)) &&
-
-            (sidebarFilters.categories.length === 0 ||
-                sidebarFilters.categories.includes(book.category)) &&
-
-            (sidebarFilters.formats.length === 0 ||
-                sidebarFilters.formats.includes(book.format))
-        );
-    }, [sidebarFilters]);
+    const handleSortChange = (newSort) => {
+        setSortOption(newSort);
+        setDisplayBooks(updateDisplayBooks(baseBooks));
+    };
 
     useEffect(() => {
         setBaseBooks(allBooks);
     }, [allBooks]);
 
     useEffect(() => {
-        setDisplayBooks(applySidebarFilters(baseBooks));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [baseBooks, applySidebarFilters]);
+        setDisplayBooks(updateDisplayBooks(baseBooks));
+    }, [baseBooks, applySidebarFilters, sortOption]);
 
     return (
         <div className="home-layout">
@@ -107,7 +125,7 @@ function Home({
 
             <div className={`content-area ${['register', 'user', 'cart'].includes(page) ? 'centered' : ''}`}>
                 { !['register', 'user', 'cart'].includes(page) && (
-                    <Sidebar onFilterChange={setSidebarFilters} />
+                    <Sidebar onFilterChange={handleSidebarFilters} />
                 )}
 
                 <div className="main-column">
@@ -121,12 +139,13 @@ function Home({
                         setPage={setPage}
                         books={displayBooks}
                         sortOption={sortOption}
-                        setSortOption={setSortOption}
+                        setSortOption={handleSortChange}
                         onUpdateQuantity={onUpdateQuantity}
                         favoriteIds={favoriteIds}
                         onToggleFavorite={onToggleFavorite}
                         selectedBook={selectedBook}
                         setSelectedBook={setSelectedBook}
+                        onSortChange={handleSortChange}
                     />
                 </div>
             </div>
