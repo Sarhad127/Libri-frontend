@@ -121,7 +121,7 @@ function App() {
 
     const handleSearch = (query) => {
         if (!query) {
-            setDisplayBooks(allBooks);
+            setBaseBooks(allBooks);
             return;
         }
         const lower = query.toLowerCase();
@@ -133,7 +133,7 @@ function App() {
             book.format?.toLowerCase().includes(lower) ||
             book.description?.toLowerCase().includes(lower)
         );
-        setDisplayBooks(filtered);
+        setBaseBooks(filtered);
         setPage('home');
     };
 
