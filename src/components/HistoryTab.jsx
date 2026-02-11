@@ -52,7 +52,6 @@ function HistoryTab() {
 
     return (
         <div className="order-history">
-            <h3>Order History</h3>
             {orderHistory.map(order => (
                 <div key={order.id} className="order-card">
                     <div className="order-header">
