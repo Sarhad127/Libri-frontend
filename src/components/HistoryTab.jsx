@@ -91,7 +91,7 @@ function HistoryTab() {
                         {order.items.map(item => {
                             const book = bookMap[item.bookId];
                             return (
-                                <tr key={item.id}>
+                                <tr key={`${order.id}-${item.id}`}>
                                     <td>{book ? `${book.title} by ${book.author}` : `Book ID ${item.bookId}`}</td>
                                     <td>{item.quantity}</td>
                                     <td>${item.priceAtPurchase.toFixed(2)}</td>
