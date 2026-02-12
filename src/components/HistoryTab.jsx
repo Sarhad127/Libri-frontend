@@ -59,7 +59,7 @@ function HistoryTab() {
                         <p>
                             <strong>Status:</strong>{' '}
                             <span className={`status-badge ${order.status.toLowerCase()}`}>
-                            {order.status === 'PLACED' ? 'Pending Payment' : order.status}
+                                {order.status === 'PLACED' ? 'Pending Payment' : order.status}
                             </span>
                         </p>
                         <p><strong>Total:</strong> ${order.totalAmount.toFixed(2)}</p>
@@ -76,6 +76,12 @@ function HistoryTab() {
                                 minute: '2-digit',
                             })}
                         </p>
+
+                        {order.shippingMethodLabel && (
+                            <p>
+                                <strong>Shipping:</strong> {order.shippingMethodLabel} - ${ (order.shippingCost ?? 0).toFixed(2) }
+                            </p>
+                        )}
                     </div>
 
                     <table className="order-items-table">
