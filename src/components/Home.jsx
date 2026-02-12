@@ -3,6 +3,7 @@ import MainContent from "./MainContent";
 import TopBar from "./TopBar";
 import SubTopBar from "./SubTopBar.jsx";
 import '../styles/Home.css';
+import PromoBar from "./PromoBar.jsx";
 
 function Home({
                   user,
@@ -31,6 +32,7 @@ function Home({
 
     return (
         <div className="home-layout">
+            <PromoBar />
             <TopBar
                 user={user}
                 onLoginSuccess={onLoginSuccess}

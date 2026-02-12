@@ -1,4 +1,5 @@
-import '../styles/FavoriteButton.css'
+import '../styles/FavoriteButton.css';
+import { Heart } from 'lucide-react';
 
 function FavoriteButton({ isFavorite, onToggle }) {
     return (
@@ -9,7 +10,10 @@ function FavoriteButton({ isFavorite, onToggle }) {
                 onToggle();
             }}
         >
-            {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+            <Heart
+                size={20}
+                className={`heart-icon ${isFavorite ? 'active' : ''}`}
+            />
         </button>
     );
 }
