@@ -52,7 +52,7 @@ function Home({
                 )}
 
                 <div className="main-column">
-                    {!['register'].includes(page) && <SubTopBar onFilter={onFilter} />}
+                    <SubTopBar onFilter={onFilter} />
                     <MainContent
                         user={user}
                         page={page}
