@@ -29,32 +29,36 @@
 
 .top-bar-search {
     display: flex;
-    gap: 10px;
     justify-content: center;
     align-items: center;
 }
 
-.top-bar-search input[type="text"] {
-    width: 450px;
-    max-width: 40vw;
-    padding: 7px 10px;
+.top-bar-search input[type="text"],
+.top-bar-search button {
     border: 1px solid #444;
     background-color: #222;
     color: #eee;
     font-size: 0.9rem;
     outline: none;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.top-bar-search button {
-    padding: 7px 12px;
-    border: 1px solid #444;
-    background-color: #222;
-    color: #eee;
-    cursor: pointer;
+    box-sizing: border-box;
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+.top-bar-search input[type="text"] {
+    width: 450px;
+    max-width: 40vw;
+    padding: 0 10px;
+    height: 36px;
+}
+
+.top-bar-search button {
+    padding: 0 12px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
 
 .top-bar input[type="text"],
 .top-bar input[type="email"],
@@ -98,6 +102,10 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
 }
 
 .cart-count {
@@ -115,4 +123,14 @@
     display: flex;
     flex-direction: row;
     gap: 6px;
+}
+
+.user-btn,
+.logout-btn {
+    height: 36px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }

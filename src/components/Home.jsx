@@ -45,6 +45,8 @@ function Home({
                 onSearch={onSearch}
             />
 
+            <SubTopBar onFilter={onFilter} />
+
             <div className={`content-area ${['register', 'user', 'cart', 'checkout'].includes(page) ? 'centered' : ''}`}>
                 {!['register', 'user', 'cart', 'checkout'].includes(page) && (
                     <Sidebar
@@ -54,7 +56,6 @@ function Home({
                 )}
 
                 <div className="main-column">
-                    <SubTopBar onFilter={onFilter} />
                     <MainContent
                         user={user}
                         page={page}

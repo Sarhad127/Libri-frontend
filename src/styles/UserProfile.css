@@ -5,8 +5,9 @@
 .profile-top-bar {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
-    justify-content: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    justify-content: flex-end;
 }
 
 .profile-top-bar button {
