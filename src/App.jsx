@@ -169,6 +169,10 @@ function App() {
     const sortedBooks = useMemo(() => {
         const filtered = applySidebarFilters(baseBooks);
 
+        if (sortOption === 'none') {
+            return filtered;
+        }
+
         return [...filtered].sort((a, b) => {
             switch (sortOption) {
                 case 'title':
@@ -185,9 +189,8 @@ function App() {
                     return a.price - b.price;
                 case 'price-high':
                     return b.price - a.price;
-                case 'popular':
                 default:
-                    return (b.popularity || 0) - (a.popularity || 0);
+                    return 0;
             }
         });
     }, [baseBooks, sortOption, applySidebarFilters]);
@@ -215,6 +218,7 @@ function App() {
         }
 
         setBaseBooks(fetchedBooks);
+        setSortOption('none');
         setPage("home");
     };
 
