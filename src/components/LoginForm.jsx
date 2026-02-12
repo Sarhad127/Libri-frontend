@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { loginUser } from '../services/api.js';
+import {useState} from "react";
+import {loginUser} from "../services/api.js";
 import '../styles/LoginForm.css'
 
-function LoginForm({ onLoginSuccess, toggleDropdown, goToRegister }) {
+function LoginForm({ onLoginSuccess, goToRegister }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -18,10 +18,11 @@ function LoginForm({ onLoginSuccess, toggleDropdown, goToRegister }) {
                 role: data.role,
                 token: data.token
             };
+
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(userData));
+
             onLoginSuccess(userData);
-            toggleDropdown(false);
             setEmail('');
             setPassword('');
         } catch {
@@ -30,29 +31,32 @@ function LoginForm({ onLoginSuccess, toggleDropdown, goToRegister }) {
     };
 
     return (
-        <div className="login-dropdown">
-            <form onSubmit={handleLogin}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Login</button>
-            </form>
+        <div className="login-page">
+            <div className="login-card">
+                <h2>Login</h2>
+                <form onSubmit={handleLogin}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Login</button>
+                </form>
 
-            <p>
-                Don’t have an account?{' '}
-                <span onClick={goToRegister}>Register</span>
-            </p>
+                <div className="login-footer">
+                    Don’t have an account?{' '}
+                    <span onClick={goToRegister}>Register</span>
+                </div>
+            </div>
         </div>
     );
 }

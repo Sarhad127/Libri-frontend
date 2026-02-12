@@ -1,5 +1,4 @@
 import UserButtons from './UserButtons.jsx';
-import LoginDropdownWrapper from './LoginDropdownWrapper.jsx';
 import '../styles/TopBar.css';
 import { FaShoppingCart } from "react-icons/fa";
 import {useState} from "react";
@@ -7,14 +6,13 @@ import OpenBookIcon from '../assets/open-book.png';
 
 function TopBar({
                     user,
-                    goToRegister,
-                    onLoginSuccess,
                     onUserPage,
                     onLogout,
-                    showRegisterPage,
                     goToCart,
                     cartItems,
-                    onSearch}) {
+                    onSearch,
+                    setPage
+}) {
 
     const [searchTerm, setSearchTerm] = useState('');
     const totalQuantity = cartItems?.reduce((sum, item) => sum + (item.quantity || 1), 0) || 0;
@@ -52,8 +50,8 @@ function TopBar({
             <div className="top-bar-buttons">
                 {user ? (
                     <>
-                        <button className="cart-button" onClick={goToCart} >
-                            <FaShoppingCart/>
+                        <button className="cart-button" onClick={goToCart}>
+                            <FaShoppingCart />
                             Cart
                             {totalQuantity > 0 && (
                                 <span className="cart-count">{totalQuantity}</span>
@@ -63,11 +61,9 @@ function TopBar({
                         <UserButtons user={user} onUserPage={onUserPage} onLogout={onLogout} />
                     </>
                 ) : (
-                    <LoginDropdownWrapper
-                        goToRegister={goToRegister}
-                        onLoginSuccess={onLoginSuccess}
-                        showRegisterPage={showRegisterPage}
-                    />
+                    <button className="login-btn" onClick={() => setPage('login')}>
+                        Login
+                    </button>
                 )}
             </div>
         </div>

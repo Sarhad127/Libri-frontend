@@ -6,6 +6,7 @@ import BookDetails from './BookDetails';
 import Cart from './Cart';
 import '../styles/MainContent.css';
 import Checkout from "./Checkout/Checkout.jsx";
+import LoginForm from './LoginForm.jsx';
 
 function MainContent({
                          user,
@@ -22,9 +23,9 @@ function MainContent({
                          selectedBook,
                          setSelectedBook,
                          setPage,
-                         onConfirmOrder
+                         onConfirmOrder,
+                         onLoginSuccess
                      }) {
-
 
     return (
         <div className="main-content">
@@ -37,6 +38,13 @@ function MainContent({
             />}
 
             {page === 'register' && <Register />}
+
+            {page === 'login' && (
+                <LoginForm
+                    onLoginSuccess={onLoginSuccess}
+                    goToRegister={() => setPage('register')}
+                />
+            )}
 
             {page === 'cart' && <Cart
                 cartItems={cartItems}

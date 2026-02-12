@@ -30,12 +30,14 @@ function Home({
                   onConfirmOrder
               }) {
 
+    const centerPages = ['register', 'login', 'user', 'cart', 'checkout'];
+
     return (
         <div className="home-layout">
             <PromoBar />
             <TopBar
                 user={user}
-                onLoginSuccess={onLoginSuccess}
+                setPage={setPage}
                 onUserPage={() => setPage('user')}
                 goToRegister={() => setPage('register')}
                 onLogout={onLogout}
@@ -47,8 +49,9 @@ function Home({
 
             <SubTopBar onFilter={onFilter} />
 
-            <div className={`content-area ${['register', 'user', 'cart', 'checkout'].includes(page) ? 'centered' : ''}`}>
-                {!['register', 'user', 'cart', 'checkout'].includes(page) && (
+            <div className={`content-area ${centerPages.includes(page) ? 'centered' : ''}`}>
+
+                {!centerPages.includes(page) && (
                     <Sidebar
                         filters={sidebarFilters}
                         onFilterChange={onSidebarFilterChange}
@@ -56,24 +59,25 @@ function Home({
                 )}
 
                 <div className="main-column">
-                    <MainContent
-                        user={user}
-                        page={page}
-                        cartItems={cartItems}
-                        onAddToCart={onAddToCart}
-                        onRemoveItem={onRemoveFromCart}
-                        setPage={setPage}
-                        books={sortedBooks}
-                        sortOption={sortOption}
-                        setSortOption={setSortOption}
-                        onUpdateQuantity={onUpdateQuantity}
-                        favoriteIds={favoriteIds}
-                        onToggleFavorite={onToggleFavorite}
-                        selectedBook={selectedBook}
-                        setSelectedBook={setSelectedBook}
-                        onSortChange={setSortOption}
-                        onConfirmOrder={onConfirmOrder}
-                    />
+                        <MainContent
+                            user={user}
+                            page={page}
+                            cartItems={cartItems}
+                            onAddToCart={onAddToCart}
+                            onRemoveItem={onRemoveFromCart}
+                            setPage={setPage}
+                            books={sortedBooks}
+                            sortOption={sortOption}
+                            setSortOption={setSortOption}
+                            onUpdateQuantity={onUpdateQuantity}
+                            favoriteIds={favoriteIds}
+                            onToggleFavorite={onToggleFavorite}
+                            selectedBook={selectedBook}
+                            setSelectedBook={setSelectedBook}
+                            onSortChange={setSortOption}
+                            onConfirmOrder={onConfirmOrder}
+                            onLoginSuccess={onLoginSuccess}
+                        />
                 </div>
             </div>
         </div>
