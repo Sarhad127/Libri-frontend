@@ -126,6 +126,7 @@
 }
 
 .user-btn,
+.login-btn,
 .logout-btn {
     height: 36px;
     padding: 0 12px;

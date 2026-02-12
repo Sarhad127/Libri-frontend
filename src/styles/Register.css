@@ -11,8 +11,10 @@
     width: 100%;
     max-width: 380px;
     padding: 20px;
-    background-color: transparent;
-    border: 1px solid #ffffff;
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #eee;
 }
 
 .register-card h2 {
@@ -20,6 +22,7 @@
     margin-bottom: 20px;
     font-size: 1.2rem;
     font-weight: normal;
+    color: #eee;
 }
 
 .register-card form {
@@ -28,47 +31,54 @@
     gap: 10px;
 }
 
-.register-card input {
-    padding: 6px 8px;
-    border: 1px solid #ffffff;
+.register-card input[type="text"],
+.register-card input[type="email"],
+.register-card input[type="password"] {
+    padding: 7px 10px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #eee;
     font-size: 0.9rem;
-
-    background-color: transparent;
-    color: #ffffff;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .register-card input::placeholder {
-    color: #cccccc;
+    color: #999;
 }
 
 .register-card input:focus {
-    outline: none;
-    background-color: #ffffff;
-    color: #000000;
+    border-color: #6aa9ff;
+    background-color: #262626;
+    color: #eee;
 }
 
 .register-card button[type='submit'] {
+    height: 36px;
+    padding: 0 12px;
     margin-top: 10px;
-    padding: 6px 8px;
-
-    border: 1px solid #ffffff;
-    background-color: transparent;
-    color: #ffffff;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #eee;
+    font-size: 0.9rem;
     cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .register-card button[type='submit']:hover {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #2a2a2a;
+    border-color: #6aa9ff;
 }
 
 .register-footer {
     margin-top: 15px;
     text-align: center;
     font-size: 0.85rem;
+    color: #eee;
 }
 
 .register-footer span {
     cursor: pointer;
     text-decoration: underline;
+    color: #6aa9ff;
 }
