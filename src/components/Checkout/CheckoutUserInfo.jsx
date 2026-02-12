@@ -72,7 +72,7 @@ function CheckoutUserInfo({ onNext, onBack }) {
                 </button>
 
                 <button className="cui-next-button" onClick={onNext}>
-                    Proceed to shipping ↓
+                    Proceed to shipping →
                 </button>
             </div>
         </div>

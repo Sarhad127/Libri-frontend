@@ -28,10 +28,10 @@ function CheckoutShipping({ selected, onSelect, onNext, onBack }) {
 
             <div className="csh-actions">
                 <button className="csh-back-button" onClick={onBack}>
-                    ↑ Back
+                    ← Back
                 </button>
                 <button className="csh-next-button" disabled={!selected} onClick={onNext}>
-                    Review order ↓
+                    Review order →
                 </button>
             </div>
         </div>

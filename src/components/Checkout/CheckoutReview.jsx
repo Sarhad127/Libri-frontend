@@ -35,7 +35,7 @@ function CheckoutReview({ cartItems, shippingMethod, onBack, onRemoveItem, onCon
 
             <div className="crv-actions">
                 <button className="crv-back-button" onClick={onBack}>
-                    ↑ Back
+                    ← Back
                 </button>
                 <button className="crv-confirm-button" onClick={handleCheckout}>
                     Confirm & place order
