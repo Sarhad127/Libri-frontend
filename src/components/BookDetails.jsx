@@ -1,7 +1,7 @@
 import '../styles/BookDetails.css';
 import BookReviews from './BookReviews.jsx';
 import BookImage from "./BookImage.jsx";
-import FavoriteButton from './FavoriteButton.jsx';
+import FavoriteButtonText from "./FavoriteButtonText.jsx";
 import AddToCartButton from "./AddToCartButton.jsx";
 
 function BookDetails({ book, onBack, onAddToCart, isFavorite, onToggleFavorite, onReviewAdded }) {
@@ -21,7 +21,7 @@ function BookDetails({ book, onBack, onAddToCart, isFavorite, onToggleFavorite, 
                     />
 
                     {token && (
-                        <FavoriteButton
+                        <FavoriteButtonText
                             isFavorite={isFavorite}
                             onToggle={() => onToggleFavorite(book.id)}
                         />
