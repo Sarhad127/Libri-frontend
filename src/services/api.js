@@ -313,3 +313,23 @@ export async function fetchTopRatedBooks(limit = 10) {
         throw error;
     }
 }
+
+export async function importBooks() {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch(`${API_BASE_URL}/admin/import-books`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Book import failed: ${text}`);
+    }
+
+    const result = await response.json();
+    return result;
+}

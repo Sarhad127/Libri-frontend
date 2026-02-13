@@ -3,8 +3,9 @@ import '../../styles/UserProfile.css';
 import Favorites from "./Favorites.jsx";
 import UserInfo from "./UserInfo.jsx";
 import HistoryTab from "./HistoryTab.jsx";
+import AdminPanel from "./AdminPanel.jsx";
 
-function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite }) {
+function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite, user }) {
     const [activeTab, setActiveTab] = useState('info');
 
     const renderTabContent = () => {
@@ -24,10 +25,15 @@ function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite }) {
                     />
                 );
 
+            case 'admin':
+                return <AdminPanel />;
+
             default:
                 return null;
         }
     };
+
+    const isAdmin = user?.role === 'ADMIN';
 
     return (
         <div className="user-profile">
@@ -50,6 +56,15 @@ function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite }) {
                 >
                     Favorites
                 </button>
+
+                {isAdmin && (
+                    <button
+                        className={activeTab === 'admin' ? 'active' : ''}
+                        onClick={() => setActiveTab('admin')}
+                    >
+                        Admin Panel
+                    </button>
+                )}
             </div>
 
             <div className="profile-content">
