@@ -1,11 +1,25 @@
-import { importBooks } from '../../services/api.js';
-import { useState } from 'react';
+import { fetchUsers, importBooks } from '../../services/api.js';
+import { useEffect, useState } from 'react';
 import '../../styles/AdminPage.css';
 
 function AdminPage() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [status, setStatus] = useState('');
+    const [users, setUsers] = useState([]);
+
+    const loadUsers = async () => {
+        try {
+            const data = await fetchUsers();
+            setUsers(data);
+        } catch (err) {
+            console.error('Failed to fetch users:', err);
+        }
+    };
+
+    useEffect(() => {
+        loadUsers();
+    }, []);
 
     const handleImport = async () => {
         setLoading(true);
@@ -26,6 +40,9 @@ function AdminPage() {
                 setMessage(`Book import completed successfully! ${changes}`);
                 setStatus('success');
             }
+
+            await loadUsers();
+
         } catch (err) {
             setMessage(`${err.message}`);
             setStatus('error');
@@ -45,6 +62,32 @@ function AdminPage() {
                 <p className={`admin-message ${status}`}>
                     {message}
                 </p>
+            )}
+
+            {users.length > 0 && (
+                <div className="admin-section">
+                    <h3>Users in System</h3>
+                    <table className="admin-table">
+                        <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Active</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {users.map((user, idx) => (
+                            <tr key={idx}>
+                                <td>{user.firstName}</td>
+                                <td>{user.lastName}</td>
+                                <td>{user.email}</td>
+                                <td>{user.active ? 'Yes' : 'No'}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );
