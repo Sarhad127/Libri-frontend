@@ -89,7 +89,7 @@ function App() {
     };
 
     const handleAddToCart = async (book) => {
-        if (!token || !user) return;
+        if (!token || !user) return alert('Please log in first.');
         try {
             await addToCart(token, book.id, 1);
             const updatedCart = await fetchCart(token);
@@ -138,7 +138,7 @@ function App() {
     };
 
     const toggleFavorite = async (bookId) => {
-        if (!token) return alert('Please log in.');
+        if (!token || !user) return alert('Please log in first.');
         try {
             if (favoriteIds.includes(bookId)) {
                 await removeFavorite(token, bookId);
