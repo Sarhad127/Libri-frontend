@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { API_BASE_URL, fetchUserOrders } from '../services/api.js';
-import '../styles/HistoryTab.css';
+import { API_BASE_URL, fetchUserOrders } from '../../services/api.js';
+import '../../styles/HistoryTab.css';
 
 function HistoryTab() {
     const [orderHistory, setOrderHistory] = useState([]);

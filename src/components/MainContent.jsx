@@ -1,12 +1,12 @@
 import SortDropdown from "./SortDropdown.jsx";
-import UserProfile from './UserProfile';
-import Register from './Register';
-import BookList from './BookList';
-import BookDetails from './BookDetails';
+import UserProfile from './UserProfile/UserProfile.jsx';
+import Register from './Authentication/Register.jsx';
+import BookList from './Book/BookList.jsx';
+import BookDetails from './Book/BookDetails.jsx';
 import Cart from './Cart';
 import '../styles/MainContent.css';
 import Checkout from "./Checkout/Checkout.jsx";
-import LoginForm from './LoginForm.jsx';
+import Login from './Authentication/Login.jsx';
 
 function MainContent({
                          user,
@@ -44,7 +44,7 @@ function MainContent({
             )}
 
             {page === 'login' && (
-                <LoginForm
+                <Login
                     onLoginSuccess={onLoginSuccess}
                     goToRegister={() => setPage('register')}
                 />

@@ -1,4 +1,4 @@
-import '../styles/BookDetails.css';
+import '../../styles/BookDetails.css';
 
 function BookImage({ book, onClick, className = '', imgClassName = '' }) {
 

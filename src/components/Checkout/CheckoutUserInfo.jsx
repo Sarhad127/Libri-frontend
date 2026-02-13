@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchUserProfile } from '../../services/api.js';
-import './CheckoutUserInfo.css';
+import '../../styles/CheckoutUserInfo.css';
 
 function CheckoutUserInfo({ onNext, onBack }) {
     const [user, setUser] = useState(null);

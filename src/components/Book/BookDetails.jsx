@@ -1,8 +1,8 @@
-import '../styles/BookDetails.css';
+import '../../styles/BookDetails.css';
 import BookReviews from './BookReviews.jsx';
 import BookImage from "./BookImage.jsx";
-import FavoriteButtonText from "./FavoriteButtonText.jsx";
-import AddToCartButton from "./AddToCartButton.jsx";
+import FavoriteButtonText from "../Buttons/FavoriteButtonText.jsx";
+import AddToCartButton from "../Buttons/AddToCartButton.jsx";
 
 function BookDetails({ book, onBack, onAddToCart, isFavorite, onToggleFavorite, onReviewAdded }) {
     const token = localStorage.getItem('token');

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { createReview, fetchBookReviews, updateReview } from "../services/api.js";
-import '../styles/BookReviews.css';
+import { createReview, fetchBookReviews, updateReview } from "../../services/api.js";
+import '../../styles/BookReviews.css';
 
 function BookReviews({ bookId, token}) {
     const [reviews, setReviews] = useState([]);

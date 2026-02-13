@@ -1,5 +1,5 @@
 import '../styles/Cart.css';
-import BookImage from './BookImage.jsx';
+import BookImage from './Book/BookImage.jsx';
 import { FaTrash } from 'react-icons/fa';
 
 function Cart({ cartItems = [], onRemoveItem, onUpdateQuantity, onCheckout }) {

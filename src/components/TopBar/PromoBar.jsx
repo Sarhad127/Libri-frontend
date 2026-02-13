@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/PromoBar.css';
+import '../../styles/PromoBar.css';
 import { CheckCircle } from 'lucide-react';
 
 function PromoBar() {

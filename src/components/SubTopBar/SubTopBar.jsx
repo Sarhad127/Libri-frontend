@@ -1,5 +1,4 @@
-import '../styles/SubTopBar.css';
-import { Menu } from 'lucide-react';
+import '../../styles/SubTopBar.css';
 
 function SubTopBar({ onFilter }) {
     const filters = ["All Books", "Most Popular", "Top Rated", "Bestsellers"];
@@ -7,8 +6,10 @@ function SubTopBar({ onFilter }) {
     return (
         <div className="sub-top-bar">
             {filters.map((f) => (
-                <button key={f} onClick={() => onFilter(f)} className={f === "All Books" ? "with-icon" : ""}>
-                    {f === "All Books" && <Menu size={16} />}
+                <button
+                    key={f}
+                    onClick={() => onFilter(f)}
+                >
                     {f}
                 </button>
             ))}

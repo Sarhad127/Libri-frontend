@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUserProfile } from '../services/api.js';
-import '../styles/UserInfo.css';
+import { fetchUserProfile } from '../../services/api.js';
+import '../../styles/UserInfo.css';
 
 function UserInfo() {
     const [user, setUser] = useState(null);

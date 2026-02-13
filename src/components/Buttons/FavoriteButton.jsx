@@ -1,4 +1,4 @@
-import '../styles/FavoriteButton.css';
+import '../../styles/FavoriteButton.css';
 import { Heart } from 'lucide-react';
 
 function FavoriteButton({ isFavorite, onToggle }) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './CheckoutReview.css';
+import '../../styles/CheckoutReview.css';
 
 function CheckoutReview({ cartItems, shippingMethod, onBack, onConfirmOrder }) {
     const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);

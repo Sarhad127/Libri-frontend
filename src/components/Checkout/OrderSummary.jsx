@@ -1,5 +1,5 @@
 import React from 'react';
-import './OrderSummary.css';
+import '../../styles/OrderSummary.css';
 
 function OrderSummary({ order, onBackToHome }) {
     if (!order) return null;

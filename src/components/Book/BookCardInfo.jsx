@@ -1,5 +1,5 @@
-import AddToCartButton from "./AddToCartButton.jsx";
-import FavoriteButton from "./FavoriteButton.jsx";
+import AddToCartButton from "../Buttons/AddToCartButton.jsx";
+import FavoriteButton from "../Buttons/FavoriteButton.jsx";
 
 function BookCardInfo({ book, favoriteIds, onToggleFavorite, onAddToCart }) {
     return (

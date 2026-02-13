@@ -1,8 +1,7 @@
-import UserButtons from './UserButtons.jsx';
-import '../styles/TopBar.css';
-import { FaShoppingCart } from "react-icons/fa";
+import UserButtons from '../Buttons/UserButtons.jsx';
+import '../../styles/TopBar.css';
 import {useState} from "react";
-import OpenBookIcon from '../assets/open-book.png';
+import OpenBookIcon from '../../assets/open-book.png';
 
 function TopBar({
                     user,
@@ -15,7 +14,6 @@ function TopBar({
 }) {
 
     const [searchTerm, setSearchTerm] = useState('');
-    const totalQuantity = cartItems?.reduce((sum, item) => sum + (item.quantity || 1), 0) || 0;
 
     const handleSearch = () => {
         onSearch(searchTerm.trim());
@@ -50,15 +48,13 @@ function TopBar({
             <div className="top-bar-buttons">
                 {user ? (
                     <>
-                        <button className="cart-button" onClick={goToCart}>
-                            <FaShoppingCart />
-                            Cart
-                            {totalQuantity > 0 && (
-                                <span className="cart-count">{totalQuantity}</span>
-                            )}
-                        </button>
-
-                        <UserButtons user={user} onUserPage={onUserPage} onLogout={onLogout} />
+                        <UserButtons
+                            user={user}
+                            onUserPage={onUserPage}
+                            onLogout={onLogout}
+                            cartItems={cartItems}
+                            goToCart={goToCart}
+                        />
                     </>
                 ) : (
                     <button className="login-btn" onClick={() => setPage('login')}>

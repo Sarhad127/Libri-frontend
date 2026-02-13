@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { fetchFavorites } from '../services/api.js';
-import BookDetails from './BookDetails.jsx';
-import BookImage from './BookImage.jsx';
-import BookCardInfo from "./BookCardInfo.jsx";
-import '../styles/Favorites.css';
+import { fetchFavorites } from '../../services/api.js';
+import BookDetails from '../Book/BookDetails.jsx';
+import BookImage from '../Book/BookImage.jsx';
+import BookCardInfo from "../Book/BookCardInfo.jsx";
+import '../../styles/Favorites.css';
 
 function Favorites({ onAddToCart, onToggleFavorite, favoriteIds }) {
     const [favorites, setFavorites] = useState([]);

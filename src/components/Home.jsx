@@ -1,9 +1,9 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/Sidebar.jsx";
 import MainContent from "./MainContent";
-import TopBar from "./TopBar";
-import SubTopBar from "./SubTopBar.jsx";
+import TopBar from "./TopBar/TopBar.jsx";
+import SubTopBar from "./SubTopBar/SubTopBar.jsx";
 import '../styles/Home.css';
-import PromoBar from "./PromoBar.jsx";
+import PromoBar from "./TopBar/PromoBar.jsx";
 
 function Home({
                   user,

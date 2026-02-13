@@ -1,5 +1,5 @@
-import '../styles/BookList.css';
-import BookImage from './BookImage';
+import '../../styles/BookList.css';
+import BookImage from './BookImage.jsx';
 import BookCardInfo from "./BookCardInfo.jsx";
 import React from "react";
 

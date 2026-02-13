@@ -1,5 +1,5 @@
 import React from 'react';
-import './CheckoutShipping.css';
+import '../../styles/CheckoutShipping.css';
 
 const SHIPPING_OPTIONS = [
     { id: 'STANDARD', label: 'Standard (3–5 days)', price: 0 },

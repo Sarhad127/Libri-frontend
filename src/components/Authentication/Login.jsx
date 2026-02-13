@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { loginUser } from "../services/api.js";
-import '../styles/LoginForm.css'
+import { loginUser } from "../../services/api.js";
+import '../../styles/LoginForm.css'
 
-function LoginForm({ onLoginSuccess, goToRegister }) {
+function Login({ onLoginSuccess, goToRegister }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
@@ -68,4 +68,4 @@ function LoginForm({ onLoginSuccess, goToRegister }) {
     );
 }
 
-export default LoginForm;
+export default Login;

@@ -1,4 +1,4 @@
-import '../styles/FavoriteButtonText.css'
+import '../../styles/FavoriteButtonText.css'
 import React from 'react';
 
 function FavoriteButtonText({ isFavorite, onToggle }) {
