@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import {registerUser} from "../services/api.js";
+import { registerUser } from "../services/api.js";
 import '../styles/Register.css';
 
-function Register() {
+function Register({ goToLogin }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -23,6 +23,7 @@ function Register() {
                 address
             });
             alert('Registration successful!');
+            goToLogin?.();
         } catch (error) {
             alert('Registration failed: ' + error.message);
         }
@@ -82,6 +83,11 @@ function Register() {
 
                     <button type="submit">Register</button>
                 </form>
+
+                <div className="register-footer">
+                    Already have an account?{' '}
+                    <span onClick={goToLogin}>Login</span>
+                </div>
             </div>
         </div>
     );

@@ -37,7 +37,11 @@ function MainContent({
                 onToggleFavorite={onToggleFavorite}
             />}
 
-            {page === 'register' && <Register />}
+            {page === 'register' && (
+                <Register
+                    goToLogin={() => setPage('login')}
+                />
+            )}
 
             {page === 'login' && (
                 <LoginForm
