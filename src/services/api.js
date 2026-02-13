@@ -227,14 +227,17 @@ export async function updateReview(token, reviewId, rating, comment) {
     return response.json();
 }
 
-export async function createOrder(token, cartItems, shippingMethod) {
+export async function createOrder(token, cartItems, shippingMethodEnum) {
     const response = await fetch(`${API_BASE_URL}/orders/create`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ cartItems, shippingMethod })
+        body: JSON.stringify({
+            cartItems,
+            shippingMethod: shippingMethodEnum
+        })
     });
 
     if (!response.ok) {

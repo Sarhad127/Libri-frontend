@@ -2,10 +2,10 @@ import React from 'react';
 import './CheckoutShipping.css';
 
 const SHIPPING_OPTIONS = [
-    { id: 'standard', label: 'Standard (3–5 days)', price: 0 },
-    { id: 'express', label: 'Express (1–2 days)', price: 2 },
-    { id: 'pickup', label: 'Store Pickup', price: 0 },
-    { id: 'overnight', label: 'Overnight', price: 5 },
+    { id: 'STANDARD', label: 'Standard (3–5 days)', price: 0 },
+    { id: 'EXPRESS', label: 'Express (1–2 days)', price: 2 },
+    { id: 'STORE_PICKUP', label: 'Store Pickup', price: 0 },
+    { id: 'OVERNIGHT', label: 'Overnight', price: 5 },
 ];
 
 function CheckoutShipping({ selected, onSelect, onNext, onBack }) {

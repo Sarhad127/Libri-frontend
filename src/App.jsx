@@ -230,14 +230,14 @@ function App() {
         if (!token) return alert("Please log in.");
 
         try {
-            await createOrder(token, cartItems, shippingMethod);
+            await createOrder(token, cartItems, shippingMethod.id);
 
             setCartItems([]);
             setPage('home');
             alert("Order placed successfully!");
         } catch (err) {
             console.error(err);
-            alert("Failed to place order.");
+            alert("Failed to place order: " + err.message);
         }
     };
 
