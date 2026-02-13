@@ -1,13 +1,16 @@
-import {useState} from "react";
-import {loginUser} from "../services/api.js";
+import { useState } from "react";
+import { loginUser } from "../services/api.js";
 import '../styles/LoginForm.css'
 
 function LoginForm({ onLoginSuccess, goToRegister }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState('');
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setLoginError('');
+
         try {
             const data = await loginUser(email, password);
 
@@ -26,7 +29,7 @@ function LoginForm({ onLoginSuccess, goToRegister }) {
             setEmail('');
             setPassword('');
         } catch {
-            alert('Login failed');
+            setLoginError('Invalid credentials');
         }
     };
 
@@ -34,6 +37,7 @@ function LoginForm({ onLoginSuccess, goToRegister }) {
         <div className="login-page">
             <div className="login-card">
                 <h2>Login</h2>
+
                 <form onSubmit={handleLogin}>
                     <input
                         type="email"
@@ -49,6 +53,9 @@ function LoginForm({ onLoginSuccess, goToRegister }) {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
+
+                    {loginError && <p className="login-error">{loginError}</p>}
+
                     <button type="submit">Login</button>
                 </form>
 
