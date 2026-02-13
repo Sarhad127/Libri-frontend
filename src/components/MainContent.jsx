@@ -57,7 +57,7 @@ function MainContent({
                 <Checkout
                     user={user}
                     cartItems={cartItems}
-                    onBack={() => setPage('cart')}
+                    onBack={() => setPage('home')}
                     onConfirmOrder={onConfirmOrder}
                     onRemoveItem={onRemoveItem}
                 />

@@ -1,22 +1,9 @@
 import React from 'react';
 import './CheckoutReview.css';
 
-function CheckoutReview({ cartItems, shippingMethod, onBack, onRemoveItem, onConfirmOrder }) {
-    const subtotal = cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-    );
+function CheckoutReview({ cartItems, shippingMethod, onBack, onConfirmOrder }) {
+    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const total = subtotal + shippingMethod.price;
-
-    const handleCheckout = async () => {
-        try {
-            await onConfirmOrder(shippingMethod);
-            cartItems.forEach(item => onRemoveItem?.(item.id));
-        } catch (err) {
-            console.error(err);
-            alert(`Failed to place order: ${err.message}`);
-        }
-    };
 
     return (
         <div className="crv-panel">
@@ -37,7 +24,7 @@ function CheckoutReview({ cartItems, shippingMethod, onBack, onRemoveItem, onCon
                 <button className="crv-back-button" onClick={onBack}>
                     ← Back
                 </button>
-                <button className="crv-confirm-button" onClick={handleCheckout}>
+                <button className="crv-confirm-button" onClick={onConfirmOrder}>
                     Confirm & place order
                 </button>
             </div>

@@ -233,8 +233,6 @@ function App() {
             await createOrder(token, cartItems, shippingMethod.id);
 
             setCartItems([]);
-            setPage('home');
-            alert("Order placed successfully!");
         } catch (err) {
             console.error(err);
             alert("Failed to place order: " + err.message);
