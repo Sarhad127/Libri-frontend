@@ -46,7 +46,16 @@ function Favorites({ onAddToCart, onToggleFavorite, favoriteIds }) {
 
     if (loading) return <p>Loading favorites...</p>;
     if (error) return <p>{error}</p>;
-    if (!favorites.length) return <p>No favorites yet.</p>;
+    if (!favorites.length) {
+        return (
+            <div className="favorites-empty">
+                <div className="favorites-empty-content">
+                    <h3>Your Favorites</h3>
+                    <p>No favorites yet.</p>
+                </div>
+            </div>
+        );
+    }
 
     if (selectedBook) {
         return (

@@ -43,9 +43,11 @@ function HistoryTab() {
     if (error) return <p>{error}</p>;
     if (!orderHistory || orderHistory.length === 0) {
         return (
-            <div className="order-history">
-                <h3>Order History</h3>
-                <p>No orders made yet.</p>
+            <div className="order-history order-history-empty">
+                <div className="order-history-empty-content">
+                    <h3>Order History</h3>
+                    <p>No orders made yet.</p>
+                </div>
             </div>
         );
     }
