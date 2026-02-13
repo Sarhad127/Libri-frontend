@@ -44,6 +44,7 @@ function BookDetails({ book, onBack, onAddToCart, isFavorite, onToggleFavorite, 
                             </p>
                         )}
                         {book.isbn && <p><strong>ISBN:</strong> {book.isbn}</p>}
+                        {book.pages && <p><strong>Pages: </strong>{book.pages}</p>}
                         <p><strong>Available:</strong> {book.stock}</p>
                     </div>
 
