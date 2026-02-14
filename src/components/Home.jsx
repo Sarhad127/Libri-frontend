@@ -27,7 +27,8 @@ function Home({
                   selectedBook,
                   setSelectedBook,
                   onSearch,
-                  onConfirmOrder
+                  onConfirmOrder,
+                  onBooksUpdated
               }) {
 
     const centerPages = ['register', 'login', 'user', 'cart', 'checkout'];
@@ -77,6 +78,7 @@ function Home({
                             onSortChange={setSortOption}
                             onConfirmOrder={onConfirmOrder}
                             onLoginSuccess={onLoginSuccess}
+                            onBooksUpdated={onBooksUpdated}
                         />
                 </div>
             </div>

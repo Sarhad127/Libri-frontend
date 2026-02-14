@@ -14,7 +14,7 @@ function App() {
     const [page, setPage] = useState('home');
     const [selectedBook, setSelectedBook] = useState(null);
 
-    const { allBooks } = useBooks();
+    const { allBooks, refetchBooks } = useBooks();
     const { favoriteIds, toggleFavorite } = useFavorites(token, user);
     const { handleLoginSuccess, handleLogout } = useUser(token, setUser, setPage);
     const {
@@ -68,6 +68,7 @@ function App() {
                 onSidebarFilterChange={handleSidebarFilters}
                 onFilter={handleFilter}
                 onConfirmOrder={handleConfirmOrder}
+                onBooksUpdated={refetchBooks}
             />
         </div>
     );

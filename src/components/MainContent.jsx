@@ -24,7 +24,8 @@ function MainContent({
                          setSelectedBook,
                          setPage,
                          onConfirmOrder,
-                         onLoginSuccess
+                         onLoginSuccess,
+                         onBooksUpdated
                      }) {
 
     return (
@@ -35,6 +36,7 @@ function MainContent({
                 onAddToCart={onAddToCart}
                 favoriteIds={favoriteIds}
                 onToggleFavorite={onToggleFavorite}
+                onBooksUpdated={onBooksUpdated}
             />}
 
             {page === 'register' && (

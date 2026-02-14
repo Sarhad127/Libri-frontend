@@ -1,9 +1,4 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import {
-    fetchMostPopularRecent,
-    fetchTopRatedBooks,
-    fetchMostPopularBooks
-} from '../services/api.js';
 
 export function useBookFilters(allBooks, setPage) {
     const [baseBooks, setBaseBooks] = useState(allBooks);
@@ -59,28 +54,32 @@ export function useBookFilters(allBooks, setPage) {
         });
     }, [baseBooks, sidebarFilters, sortOption, applySidebarFilters, searchQuery]);
 
-    const handleFilter = useCallback(async (filter) => {
-        let fetchedBooks;
-        try {
-            switch (filter) {
-                case "Most Popular":
-                    fetchedBooks = await fetchMostPopularRecent(7, 10);
-                    break;
-                case "Top Rated":
-                    fetchedBooks = await fetchTopRatedBooks(10);
-                    break;
-                case "Bestsellers":
-                    fetchedBooks = await fetchMostPopularBooks(10);
-                    break;
-                case "All Books":
-                default:
-                    fetchedBooks = allBooks;
-            }
-        } catch {
-            fetchedBooks = allBooks;
+    const handleFilter = useCallback((filter) => {
+        let books = [...allBooks];
+
+        switch (filter) {
+            case "Most Popular":
+                books.sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0));
+                break;
+
+            case "Top Rated":
+                books.sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0));
+                break;
+
+            case "Bestsellers":
+                books.sort((a, b) => (b.stock || 0) - (a.stock || 0));
+                break;
+
+            case "Newest":
+                books.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                break;
+
+            case "All Books":
+            default:
+                books = allBooks;
         }
 
-        setBaseBooks(fetchedBooks);
+        setBaseBooks(books);
         setSortOption('none');
         setPage("home");
     }, [allBooks, setPage]);

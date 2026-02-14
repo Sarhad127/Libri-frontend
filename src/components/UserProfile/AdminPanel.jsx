@@ -2,7 +2,7 @@ import { fetchUsers, importBooks } from '../../services/api.js';
 import { useEffect, useState } from 'react';
 import '../../styles/AdminPage.css';
 
-function AdminPage() {
+function AdminPage({ onBooksUpdated }) {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [status, setStatus] = useState('');
@@ -28,6 +28,12 @@ function AdminPage() {
 
         try {
             const result = await importBooks();
+
+            sessionStorage.removeItem('books_cache');
+
+            if (onBooksUpdated) {
+                await onBooksUpdated();
+            }
 
             if ((result.added + result.updated) === 0) {
                 setMessage('All books already updated and fetched.');

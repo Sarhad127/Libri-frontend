@@ -5,7 +5,7 @@ import UserInfo from "./UserInfo.jsx";
 import HistoryTab from "./HistoryTab.jsx";
 import AdminPanel from "./AdminPanel.jsx";
 
-function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite, user }) {
+function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite, user, onBooksUpdated }) {
     const [activeTab, setActiveTab] = useState('info');
 
     const renderTabContent = () => {
@@ -26,7 +26,7 @@ function UserProfile({ onAddToCart, favoriteIds, onToggleFavorite, user }) {
                 );
 
             case 'admin':
-                return <AdminPanel />;
+                return <AdminPanel onBooksUpdated={onBooksUpdated}/>;
 
             default:
                 return null;
