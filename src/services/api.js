@@ -352,3 +352,22 @@ export async function fetchUsers() {
 
     return response.json();
 }
+
+export async function updateUserActiveStatus(userId, active) {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/admin/${userId}/active?active=${active}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to update user: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+}

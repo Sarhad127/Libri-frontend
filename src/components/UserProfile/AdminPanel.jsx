@@ -1,4 +1,4 @@
-import { fetchUsers, importBooks } from '../../services/api.js';
+import { fetchUsers, importBooks, updateUserActiveStatus } from '../../services/api.js';
 import { useEffect, useState } from 'react';
 import '../../styles/AdminPage.css';
 
@@ -28,12 +28,8 @@ function AdminPage({ onBooksUpdated }) {
 
         try {
             const result = await importBooks();
-
             sessionStorage.removeItem('books_cache');
-
-            if (onBooksUpdated) {
-                await onBooksUpdated();
-            }
+            if (onBooksUpdated) await onBooksUpdated();
 
             if ((result.added + result.updated) === 0) {
                 setMessage('All books already updated and fetched.');
@@ -42,18 +38,28 @@ function AdminPage({ onBooksUpdated }) {
                 const addedMsg = result.added > 0 ? `${result.added} added` : '';
                 const updatedMsg = result.updated > 0 ? `${result.updated} updated` : '';
                 const changes = [addedMsg, updatedMsg].filter(Boolean).join(', ');
-
                 setMessage(`Book import completed successfully! ${changes}`);
                 setStatus('success');
             }
 
             await loadUsers();
-
         } catch (err) {
             setMessage(`${err.message}`);
             setStatus('error');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleToggleActive = async (userId, currentActive) => {
+        try {
+            const updated = await updateUserActiveStatus(userId, !currentActive);
+            setUsers(prev =>
+                prev.map(u => (u.id === userId ? { ...u, active: updated.active } : u))
+            );
+        } catch (err) {
+            console.error('Failed to update user:', err);
+            alert(`Failed to update user: ${err.message}`);
         }
     };
 
@@ -88,7 +94,16 @@ function AdminPage({ onBooksUpdated }) {
                                 <td>{user.firstName}</td>
                                 <td>{user.lastName}</td>
                                 <td>{user.email}</td>
-                                <td>{user.active ? 'Yes' : 'No'}</td>
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        checked={user.active}
+                                        onChange={() => {
+                                            console.log('Toggling user', user.id, 'from', user.active, 'to', !user.active);
+                                            handleToggleActive(user.id, user.active);
+                                        }}
+                                    />
+                                </td>
                             </tr>
                         ))}
                         </tbody>
