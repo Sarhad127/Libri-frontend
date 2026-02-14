@@ -1,0 +1,87 @@
+.user-info-dark {
+    display: flex;
+    flex-direction: column;
+    color: #eaeaea;
+    padding: 2rem;
+    border-radius: 4px;
+    max-width: 600px;
+    border: 1px solid #444;
+    margin: auto;
+    font-family: 'Inter', sans-serif;
+}
+
+.user-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+
+.user-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-name {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.user-email {
+    margin: 0.2rem 0 0;
+    font-size: 0.95rem;
+    color: #aaa;
+}
+
+.section-title {
+    margin: 1.5rem 0 0.8rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    border-bottom: 1px solid #444;
+    padding-bottom: 0.3rem;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.detail-row {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1rem;
+    transition: background 0.2s;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+}
+
+.label {
+    min-width: 100px;
+    color: #888;
+    font-weight: 500;
+}
+
+.value {
+    color: #eaeaea;
+    font-weight: 400;
+    word-break: break-word;
+}

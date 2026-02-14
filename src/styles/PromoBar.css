@@ -1,0 +1,22 @@
+.promo-bar {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    padding: 4px 0;
+    gap: 20px;
+}
+
+.promo-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+}
+
+.check-icon {
+    color: #4CAF50;
+}

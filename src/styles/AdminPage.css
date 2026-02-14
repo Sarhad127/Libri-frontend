@@ -1,0 +1,88 @@
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    text-align: left;
+    color: #e0e0e0;
+    gap: 20px;
+    font-family: 'Consolas', monospace;
+}
+
+.admin-container h2 {
+    color: #e0e0e0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.admin-container button {
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    background-color: #1a73e8;
+    border: 1px solid #0c4dab;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border 0.2s ease;
+    text-transform: uppercase;
+}
+
+.admin-container button:hover:not(:disabled) {
+    background-color: #0c4dab;
+    border-color: #084a8f;
+}
+
+.admin-container button:disabled {
+    background-color: #333;
+    border-color: #222;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.admin-container p {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.admin-section {
+    background-color: #1f1f1f;
+    padding: 15px 20px;
+    border-radius: 2px;
+    border-left: 4px solid #007bff;
+}
+
+.admin-section h3 {
+    color: #e0e0e0;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.admin-message {
+    padding: 8px 12px;
+    border-radius: 2px;
+    font-weight: 700;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+}
+
+.admin-message.success {
+    background-color: #198754;
+    color: #fff;
+}
+
+.admin-message.info {
+    background-color: #fd7e14;
+    color: #fff;
+}
+
+.admin-message.error {
+    background-color: #dc3545;
+    color: #fff;
+}

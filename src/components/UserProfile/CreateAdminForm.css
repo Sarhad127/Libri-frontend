@@ -1,0 +1,84 @@
+.create-admin-form {
+    background-color: #1f1f1f;
+    padding: 15px 20px;
+    border-radius: 2px;
+    border-left: 4px solid #007bff;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.create-admin-form h3 {
+    color: #e0e0e0;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.create-admin-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.create-admin-form input {
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 2px;
+    border: 1px solid #333;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    font-family: 'Consolas', monospace;
+}
+
+.create-admin-form input:focus {
+    outline: none;
+    border-color: #1a73e8;
+}
+
+.create-admin-form button {
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    background-color: #1a73e8;
+    border: 1px solid #0c4dab;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border 0.2s ease;
+    text-transform: uppercase;
+}
+
+.create-admin-form button:hover:not(:disabled) {
+    background-color: #0c4dab;
+    border-color: #084a8f;
+}
+
+.create-admin-form button:disabled {
+    background-color: #333;
+    border-color: #222;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.create-admin-form p {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.create-admin-form p.success {
+    background-color: #198754;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 2px;
+}
+
+.create-admin-form p.error {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 2px;
+}

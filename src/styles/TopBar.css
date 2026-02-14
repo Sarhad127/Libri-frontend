@@ -1,0 +1,137 @@
+.top-bar {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #222;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.top-bar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.top-bar-icon {
+    width: 30px;
+    height: 30px;
+    filter: invert(1);
+}
+
+.top-bar-title {
+    font-size: 2rem;
+    margin: 0;
+    color: #fff;
+}
+
+.top-bar-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-bar-search input[type="text"],
+.top-bar-search button {
+    border: 1px solid #444;
+    background-color: #222;
+    color: #eee;
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.top-bar-search input[type="text"] {
+    width: 450px;
+    max-width: 40vw;
+    padding: 0 10px;
+    height: 36px;
+}
+
+.top-bar-search button {
+    padding: 0 12px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.top-bar input[type="text"],
+.top-bar input[type="email"],
+.top-bar input[type="password"] {
+    padding: 7px 10px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #eee;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    flex: 1;
+}
+
+.top-bar input::placeholder {
+    color: #999;
+}
+
+.top-bar input:focus {
+    border-color: #6aa9ff;
+    background-color: #262626;
+}
+
+.top-bar button {
+    padding: 7px 12px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.top-bar button:hover {
+    background-color: #2a2a2a;
+    border-color: #6aa9ff;
+}
+
+.cart-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: red;
+    color: white;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.top-bar-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.user-btn,
+.login-btn,
+.logout-btn {
+    height: 36px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}

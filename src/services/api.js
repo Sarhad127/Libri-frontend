@@ -1,0 +1,395 @@
+export const API_BASE_URL = 'http://localhost:8080/api';
+
+export async function loginUser(email, password) {
+    const response = await fetch(`${API_BASE_URL}/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Login failed');
+    }
+
+    return response.json();
+}
+
+export async function registerUser(userData) {
+    const response = await fetch(`${API_BASE_URL}/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
+    }
+
+    return response.json();
+}
+
+export async function fetchUserProfile(token) {
+    const response = await fetch(`${API_BASE_URL}/me`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch user profile');
+    }
+
+    return response.json();
+}
+
+export async function fetchBooks() {
+    const response = await fetch(`${API_BASE_URL}/books`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch books');
+    }
+
+    return response.json();
+}
+
+export async function createReview(token, reviewData) {
+    const response = await fetch(`${API_BASE_URL}/reviews`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(reviewData),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to create review');
+    }
+
+    return response.json();
+}
+
+export async function fetchBookReviews(bookId) {
+    const response = await fetch(`${API_BASE_URL}/${bookId}/reviews`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch reviews');
+    }
+
+    return response.json();
+}
+
+export async function addFavorite(token, bookId) {
+    const response = await fetch(`${API_BASE_URL}/favorites/${bookId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to add favorite');
+    }
+
+    return response.json();
+}
+
+export async function removeFavorite(token, bookId) {
+    const response = await fetch(`${API_BASE_URL}/favorites/${bookId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to remove favorite');
+    }
+
+    return response.json();
+}
+
+export async function fetchFavorites(token) {
+    const response = await fetch(`${API_BASE_URL}/favorites`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch favorites');
+    }
+
+    return response.json();
+}
+
+export async function fetchCart(token) {
+    const response = await fetch(`${API_BASE_URL}/cart`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch cart');
+    }
+
+    return response.json();
+}
+
+export async function addToCart(token, bookId, quantity = 1) {
+    const response = await fetch(`${API_BASE_URL}/cart`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ bookId, quantity }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to add item to cart');
+    }
+
+    return response.json();
+}
+
+export async function updateCartItem(token, cartItemId, quantity) {
+    const response = await fetch(`${API_BASE_URL}/cart/${cartItemId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ quantity }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update cart item');
+    }
+
+    return response.json();
+}
+
+export async function removeCartItem(token, cartItemId) {
+    const response = await fetch(`${API_BASE_URL}/cart/${cartItemId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to remove cart item');
+    }
+
+    return response.json();
+}
+
+export async function updateReview(token, reviewId, rating, comment) {
+    const response = await fetch(`${API_BASE_URL}/reviews/${reviewId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ rating, comment }),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error('Failed to update review: ' + errorText);
+    }
+
+    return response.json();
+}
+
+export async function createOrder(token, cartItems, shippingMethodEnum) {
+    const response = await fetch(`${API_BASE_URL}/orders/create`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            cartItems,
+            shippingMethod: shippingMethodEnum
+        })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Failed to create order');
+    }
+
+    return response.json();
+}
+
+export async function fetchUserOrders(token) {
+    const response = await fetch(`${API_BASE_URL}/orders`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch orders');
+    }
+
+    return response.json();
+}
+
+export async function fetchMostPopularBooks(limit = 10) {
+    const response = await fetch(`${API_BASE_URL}/most-popular?limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch most popular books');
+    }
+
+    return response.json();
+}
+
+export async function fetchMostPopularRecent(days = 7, limit = 10) {
+    const response = await fetch(`${API_BASE_URL}/most-popular/recent?days=${days}&limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch most popular books (recent)');
+    }
+
+    return response.json();
+}
+
+export async function fetchTopRatedBooks(limit = 10) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/top-rated?limit=${limit}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch top rated books');
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Error fetching top rated books:', error);
+        throw error;
+    }
+}
+
+export async function importBooks() {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch(`${API_BASE_URL}/admin/import-books`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Book import failed: ${text}`);
+    }
+
+    const result = await response.json();
+    return result;
+}
+
+export async function fetchUsers() {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/users`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch users: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+}
+
+export async function updateUserActiveStatus(userId, active) {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/admin/${userId}/active?active=${active}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to update user: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+}
+
+export async function createAdminUser({ email, password, firstName, lastName }) {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/admin/create-admin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email, password, firstName, lastName }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || 'Failed to create admin user');
+    }
+
+    return data;
+}

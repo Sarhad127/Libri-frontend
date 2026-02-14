@@ -1,0 +1,30 @@
+.book-favorite-btn {
+    margin-top: 8px;
+    width: fit-content;
+    padding: 6px;
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.book-favorite-btn:hover {
+    background-color: #444;
+}
+
+.heart-icon {
+    color: #ccc;
+    transition: color 0.2s;
+}
+
+.book-favorite-btn--active .heart-icon {
+    color: #FF4D4D;
+}
+
+.book-favorite-btn:hover .heart-icon.active {
+    color: #FF0000;
+}

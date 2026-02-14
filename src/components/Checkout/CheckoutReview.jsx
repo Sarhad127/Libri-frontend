@@ -1,0 +1,35 @@
+import React from 'react';
+import '../../styles/CheckoutReview.css';
+
+function CheckoutReview({ cartItems, shippingMethod, onBack, onConfirmOrder }) {
+    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const total = subtotal + shippingMethod.price;
+
+    return (
+        <div className="crv-panel">
+            <h2 className="crv-heading-main">Review your order</h2>
+
+            <div className="crv-items">
+                {cartItems.map(item => (
+                    <div key={item.id} className="crv-item">
+                        {item.bookTitle} × {item.quantity}
+                    </div>
+                ))}
+            </div>
+
+            <p className="crv-shipping"><strong>Shipping:</strong> {shippingMethod.label}</p>
+            <p className="crv-total"><strong>Total:</strong> ${total.toFixed(2)}</p>
+
+            <div className="crv-actions">
+                <button className="crv-back-button" onClick={onBack}>
+                    ← Back
+                </button>
+                <button className="crv-confirm-button" onClick={onConfirmOrder}>
+                    Confirm & place order
+                </button>
+            </div>
+        </div>
+    );
+}
+
+export default CheckoutReview;
