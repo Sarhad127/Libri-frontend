@@ -1,6 +1,7 @@
 import { fetchUsers, importBooks, updateUserActiveStatus } from '../../services/api.js';
 import { useEffect, useState } from 'react';
 import '../../styles/AdminPage.css';
+import CreateAdminForm from "./CreateAdminForm.jsx";
 
 function AdminPage({ onBooksUpdated }) {
     const [loading, setLoading] = useState(false);
@@ -110,6 +111,7 @@ function AdminPage({ onBooksUpdated }) {
                     </table>
                 </div>
             )}
+            <CreateAdminForm onAdminCreated={loadUsers} />
         </div>
     );
 }

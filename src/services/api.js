@@ -371,3 +371,25 @@ export async function updateUserActiveStatus(userId, active) {
 
     return response.json();
 }
+
+export async function createAdminUser({ email, password, firstName, lastName }) {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/admin/create-admin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email, password, firstName, lastName }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || 'Failed to create admin user');
+    }
+
+    return data;
+}
