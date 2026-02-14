@@ -7,6 +7,7 @@ import Cart from './Cart';
 import '../styles/MainContent.css';
 import Checkout from "./Checkout/Checkout.jsx";
 import Login from './Authentication/Login.jsx';
+import PaginatedBookList from "./Book/PaginatedBookList.jsx";
 
 function MainContent({
                          user,
@@ -72,7 +73,7 @@ function MainContent({
             {page === 'home' && !selectedBook && (
                 <>
                     <SortDropdown sortOption={sortOption} onSortChange={setSortOption} />
-                    <BookList
+                    <PaginatedBookList
                         books={books}
                         onSelectBook={setSelectedBook}
                         onAddToCart={onAddToCart}
