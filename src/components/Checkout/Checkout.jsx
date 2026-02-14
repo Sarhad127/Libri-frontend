@@ -3,6 +3,7 @@ import CheckoutUserInfo from './CheckoutUserInfo';
 import CheckoutShipping from './CheckoutShipping';
 import CheckoutReview from './CheckoutReview';
 import OrderSummary from './OrderSummary';
+import {fetchUserProfile} from "../../services/api.js";
 
 function Checkout({ user, cartItems, onConfirmOrder, onBack, onRemoveItem }) {
     const [step, setStep] = useState(1);
@@ -11,8 +12,10 @@ function Checkout({ user, cartItems, onConfirmOrder, onBack, onRemoveItem }) {
 
     const handleConfirmOrder = async () => {
         try {
+            const token = user.token;
+            const fullUser = await fetchUserProfile(token);
             const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            setOrderDetails({ items: cartItems, shippingMethod, subtotal });
+            setOrderDetails({ items: cartItems, shippingMethod, subtotal, user: fullUser });
             await onConfirmOrder(shippingMethod);
             cartItems.forEach(item => onRemoveItem?.(item.id));
             setStep(4);
